@@ -5,10 +5,13 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import com.example.killerparty.model.Challenge
+import java.lang.Exception
 
 
 class MyDatabaseHelper(context: Context) :
     SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
+
+    private var db: SQLiteDatabase = writableDatabase
 
     override fun onCreate(db: SQLiteDatabase) {
         println("on créé la BDD !")
@@ -18,7 +21,8 @@ class MyDatabaseHelper(context: Context) :
                 "$COLUMN_DESCRIPTION TEXT" +
                 ")"
         // Execute script.
-        db.execSQL(script)
+        this.db = db
+        this.db.execSQL(script)
         addChallenge("test challenge 1")
         addChallenge("test challenge 2")
     }
@@ -30,7 +34,6 @@ class MyDatabaseHelper(context: Context) :
     }
 
     fun addChallenge(description: String) {
-        val db = writableDatabase
         val values = ContentValues()
         values.put(COLUMN_DESCRIPTION, description)
         db.insert(TABLE_CHALLENGES, null, values)
@@ -38,7 +41,6 @@ class MyDatabaseHelper(context: Context) :
     }
 
     fun deleteChallengeById(id: Int) {
-        val db = writableDatabase
         db.delete(TABLE_CHALLENGES, "id = $id", null)
     }
 
@@ -48,7 +50,7 @@ class MyDatabaseHelper(context: Context) :
         // Select All Query
         val selectQuery = "SELECT  * FROM $TABLE_CHALLENGES"
 
-        val cursor = writableDatabase.rawQuery(selectQuery, null)
+        val cursor = db.rawQuery(selectQuery, null)
 
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {

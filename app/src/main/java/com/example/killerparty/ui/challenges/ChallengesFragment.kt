@@ -1,5 +1,6 @@
 package com.example.killerparty.ui.challenges
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +19,7 @@ class ChallengesFragment : Fragment() {
     private lateinit var binding: FragmentChallengesBinding
     private val challenges: MutableList<Challenge> = mutableListOf()
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -29,7 +31,13 @@ class ChallengesFragment : Fragment() {
         fillAllChallenges(db)
         binding.challenges.apply {
             layoutManager = LinearLayoutManager(context)
-            adapter = ChallengeViewAdapter(challenges)
+            val adapter = ChallengeViewAdapter(challenges)
+            adapter.onChallengeRemoved = {
+                db.deleteChallengeById(it.id)
+                challenges.remove(it)
+                adapter.notifyDataSetChanged()
+            }
+            this.adapter = adapter
         }
 
         binding.floatingActionButton.setOnClickListener {
