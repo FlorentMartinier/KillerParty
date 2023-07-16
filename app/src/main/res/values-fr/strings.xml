@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Killer party</string>
+    <string name="title_party">Partie</string>
+    <string name="title_challenges">Défis</string>
+    <string name="title_historic">Historique</string>
+    <string name="add_challenge">Ajouter un défi</string>
+    <string name="challenge_description">Description du défi</string>
+    <string name="ok">Ok</string>
+    <string name="cancel">Annuler</string>
+</resources>
