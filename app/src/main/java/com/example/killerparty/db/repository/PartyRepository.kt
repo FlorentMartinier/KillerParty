@@ -41,8 +41,6 @@ class PartyRepository(context: Context) {
             throw Exception("Error during party recuperation")
         }
         cursor2.close()
-
-        // return note list
         return party
     }
 

@@ -8,8 +8,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.killerparty.databinding.FragmentChallengesBinding
-import com.example.killerparty.db.repository.ChallengeRepository
 import com.example.killerparty.model.Challenge
+import com.example.killerparty.services.ChallengeService
 import com.example.killerparty.ui.dialogs.AddChallengeDialogFragment
 import com.example.killerparty.utils.CHALLENGE_DESCRIPTION
 
@@ -17,6 +17,8 @@ import com.example.killerparty.utils.CHALLENGE_DESCRIPTION
 class ChallengesFragment : Fragment() {
 
     private lateinit var binding: FragmentChallengesBinding
+    private lateinit var challengeService: ChallengeService
+
     private val challenges: MutableList<Challenge> = mutableListOf()
 
     @SuppressLint("NotifyDataSetChanged")
@@ -26,15 +28,14 @@ class ChallengesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentChallengesBinding.inflate(inflater, container, false)
-
-        val chellengeRepository = ChallengeRepository(requireContext())
-        fillAllChallenges(chellengeRepository)
+        challengeService = ChallengeService(requireContext())
+        fillAllChallenges()
 
         binding.challenges.apply {
             layoutManager = LinearLayoutManager(context)
             val adapter = ChallengeViewAdapter(challenges, context)
             adapter.onChallengeRemoved = {
-                chellengeRepository.deleteChallengeById(it.id)
+                challengeService.deleteChallengeById(it.id)
                 challenges.remove(it)
                 adapter.notifyDataSetChanged()
             }
@@ -50,8 +51,8 @@ class ChallengesFragment : Fragment() {
                 if (requestKey == CHALLENGE_DESCRIPTION && !bundle.getString(CHALLENGE_DESCRIPTION)
                         .isNullOrEmpty()
                 ) {
-                    chellengeRepository.insertChallenge(bundle.getString(CHALLENGE_DESCRIPTION)!!)
-                    fillAllChallenges(chellengeRepository)
+                    challengeService.insertChallenge(bundle.getString(CHALLENGE_DESCRIPTION)!!)
+                    fillAllChallenges()
                 }
             }
             dialog.show(activity?.supportFragmentManager!!, "")
@@ -59,9 +60,9 @@ class ChallengesFragment : Fragment() {
         return binding.root
     }
 
-    private fun fillAllChallenges(challengeRepository: ChallengeRepository) {
+    private fun fillAllChallenges() {
         challenges.clear()
-        challenges.addAll(challengeRepository.findAllChallenges())
+        challenges.addAll(challengeService.findAllChallenges())
     }
 
 }

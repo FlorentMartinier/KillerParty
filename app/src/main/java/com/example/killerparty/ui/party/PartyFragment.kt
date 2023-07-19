@@ -9,10 +9,10 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.killerparty.databinding.FragmentPartyBinding
-import com.example.killerparty.db.repository.PartyRepository
-import com.example.killerparty.db.repository.PlayerRepository
 import com.example.killerparty.model.Party
 import com.example.killerparty.model.Player
+import com.example.killerparty.services.PartyService
+import com.example.killerparty.services.PlayerService
 import com.example.killerparty.ui.dialogs.AddPlayerDialogFragment
 import com.example.killerparty.utils.PLAYER_DESCRIPTION
 import com.example.killerparty.utils.PLAYER_NAME
@@ -24,8 +24,8 @@ class PartyFragment : Fragment() {
 
     private val players: MutableList<Player> = mutableListOf()
     private lateinit var party: Party
-    private lateinit var partyRepository: PartyRepository
-    private lateinit var playerRepository: PlayerRepository
+    private lateinit var partyService: PartyService
+    private lateinit var playerService: PlayerService
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onCreateView(
@@ -36,16 +36,16 @@ class PartyFragment : Fragment() {
         binding = FragmentPartyBinding.inflate(inflater, container, false)
 
         val requiredContext = requireContext()
-        partyRepository = PartyRepository(requiredContext)
-        playerRepository = PlayerRepository(requiredContext)
-        party = partyRepository.findOrCreateNotStartedParty()
+        partyService = PartyService(requiredContext)
+        playerService = PlayerService(requiredContext)
+        party = partyService.findOrCreateNotStartedParty()
         fillAllPlayers()
 
         binding.players.apply {
             layoutManager = LinearLayoutManager(context)
             val adapter = PlayerViewAdapter(players, context)
             adapter.onPlayerRemoved = {
-                playerRepository.deletePlayerById(it.id)
+                playerService.deletePlayerById(it.id)
                 players.remove(it)
                 adapter.notifyDataSetChanged()
             }
@@ -61,7 +61,7 @@ class PartyFragment : Fragment() {
                 if (requestKey == PLAYER_DESCRIPTION && !bundle.getString(PLAYER_NAME)
                         .isNullOrEmpty() && !bundle.getString(PLAYER_PHONE).isNullOrEmpty()
                 ) {
-                    playerRepository.insertPlayer(
+                    playerService.insertPlayer(
                         name = bundle.getString(PLAYER_NAME) ?: "",
                         phone = bundle.getString(PLAYER_PHONE) ?: "",
                         party = party
@@ -81,6 +81,6 @@ class PartyFragment : Fragment() {
 
     private fun fillAllPlayers() {
         players.clear()
-        players.addAll(playerRepository.findAllPlayersFromParty(party))
+        players.addAll(playerService.findAllPlayersFromParty(party))
     }
 }
