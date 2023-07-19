@@ -1,42 +1,86 @@
 package com.example.killerparty.ui.party
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.killerparty.databinding.FragmentPartyBinding
+import com.example.killerparty.db.repository.PartyRepository
+import com.example.killerparty.db.repository.PlayerRepository
+import com.example.killerparty.model.Party
+import com.example.killerparty.model.Player
+import com.example.killerparty.ui.dialogs.AddPlayerDialogFragment
+import com.example.killerparty.utils.PLAYER_DESCRIPTION
+import com.example.killerparty.utils.PLAYER_NAME
+import com.example.killerparty.utils.PLAYER_PHONE
 
 class PartyFragment : Fragment() {
 
-    private var _binding: FragmentPartyBinding? = null
+    private lateinit var binding: FragmentPartyBinding
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
+    private val players: MutableList<Player> = mutableListOf()
+    private lateinit var party: Party
+    private lateinit var partyRepository: PartyRepository
+    private lateinit var playerRepository: PlayerRepository
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val partyViewModel =
-            ViewModelProvider(this)[PartyViewModel::class.java]
+        binding = FragmentPartyBinding.inflate(inflater, container, false)
 
-        _binding = FragmentPartyBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+        val requiredContext = requireContext()
+        partyRepository = PartyRepository(requiredContext)
+        playerRepository = PlayerRepository(requiredContext)
+        party = partyRepository.findOrCreateNotStartedParty()
+        fillAllPlayers()
 
-        val textView: TextView = binding.textDashboard
-        partyViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
+        binding.players.apply {
+            layoutManager = LinearLayoutManager(context)
+            val adapter = PlayerViewAdapter(players, context)
+            adapter.onPlayerRemoved = {
+                playerRepository.deletePlayerById(it.id)
+                players.remove(it)
+                adapter.notifyDataSetChanged()
+            }
+            this.adapter = adapter
         }
-        return root
+
+        binding.addPlayerButton.setOnClickListener {
+            val dialog = AddPlayerDialogFragment()
+            requireActivity().supportFragmentManager.setFragmentResultListener(
+                PLAYER_DESCRIPTION,
+                viewLifecycleOwner
+            ) { requestKey, bundle ->
+                if (requestKey == PLAYER_DESCRIPTION && !bundle.getString(PLAYER_NAME)
+                        .isNullOrEmpty() && !bundle.getString(PLAYER_PHONE).isNullOrEmpty()
+                ) {
+                    playerRepository.insertPlayer(
+                        name = bundle.getString(PLAYER_NAME) ?: "",
+                        phone = bundle.getString(PLAYER_PHONE) ?: "",
+                        party = party
+                    )
+                    fillAllPlayers()
+                }
+            }
+            dialog.show(activity?.supportFragmentManager!!, "")
+        }
+
+        binding.beginPartyButton.setOnClickListener {
+            Toast.makeText(context, "La partie commence", Toast.LENGTH_SHORT).show()
+        }
+
+        return binding.root
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    private fun fillAllPlayers() {
+        players.clear()
+        players.addAll(playerRepository.findAllPlayersFromParty(party))
     }
 }

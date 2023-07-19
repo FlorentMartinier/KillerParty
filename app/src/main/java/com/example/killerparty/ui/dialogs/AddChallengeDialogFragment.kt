@@ -5,10 +5,8 @@ import android.app.Dialog
 import android.os.Bundle
 import android.widget.EditText
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.setFragmentResult
-import com.example.killerparty.CHALLENGE_DESCRIPTION
+import com.example.killerparty.utils.CHALLENGE_DESCRIPTION
 import com.example.killerparty.R
-import com.example.killerparty.db.MyDatabaseHelper
 
 
 class AddChallengeDialogFragment : DialogFragment() {

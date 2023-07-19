@@ -4,7 +4,14 @@
     <string name="title_challenges">Challenges</string>
     <string name="title_historic">Historic</string>
     <string name="add_challenge">Add challenge</string>
+    <string name="add_player">Add player</string>
+    <string name="player_name">Name</string>
+    <string name="player_phone">Phone</string>
     <string name="challenge_description">Challenge description</string>
-    <string name="ok">Ok</string>
+    <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
+    <string name="delete_confirmation">Are you sure you want to Delete?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="begin_party">Begin party</string>
 </resources>

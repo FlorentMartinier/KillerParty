@@ -1,11 +1,8 @@
 package com.example.killerparty.db
 
-import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import com.example.killerparty.model.Challenge
-import java.lang.Exception
 
 
 class MyDatabaseHelper(context: Context) :
@@ -14,54 +11,81 @@ class MyDatabaseHelper(context: Context) :
     private var db: SQLiteDatabase = writableDatabase
 
     override fun onCreate(db: SQLiteDatabase) {
-        println("on créé la BDD !")
+        this.db = db
+        initializeChallengeTable()
+        initializePartyTable()
+        initializePlayerTable()
+        initializePlayerToChallengeTable()
+        initializePlayerToPartyTable()
+    }
+
+
+    override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
+        db.execSQL("DROP TABLE IF EXISTS $TABLE_CHALLENGES")
+        db.execSQL("DROP TABLE IF EXISTS $TABLE_PLAYERS")
+        db.execSQL("DROP TABLE IF EXISTS $TABLE_PLAYER_TO_PARTY")
+        db.execSQL("DROP TABLE IF EXISTS $TABLE_PLAYER_TO_CHALLENGE")
+        db.execSQL("DROP TABLE IF EXISTS $TABLE_PARTIES")
+        db.execSQL("DROP TABLE IF EXISTS $TABLE_HISTORICS")
+        onCreate(db)
+    }
+
+    fun getDb(): SQLiteDatabase {
+        return db
+    }
+
+    private fun initializeChallengeTable() {
         // Script to create table.
         val script = "CREATE TABLE $TABLE_CHALLENGES(" +
                 "$COLUMN_ID INTEGER PRIMARY KEY," +
                 "$COLUMN_DESCRIPTION TEXT" +
                 ")"
         // Execute script.
-        this.db = db
         this.db.execSQL(script)
-        addChallenge("test challenge 1")
-        addChallenge("test challenge 2")
     }
 
-
-    override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
-        db.execSQL("DROP TABLE IF EXISTS $TABLE_CHALLENGES")
-        onCreate(db)
+    private fun initializePartyTable() {
+        // Script to create table.
+        val script = "CREATE TABLE $TABLE_PARTIES(" +
+                "$COLUMN_ID INTEGER PRIMARY KEY," +
+                "$COLUMN_DESCRIPTION TEXT, " +
+                "$COLUMN_STATE TEXT" +
+                ")"
+        // Execute script.
+        this.db.execSQL(script)
     }
 
-    fun addChallenge(description: String) {
-        val values = ContentValues()
-        values.put(COLUMN_DESCRIPTION, description)
-        db.insert(TABLE_CHALLENGES, null, values)
-        println("1 challenge added to database")
+    private fun initializePlayerTable() {
+        // Script to create table.
+        val script = "CREATE TABLE $TABLE_PLAYERS(" +
+                "$COLUMN_ID INTEGER PRIMARY KEY," +
+                "$COLUMN_NAME TEXT," +
+                "$COLUMN_PHONE TEXT," +
+                "$COLUMN_STATE TEXT" +
+                ")"
+        // Execute script.
+        this.db.execSQL(script)
     }
 
-    fun deleteChallengeById(id: Int) {
-        db.delete(TABLE_CHALLENGES, "id = $id", null)
+    private fun initializePlayerToChallengeTable() {
+        // Script to create table.
+        val script = "CREATE TABLE $TABLE_PLAYER_TO_CHALLENGE(" +
+                "$COLUMN_ID INTEGER PRIMARY KEY," +
+                "$COLUMN_CHALLENGE_ID INTEGER," +
+                "$COLUMN_TARGET_ID INTEGER" +
+                ")"
+        // Execute script.
+        this.db.execSQL(script)
     }
 
-    fun getAllChallenges(): List<Challenge> {
-        println("getAllChallenges")
-        val challenges = mutableListOf<Challenge>()
-        // Select All Query
-        val selectQuery = "SELECT  * FROM $TABLE_CHALLENGES"
-
-        val cursor = db.rawQuery(selectQuery, null)
-
-        // looping through all rows and adding to list
-        if (cursor.moveToFirst()) {
-            do {
-                val challenge = Challenge(cursor.getString(0).toInt(), cursor.getString(1))
-                challenges.add(challenge)
-            } while (cursor.moveToNext())
-        }
-        cursor.close()
-
-        // return note list
-        return challenges
+    private fun initializePlayerToPartyTable() {
+        // Script to create table.
+        val script = "CREATE TABLE $TABLE_PLAYER_TO_PARTY(" +
+                "$COLUMN_ID INTEGER PRIMARY KEY," +
+                "$COLUMN_PLAYER_ID INTEGER," +
+                "$COLUMN_PARTY_ID INTEGER" +
+                ")"
+        // Execute script.
+        this.db.execSQL(script)
     }
 }
