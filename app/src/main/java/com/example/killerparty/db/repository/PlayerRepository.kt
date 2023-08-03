@@ -2,6 +2,7 @@ package com.example.killerparty.db.repository
 
 import android.content.ContentValues
 import android.content.Context
+import com.example.killerparty.db.COLUMN_CHALLENGE_ID
 import com.example.killerparty.db.COLUMN_ID
 import com.example.killerparty.db.COLUMN_NAME
 import com.example.killerparty.db.COLUMN_PARTY_ID
@@ -10,6 +11,7 @@ import com.example.killerparty.db.COLUMN_PLAYER_ID
 import com.example.killerparty.db.COLUMN_STATE
 import com.example.killerparty.db.MyDatabaseHelper
 import com.example.killerparty.db.TABLE_PLAYERS
+import com.example.killerparty.db.TABLE_PLAYER_TO_CHALLENGE
 import com.example.killerparty.db.TABLE_PLAYER_TO_PARTY
 import com.example.killerparty.model.Party
 import com.example.killerparty.model.Player
@@ -19,22 +21,22 @@ class PlayerRepository(context: Context) {
 
     private val db = MyDatabaseHelper(context).getDb()
 
-    fun insertPlayer(name: String, phone: String, party: Party) {
+    fun insert(name: String, phone: String, party: Party) {
         val values = ContentValues()
         values.put(COLUMN_NAME, name)
         values.put(COLUMN_PHONE, phone)
         values.put(COLUMN_STATE, PlayerState.IN_LIFE.name)
         val playerId = db.insert(TABLE_PLAYERS, null, values)
-        insertPlayerToParty(playerId = playerId.toInt(), partyId = party.id)
+        insertToParty(playerId = playerId.toInt(), partyId = party.id)
         println("1 player added to database")
     }
 
-    fun deletePlayerById(id: Int) {
+    fun deleteById(id: Int) {
         db.delete(TABLE_PLAYERS, "$COLUMN_ID = $id", null)
         db.delete(TABLE_PLAYER_TO_PARTY, "$COLUMN_PLAYER_ID = $id", null)
     }
 
-    fun findAllPlayersFromParty(party: Party): List<Player> {
+    fun findAllFromParty(party: Party): List<Player> {
         val selectQuery = "SELECT p.$COLUMN_ID, p.$COLUMN_NAME, p.$COLUMN_PHONE, p.$COLUMN_STATE " +
                 "FROM $TABLE_PLAYER_TO_PARTY pp " +
                 "JOIN $TABLE_PLAYERS p on p.$COLUMN_ID = pp.$COLUMN_PLAYER_ID " +
@@ -61,7 +63,15 @@ class PlayerRepository(context: Context) {
         return players
     }
 
-    private fun insertPlayerToParty(playerId: Int, partyId: Int) {
+    fun giveChallenge(playerId: Int, challengeId: Int) {
+        val values = ContentValues()
+        values.put(COLUMN_PLAYER_ID, playerId)
+        values.put(COLUMN_CHALLENGE_ID, challengeId)
+        db.insert(TABLE_PLAYER_TO_CHALLENGE, null, values)
+        println("1 playerToChallenge added to database")
+    }
+
+    private fun insertToParty(playerId: Int, partyId: Int) {
         val values = ContentValues()
         values.put(COLUMN_PLAYER_ID, playerId)
         values.put(COLUMN_PARTY_ID, partyId)

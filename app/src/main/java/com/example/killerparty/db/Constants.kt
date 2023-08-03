@@ -1,7 +1,7 @@
 package com.example.killerparty.db
 
 const val DATABASE_NAME = "KillerParty"
-const val DATABASE_VERSION = 5
+const val DATABASE_VERSION = 6
 
 // Tables
 const val TABLE_CHALLENGES = "challenges"

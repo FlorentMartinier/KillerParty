@@ -38,7 +38,7 @@ class PartyFragment : Fragment() {
         val requiredContext = requireContext()
         partyService = PartyService(requiredContext)
         playerService = PlayerService(requiredContext)
-        party = partyService.findOrCreateNotStartedParty()
+        party = partyService.findOrCreate()
         fillAllPlayers()
 
         binding.players.apply {
@@ -73,6 +73,7 @@ class PartyFragment : Fragment() {
         }
 
         binding.beginPartyButton.setOnClickListener {
+            partyService.beginParty(party = party, players = players)
             Toast.makeText(context, "La partie commence", Toast.LENGTH_SHORT).show()
         }
 

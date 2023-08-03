@@ -2,6 +2,7 @@ package com.example.killerparty.db.repository
 
 import android.content.ContentValues
 import android.content.Context
+import com.example.killerparty.db.COLUMN_ID
 import com.example.killerparty.db.COLUMN_STATE
 import com.example.killerparty.db.MyDatabaseHelper
 import com.example.killerparty.db.TABLE_PARTIES
@@ -17,7 +18,7 @@ class PartyRepository(context: Context) {
      * Find the only not started party in database.
      * If none not started party exist, create one
      */
-    fun findOrCreateNotStartedParty(): Party {
+    fun findOrCreate(): Party {
         val selectQuery = "SELECT * " +
                 "FROM $TABLE_PARTIES " +
                 "WHERE $COLUMN_STATE = '${PartyState.NOT_STARTED.name}' "
@@ -26,7 +27,7 @@ class PartyRepository(context: Context) {
 
         // If none party exist, create one
         if (!cursor.moveToFirst()) {
-            insertPartyNotStarted()
+            insertNotStarted()
         }
         cursor.close()
 
@@ -44,7 +45,14 @@ class PartyRepository(context: Context) {
         return party
     }
 
-    private fun insertPartyNotStarted() {
+    fun modifyStateById(id: Int, partyState: PartyState) {
+        val values = ContentValues()
+        values.put(COLUMN_STATE, partyState.name)
+
+        db.update(TABLE_PARTIES, values, "$COLUMN_ID = $id", null)
+    }
+
+    private fun insertNotStarted() {
         val values = ContentValues()
         values.put(COLUMN_STATE, PartyState.NOT_STARTED.name)
         db.insert(TABLE_PARTIES, null, values)

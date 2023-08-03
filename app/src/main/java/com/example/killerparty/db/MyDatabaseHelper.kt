@@ -72,7 +72,8 @@ class MyDatabaseHelper(context: Context) :
         val script = "CREATE TABLE $TABLE_PLAYER_TO_CHALLENGE(" +
                 "$COLUMN_ID INTEGER PRIMARY KEY," +
                 "$COLUMN_CHALLENGE_ID INTEGER," +
-                "$COLUMN_TARGET_ID INTEGER" +
+                "$COLUMN_TARGET_ID INTEGER," +
+                "$COLUMN_STATE TEXT" +
                 ")"
         // Execute script.
         this.db.execSQL(script)

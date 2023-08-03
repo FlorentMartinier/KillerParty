@@ -8,8 +8,11 @@ import com.example.killerparty.model.Player
 class PlayerService(context: Context) {
     private val playerRepository = PlayerRepository(context)
 
+    /**
+     * Insert player in DB and create put it in the current party
+     */
     fun insertPlayer(name: String, phone: String, party: Party) {
-        playerRepository.insertPlayer(
+        playerRepository.insert(
             name = name,
             phone = phone,
             party = party,
@@ -17,10 +20,10 @@ class PlayerService(context: Context) {
     }
 
     fun deletePlayerById(id: Int) {
-        playerRepository.deletePlayerById(id)
+        playerRepository.deleteById(id)
     }
 
     fun findAllPlayersFromParty(party: Party): List<Player> {
-        return playerRepository.findAllPlayersFromParty(party)
+        return playerRepository.findAllFromParty(party)
     }
 }
