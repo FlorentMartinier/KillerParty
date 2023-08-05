@@ -12,18 +12,18 @@ class ChallengeRepository(context: Context) {
 
     private val db = MyDatabaseHelper(context).getDb()
 
-    fun insertChallenge(description: String) {
+    fun insert(description: String) {
         val values = ContentValues()
         values.put(COLUMN_DESCRIPTION, description)
         db.insert(TABLE_CHALLENGES, null, values)
         println("1 challenge added to database")
     }
 
-    fun deleteChallengeById(id: Int) {
+    fun deleteById(id: Int) {
         db.delete(TABLE_CHALLENGES, "$COLUMN_ID = $id", null)
     }
 
-    fun findAllChallenges(): List<Challenge> {
+    fun findAll(): List<Challenge> {
         val challenges = mutableListOf<Challenge>()
         val selectQuery = "SELECT  * FROM $TABLE_CHALLENGES"
 

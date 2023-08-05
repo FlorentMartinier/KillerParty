@@ -20,10 +20,18 @@ class PartyService(context: Context) {
         return partyRepository.findOrCreate()
     }
 
+    fun findAll(): List<Party> {
+        return partyRepository.findAll()
+    }
+
     fun beginParty(party: Party, players: List<Player>) {
         partyRepository.modifyStateById(party.id, PartyState.IN_PROGRESS)
         giveChallengeToPlayers(players)
         // Envoyer un sms à tous les joueurs
+    }
+
+    fun findPlayers(history: Party) {
+        playerRepository.findAllFromParty(history)
     }
 
     /**
@@ -31,7 +39,7 @@ class PartyService(context: Context) {
      */
     private fun giveChallengeToPlayers(players: List<Player>) {
         val availableChallenges: MutableList<Challenge> = mutableListOf()
-        availableChallenges.addAll(challengeRepository.findAllChallenges())
+        availableChallenges.addAll(challengeRepository.findAll())
         players.forEach {
             val randomIndex = Random.nextInt(availableChallenges.size)
             val randomChallenge = availableChallenges[randomIndex]

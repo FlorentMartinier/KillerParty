@@ -35,7 +35,7 @@ class ChallengesFragment : Fragment() {
             layoutManager = LinearLayoutManager(context)
             val adapter = ChallengeViewAdapter(challenges, context)
             adapter.onChallengeRemoved = {
-                challengeService.deleteChallengeById(it.id)
+                challengeService.deleteById(it.id)
                 challenges.remove(it)
                 adapter.notifyDataSetChanged()
             }
@@ -51,7 +51,7 @@ class ChallengesFragment : Fragment() {
                 if (requestKey == CHALLENGE_DESCRIPTION && !bundle.getString(CHALLENGE_DESCRIPTION)
                         .isNullOrEmpty()
                 ) {
-                    challengeService.insertChallenge(bundle.getString(CHALLENGE_DESCRIPTION)!!)
+                    challengeService.insert(bundle.getString(CHALLENGE_DESCRIPTION)!!)
                     fillAllChallenges()
                 }
             }
@@ -62,7 +62,7 @@ class ChallengesFragment : Fragment() {
 
     private fun fillAllChallenges() {
         challenges.clear()
-        challenges.addAll(challengeService.findAllChallenges())
+        challenges.addAll(challengeService.findAll())
     }
 
 }

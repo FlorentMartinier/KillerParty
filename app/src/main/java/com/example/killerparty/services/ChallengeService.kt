@@ -7,15 +7,15 @@ import com.example.killerparty.model.Challenge
 class ChallengeService(context: Context) {
     private val challengeRepository = ChallengeRepository(context)
 
-    fun insertChallenge(description: String) {
-        challengeRepository.insertChallenge(description)
+    fun insert(description: String) {
+        challengeRepository.insert(description)
     }
 
-    fun deleteChallengeById(id: Int) {
-        challengeRepository.deleteChallengeById(id)
+    fun deleteById(id: Int) {
+        challengeRepository.deleteById(id)
     }
 
-    fun findAllChallenges(): List<Challenge> {
-        return challengeRepository.findAllChallenges()
+    fun findAll(): List<Challenge> {
+        return challengeRepository.findAll()
     }
 }

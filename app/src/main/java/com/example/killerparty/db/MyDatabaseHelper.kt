@@ -26,7 +26,6 @@ class MyDatabaseHelper(context: Context) :
         db.execSQL("DROP TABLE IF EXISTS $TABLE_PLAYER_TO_PARTY")
         db.execSQL("DROP TABLE IF EXISTS $TABLE_PLAYER_TO_CHALLENGE")
         db.execSQL("DROP TABLE IF EXISTS $TABLE_PARTIES")
-        db.execSQL("DROP TABLE IF EXISTS $TABLE_HISTORICS")
         onCreate(db)
     }
 
@@ -48,8 +47,9 @@ class MyDatabaseHelper(context: Context) :
         // Script to create table.
         val script = "CREATE TABLE $TABLE_PARTIES(" +
                 "$COLUMN_ID INTEGER PRIMARY KEY," +
-                "$COLUMN_DESCRIPTION TEXT, " +
-                "$COLUMN_STATE TEXT" +
+                "$COLUMN_DATE DATE, " +
+                "$COLUMN_STATE TEXT, " +
+                "$COLUMN_WINNER TEXT" +
                 ")"
         // Execute script.
         this.db.execSQL(script)
