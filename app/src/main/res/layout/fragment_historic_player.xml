@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/state"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal">
@@ -16,29 +18,29 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/playerName"
+                android:id="@+id/player_name"
                 android:layout_weight="1"
                 android:layout_height="fill_parent"
                 android:layout_width="0dp"
-                android:gravity="center" />
-
-            <TextView
-                android:id="@+id/phone"
-                android:layout_height="fill_parent"
-                android:layout_width="0dp"
-                android:layout_weight="1"
                 android:gravity="center"/>
 
-            <ImageView
-                android:id="@+id/delete_icon"
-                android:layout_weight="0.4"
+            <TextView
+                android:id="@+id/player_state"
+                android:layout_weight="1"
                 android:layout_height="fill_parent"
                 android:layout_width="0dp"
-                app:srcCompat="@android:drawable/btn_dialog" />
+                android:gravity="center"/>
+
+            <Button
+                android:id="@+id/button_kill"
+                android:layout_weight="1"
+                android:layout_height="fill_parent"
+                android:layout_width="0dp"
+                tools:text="Kill"
+                android:gravity="center"/>
 
         </LinearLayout>
 

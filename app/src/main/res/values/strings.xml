@@ -14,4 +14,11 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="begin_party">Begin party</string>
+    <string name="party_date">Date : %1$s</string>
+    <string name="party_state">State : %1$s</string>
+    <string name="party_state_not_started">Not started</string>
+    <string name="party_state_in_progress">In progress</string>
+    <string name="party_state_ended">Ended</string>
+    <string name="winner">Winner: %1$s</string>
+    <string name="no_winner_yet">No winner yet !</string>
 </resources>

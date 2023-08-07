@@ -30,8 +30,8 @@ class PartyService(context: Context) {
         // Envoyer un sms à tous les joueurs
     }
 
-    fun findPlayers(history: Party) {
-        playerRepository.findAllFromParty(history)
+    fun findPlayers(history: Party): List<Player> {
+        return playerRepository.findAllFromParty(history)
     }
 
     /**

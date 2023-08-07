@@ -9,11 +9,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.killerparty.databinding.FragmentHistoricsBinding
 import com.example.killerparty.model.Party
 import com.example.killerparty.services.PartyService
+import com.example.killerparty.services.PlayerService
 
 class HistoricsFragment : Fragment() {
 
     private lateinit var binding: FragmentHistoricsBinding
     private lateinit var partyService: PartyService
+    private lateinit var playerService: PlayerService
 
     private val histories: MutableList<Party> = mutableListOf()
 
@@ -24,13 +26,19 @@ class HistoricsFragment : Fragment() {
     ): View {
         binding = FragmentHistoricsBinding.inflate(inflater, container, false)
         partyService = PartyService(requireContext())
-        histories.addAll(partyService.findAll())
+        playerService = PlayerService(requireContext())
+        fillParties()
 
         binding.historics.apply {
             layoutManager = LinearLayoutManager(context)
-            val adapter = HistoricViewAdapter(histories, context, partyService)
+            val adapter = HistoricViewAdapter(histories, context, partyService, playerService)
             this.adapter = adapter
         }
         return binding.root
+    }
+
+    private fun fillParties() {
+        histories.clear()
+        histories.addAll(partyService.findAll())
     }
 }

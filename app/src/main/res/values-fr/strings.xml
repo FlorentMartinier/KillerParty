@@ -14,4 +14,11 @@
     <string name="yes">Oui</string>
     <string name="no">Non</string>
     <string name="begin_party">Commencer la partie</string>
+    <string name="party_date">Date : %1$s</string>
+    <string name="party_state">Etat : %1$s</string>
+    <string name="party_state_not_started">Pas encore commencée</string>
+    <string name="party_state_in_progress">En cours</string>
+    <string name="party_state_ended">Terminée</string>
+    <string name="winner">Gagnant: %1$s</string>
+    <string name="no_winner_yet">Pas encore de gagnant !</string>
 </resources>

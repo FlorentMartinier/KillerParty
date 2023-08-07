@@ -21,7 +21,13 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/partyState"
+                android:id="@+id/date"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center" />
+
+            <TextView
+                android:id="@+id/party_state"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center" />
@@ -29,7 +35,8 @@
             <TextView
                 android:id="@+id/winner"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:gravity="center" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/playerList"
