@@ -1,6 +1,7 @@
 package com.example.killerparty.services
 
 import android.content.Context
+import android.widget.Toast
 import com.example.killerparty.db.repository.ChallengeRepository
 import com.example.killerparty.db.repository.PartyRepository
 import com.example.killerparty.db.repository.PlayerRepository
@@ -25,9 +26,23 @@ class PartyService(context: Context) {
     }
 
     fun beginParty(party: Party, players: List<Player>) {
-        partyRepository.modifyStateById(party.id, PartyState.IN_PROGRESS)
         giveChallengeToPlayers(players)
-        // Envoyer un sms à tous les joueurs
+        partyRepository.modifyStateById(party.id, PartyState.IN_PROGRESS)
+        // TODO : Envoyer un sms à tous les joueurs
+    }
+
+    fun canBeginParty(context: Context, party: Party): Boolean {
+        val players = findPlayers(party)
+        val challenges = challengeRepository.findAll()
+        return if(players.size < 2) {
+            Toast.makeText(context, "Le nombre de joueur n'est pas suffisant !", Toast.LENGTH_SHORT).show()
+            false
+        } else if(challenges.size < players.size) {
+            Toast.makeText(context, "Il y a plus de joueurs que de défis !", Toast.LENGTH_SHORT).show()
+            false
+        } else {
+            true
+        }
     }
 
     fun findPlayers(history: Party): List<Player> {

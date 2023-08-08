@@ -73,8 +73,10 @@ class PartyFragment : Fragment() {
         }
 
         binding.beginPartyButton.setOnClickListener {
-            partyService.beginParty(party = party, players = players)
-            Toast.makeText(context, "La partie commence", Toast.LENGTH_SHORT).show()
+            if (partyService.canBeginParty(requiredContext, party)) {
+                partyService.beginParty(party = party, players = players)
+                Toast.makeText(context, "La partie commence", Toast.LENGTH_SHORT).show()
+            }
         }
 
         return binding.root

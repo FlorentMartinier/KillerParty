@@ -18,9 +18,7 @@ class HistoricViewHolder(
 ) : RecyclerView.ViewHolder(fragmentHistoricBinding.root) {
 
     fun bindHistory(party: Party) {
-        // TODO : lister tous les joueurs en lice dans la party
-        // Créer un bouton permettant de killer un joueur
-        // quand un joueur est killé, un sms est envoyé au killer pour définir sa nouvelle cible.
+        // TODO : quand un joueur est killé, un sms est envoyé au killer pour définir sa nouvelle cible.
         val players = partyService.findPlayers(party)
         val resources = context.resources
         val winner = party.winner ?: resources.getString(R.string.no_winner_yet)
