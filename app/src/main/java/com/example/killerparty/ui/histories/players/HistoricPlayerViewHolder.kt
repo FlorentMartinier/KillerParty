@@ -7,14 +7,17 @@ import com.example.killerparty.model.Player
 import com.example.killerparty.services.PlayerService
 
 class HistoricPlayerViewHolder(
-    private val fragmentHistoricBinding: FragmentHistoricPlayerBinding,
+    private val binding: FragmentHistoricPlayerBinding,
     private val context: Context,
     private val playerService: PlayerService,
-) : RecyclerView.ViewHolder(fragmentHistoricBinding.root) {
+) : RecyclerView.ViewHolder(binding.root) {
 
     fun bindPlayer(player: Player) {
-        fragmentHistoricBinding.playerName.text = player.name
-        fragmentHistoricBinding.playerState.text = player.state.name
+        binding.playerName.text = player.name
+        binding.playerState.text = player.state.name
+        binding.buttonKill.setOnClickListener {
+            playerService.killPlayer(player)
+        }
     }
 
 }

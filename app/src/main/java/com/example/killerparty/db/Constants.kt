@@ -1,7 +1,7 @@
 package com.example.killerparty.db
 
 const val DATABASE_NAME = "KillerParty"
-const val DATABASE_VERSION = 7
+const val DATABASE_VERSION = 9
 
 // Tables
 const val TABLE_CHALLENGES = "challenges"
@@ -17,6 +17,7 @@ const val COLUMN_NAME = "name"
 const val COLUMN_PHONE = "phone"
 const val COLUMN_STATE = "state"
 const val COLUMN_CHALLENGE_ID = "challenge_id"
+const val COLUMN_KILLER_ID = "killer_id"
 const val COLUMN_TARGET_ID = "target_id"
 const val COLUMN_PLAYER_ID = "player_id"
 const val COLUMN_PARTY_ID = "party_id"

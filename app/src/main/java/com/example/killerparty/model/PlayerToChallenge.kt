@@ -4,7 +4,8 @@ import com.example.killerparty.model.enums.PlayerToChallengeState
 
 data class PlayerToChallenge(
     val id: Int,
-    val challenge: Challenge,
-    val target: Player,
+    val challengeId: Int,
+    val killerId: Int,
+    val targetId: Int,
     val state: PlayerToChallengeState,
 )

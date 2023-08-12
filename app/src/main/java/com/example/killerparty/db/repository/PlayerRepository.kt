@@ -2,13 +2,16 @@ package com.example.killerparty.db.repository
 
 import android.content.ContentValues
 import android.content.Context
+import android.database.Cursor
 import com.example.killerparty.db.COLUMN_CHALLENGE_ID
 import com.example.killerparty.db.COLUMN_ID
+import com.example.killerparty.db.COLUMN_KILLER_ID
 import com.example.killerparty.db.COLUMN_NAME
 import com.example.killerparty.db.COLUMN_PARTY_ID
 import com.example.killerparty.db.COLUMN_PHONE
 import com.example.killerparty.db.COLUMN_PLAYER_ID
 import com.example.killerparty.db.COLUMN_STATE
+import com.example.killerparty.db.COLUMN_TARGET_ID
 import com.example.killerparty.db.MyDatabaseHelper
 import com.example.killerparty.db.TABLE_PLAYERS
 import com.example.killerparty.db.TABLE_PLAYER_TO_CHALLENGE
@@ -16,6 +19,7 @@ import com.example.killerparty.db.TABLE_PLAYER_TO_PARTY
 import com.example.killerparty.model.Party
 import com.example.killerparty.model.Player
 import com.example.killerparty.model.enums.PlayerState
+import java.lang.Exception
 
 class PlayerRepository(context: Context) {
 
@@ -42,9 +46,35 @@ class PlayerRepository(context: Context) {
                 "JOIN $TABLE_PLAYERS p on p.$COLUMN_ID = pp.$COLUMN_PLAYER_ID " +
                 "WHERE pp.$COLUMN_PARTY_ID = ${party.id} "
 
-        val players = mutableListOf<Player>()
-        val cursor = db.rawQuery(selectQuery, null)
+        return mapQueryToPlayers(selectQuery)
+    }
 
+    fun findKillerOf(player: Player): Player {
+        val selectQuery = "SELECT p.$COLUMN_ID, p.$COLUMN_NAME, p.$COLUMN_PHONE, p.$COLUMN_STATE " +
+                "FROM $TABLE_PLAYER_TO_CHALLENGE pc " +
+                "JOIN $TABLE_PLAYERS p on p.$COLUMN_ID=pc.$COLUMN_KILLER_ID " +
+                "WHERE pc.$COLUMN_TARGET_ID = ${player.id} "
+
+        val players = mapQueryToPlayers(selectQuery)
+        return if (players.isEmpty()) {
+            throw Exception("Le joueur ${player.name} ne possède pas de killer, ce n'est pas normal.")
+        } else {
+            players.first()
+        }
+    }
+
+    fun kill(player: Player) {
+        val updateQuery = "UPDATE $TABLE_PLAYERS " +
+                "SET $COLUMN_STATE='${PlayerState.KILLED}' " +
+                "WHERE $COLUMN_ID='${player.id}'"
+
+        val cursor = db.rawQuery(updateQuery, null)
+        cursor.close()
+    }
+
+    private fun mapQueryToPlayers(query: String): List<Player> {
+        val cursor = db.rawQuery(query, null)
+        val players = mutableListOf<Player>()
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
             do {
@@ -58,17 +88,7 @@ class PlayerRepository(context: Context) {
             } while (cursor.moveToNext())
         }
         cursor.close()
-
-        // return note list
         return players
-    }
-
-    fun giveChallenge(playerId: Int, challengeId: Int) {
-        val values = ContentValues()
-        values.put(COLUMN_PLAYER_ID, playerId)
-        values.put(COLUMN_CHALLENGE_ID, challengeId)
-        db.insert(TABLE_PLAYER_TO_CHALLENGE, null, values)
-        println("1 playerToChallenge added to database")
     }
 
     private fun insertToParty(playerId: Int, partyId: Int) {
