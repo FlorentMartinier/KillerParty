@@ -40,5 +40,6 @@ class HistoricsFragment : Fragment() {
     private fun fillParties() {
         histories.clear()
         histories.addAll(partyService.findAllBegan())
+        histories.sortByDescending { it.id }
     }
 }

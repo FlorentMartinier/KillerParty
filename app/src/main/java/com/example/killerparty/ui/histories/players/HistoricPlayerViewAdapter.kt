@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.killerparty.databinding.FragmentHistoricPlayerBinding
 import com.example.killerparty.model.Player
+import com.example.killerparty.model.enums.PlayerState
 import com.example.killerparty.services.PlayerService
 
 class HistoricPlayerViewAdapter(
@@ -22,7 +23,10 @@ class HistoricPlayerViewAdapter(
     }
 
     override fun onBindViewHolder(holder: HistoricPlayerViewHolder, position: Int) {
-        holder.bindPlayer(players[position])
+        val player = players[position]
+        val isInLife = player.state == PlayerState.IN_LIFE
+        val lastOneIneLife = players.filter { it.state == PlayerState.IN_LIFE }.size == 1
+        holder.bindPlayer(player, isInLife && !lastOneIneLife)
         holder.onPlayerKilled = {
             this.onPlayerKilled.invoke(it)
         }

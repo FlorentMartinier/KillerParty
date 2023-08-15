@@ -6,11 +6,13 @@ import com.example.killerparty.db.COLUMN_CHALLENGE_ID
 import com.example.killerparty.db.COLUMN_DESCRIPTION
 import com.example.killerparty.db.COLUMN_ID
 import com.example.killerparty.db.COLUMN_KILLER_ID
+import com.example.killerparty.db.COLUMN_STATE
 import com.example.killerparty.db.MyDatabaseHelper
 import com.example.killerparty.db.TABLE_CHALLENGES
 import com.example.killerparty.db.TABLE_PLAYER_TO_CHALLENGE
 import com.example.killerparty.model.Challenge
 import com.example.killerparty.model.Player
+import com.example.killerparty.model.enums.PlayerToChallengeState
 
 class ChallengeRepository(context: Context) {
 
@@ -32,11 +34,11 @@ class ChallengeRepository(context: Context) {
         return mapQueryToChallenges(selectQuery)
     }
 
-    fun findFromPlayer(player: Player): Challenge {
+    fun findActiveFromPlayer(player: Player): Challenge {
         val query = "SELECT c.$COLUMN_ID, c.$COLUMN_DESCRIPTION " +
                 "FROM $TABLE_CHALLENGES c " +
                 "JOIN $TABLE_PLAYER_TO_CHALLENGE pc on c.$COLUMN_ID = pc.$COLUMN_CHALLENGE_ID " +
-                "WHERE pc.$COLUMN_KILLER_ID = '${player.id}'"
+                "WHERE pc.$COLUMN_KILLER_ID = '${player.id}' AND pc.$COLUMN_STATE='${PlayerToChallengeState.IN_PROGRESS}'"
 
         return mapQueryToChallenges(query).first()
     }

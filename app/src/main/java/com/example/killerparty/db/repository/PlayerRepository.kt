@@ -18,6 +18,7 @@ import com.example.killerparty.db.executeUpdateQuery
 import com.example.killerparty.model.Party
 import com.example.killerparty.model.Player
 import com.example.killerparty.model.enums.PlayerState
+import com.example.killerparty.model.enums.PlayerToChallengeState
 
 class PlayerRepository(context: Context) {
 
@@ -64,8 +65,8 @@ class PlayerRepository(context: Context) {
     fun findTargetOf(player: Player): Player {
         val selectQuery = "SELECT p.$COLUMN_ID, p.$COLUMN_NAME, p.$COLUMN_PHONE, p.$COLUMN_STATE " +
                 "FROM $TABLE_PLAYER_TO_CHALLENGE pc " +
-                "JOIN $TABLE_PLAYERS p on p.$COLUMN_ID=pc.$COLUMN_KILLER_ID " +
-                "WHERE pc.$COLUMN_KILLER_ID = ${player.id} "
+                "JOIN $TABLE_PLAYERS p on p.$COLUMN_ID=pc.${COLUMN_TARGET_ID} " +
+                "WHERE pc.$COLUMN_KILLER_ID=${player.id} AND pc.$COLUMN_STATE='${PlayerToChallengeState.IN_PROGRESS}'"
 
         val players = mapQueryToPlayers(selectQuery)
         return if (players.isEmpty()) {

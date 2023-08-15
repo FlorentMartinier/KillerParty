@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/state"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -22,25 +21,25 @@
 
             <TextView
                 android:id="@+id/player_name"
-                android:layout_weight="1"
-                android:layout_height="fill_parent"
                 android:layout_width="0dp"
-                android:gravity="center"/>
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:gravity="center" />
 
             <TextView
                 android:id="@+id/player_state"
-                android:layout_weight="1"
-                android:layout_height="fill_parent"
                 android:layout_width="0dp"
-                android:gravity="center"/>
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:gravity="center" />
 
-            <Button
+            <ImageView
                 android:id="@+id/button_kill"
-                android:layout_weight="1"
-                android:layout_height="fill_parent"
+                android:layout_margin="4dp"
                 android:layout_width="0dp"
-                tools:text="Kill"
-                android:gravity="center"/>
+                android:layout_height="fill_parent"
+                android:layout_weight="0.3"
+                app:srcCompat="@drawable/ic_target_enable" />
 
         </LinearLayout>
 

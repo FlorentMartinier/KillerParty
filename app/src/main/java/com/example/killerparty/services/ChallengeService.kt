@@ -20,7 +20,7 @@ class ChallengeService(context: Context) {
         return challengeRepository.findAll()
     }
 
-    fun findFromPlayer(player: Player): Challenge {
-        return challengeRepository.findFromPlayer(player)
+    fun findActiveFromPlayer(player: Player): Challenge {
+        return challengeRepository.findActiveFromPlayer(player)
     }
 }

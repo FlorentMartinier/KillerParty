@@ -24,4 +24,11 @@
     <string name="kill_confirmation">Êtes-vous sûr de killer %1$s ?</string>
     <string name="player_killed">Killé</string>
     <string name="player_in_life">En jeu</string>
+    <string name="not_enought_players">Le nombre de joueur n\'est pas suffisant !</string>
+    <string name="not_enought_challenges">Il y a plus de joueurs que de défis !</string>
+    <string name="sms_challenge_init">La partie de Killer vient de commencer. Voici les informations qui vous concernent :\nVotre cible : %1$s\nDéfi que vous devez lui faire réaliser : %2$s</string>
+    <string name="sms_kill_player">Bravo, vous avez killé %1$s !\nVoici votre nouvelle cible : %2$s\nNouveau défi : %3$s</string>
+    <string name="invalid_fields">Des champs sont invalides</string>
+    <string name="begin_party_confirmation">Êtes-vous sûr de commencer la partie ? Cela engendrera l\'envoi de %1$s SMS aux différents joueurs.</string>
+    <string name="party_beginning">La partie commence</string>
 </resources>

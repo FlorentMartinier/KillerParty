@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.killerparty.R
 import com.example.killerparty.databinding.FragmentPartyBinding
 import com.example.killerparty.model.Party
 import com.example.killerparty.model.Player
@@ -18,6 +19,7 @@ import com.example.killerparty.ui.dialogs.AddPlayerDialogFragment
 import com.example.killerparty.utils.PLAYER_DESCRIPTION
 import com.example.killerparty.utils.PLAYER_NAME
 import com.example.killerparty.utils.PLAYER_PHONE
+import com.example.killerparty.utils.showConfirmationDialog
 
 class PartyFragment : Fragment() {
 
@@ -71,7 +73,11 @@ class PartyFragment : Fragment() {
                     )
                     fillAllPlayers()
                 } else {
-                    Toast.makeText(context, "Des champs sont invalides", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        context,
+                        resources.getString(R.string.invalid_fields),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
             dialog.show(activity?.supportFragmentManager!!, "")
@@ -79,8 +85,21 @@ class PartyFragment : Fragment() {
 
         binding.beginPartyButton.setOnClickListener {
             if (partyService.canBeginParty(requiredContext, party)) {
-                partyService.beginParty(party = party, players = players)
-                Toast.makeText(context, "La partie commence", Toast.LENGTH_SHORT).show()
+                showConfirmationDialog(
+                    context = requiredContext,
+                    confirmationMessage = resources.getString(
+                        R.string.begin_party_confirmation,
+                        players.size.toString()
+                    ),
+                    function = {
+                        partyService.beginParty(party = party, players = players)
+                        Toast.makeText(
+                            context,
+                            resources.getString(R.string.party_beginning),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                )
             }
         }
 

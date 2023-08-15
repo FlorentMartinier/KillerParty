@@ -13,7 +13,6 @@ class SmsService(
         try {
             val smsManager: SmsManager = SmsManager.getDefault()
             smsManager.sendTextMessage(phoneNo, null, msg, null, null)
-            Toast.makeText(context, "Message Sent", Toast.LENGTH_LONG).show()
         } catch (ex: Exception) {
             Toast.makeText(context, ex.message.toString(), Toast.LENGTH_LONG).show()
             ex.printStackTrace()
