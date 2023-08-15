@@ -41,7 +41,7 @@ class PlayerToChallengeRepository(context: Context) {
     fun modifyChallengeKiller(actualKiller: Player, newKiller: Player) {
         val updateQuery = "UPDATE $TABLE_PLAYER_TO_CHALLENGE " +
                 "SET $COLUMN_KILLER_ID='${newKiller.id}' " +
-                "WHERE $COLUMN_KILLER_ID=${actualKiller.id}"
+                "WHERE $COLUMN_KILLER_ID='${actualKiller.id}'"
 
         executeUpdateQuery(db, updateQuery)
     }

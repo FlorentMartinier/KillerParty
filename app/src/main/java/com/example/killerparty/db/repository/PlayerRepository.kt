@@ -61,6 +61,20 @@ class PlayerRepository(context: Context) {
         }
     }
 
+    fun findTargetOf(player: Player): Player {
+        val selectQuery = "SELECT p.$COLUMN_ID, p.$COLUMN_NAME, p.$COLUMN_PHONE, p.$COLUMN_STATE " +
+                "FROM $TABLE_PLAYER_TO_CHALLENGE pc " +
+                "JOIN $TABLE_PLAYERS p on p.$COLUMN_ID=pc.$COLUMN_KILLER_ID " +
+                "WHERE pc.$COLUMN_KILLER_ID = ${player.id} "
+
+        val players = mapQueryToPlayers(selectQuery)
+        return if (players.isEmpty()) {
+            throw Exception("Le joueur ${player.name} ne possède pas de target, ce n'est pas normal.")
+        } else {
+            players.first()
+        }
+    }
+
     fun kill(player: Player) {
         val updateQuery = "UPDATE $TABLE_PLAYERS " +
                 "SET $COLUMN_STATE='${PlayerState.KILLED}' " +
