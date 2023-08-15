@@ -17,3 +17,17 @@ fun <T> showDeleteConfirmationDialog(context: Context, itemToRemove: T, function
     val alert = builder.create()
     alert.show()
 }
+
+fun <T> showConfirmationDialog(context: Context, confirmationMessage: String, function: (T) -> Unit, params: T) {
+    val builder = AlertDialog.Builder(context)
+    builder.setMessage(confirmationMessage)
+        .setCancelable(false)
+        .setPositiveButton(R.string.yes) { _, _ ->
+            function.invoke(params)
+        }
+        .setNegativeButton(R.string.no) { dialog, _ ->
+            dialog.dismiss()
+        }
+    val alert = builder.create()
+    alert.show()
+}

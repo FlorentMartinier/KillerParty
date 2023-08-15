@@ -7,5 +7,5 @@ data class Party(
     val id: Int,
     val date: LocalDate? = LocalDate.now(),
     val state: PartyState = PartyState.NOT_STARTED,
-    val winner: String? = null,
+    var winner: String? = null,
 )

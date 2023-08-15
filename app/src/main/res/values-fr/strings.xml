@@ -21,4 +21,7 @@
     <string name="party_state_ended">Terminée</string>
     <string name="winner">Gagnant: %1$s</string>
     <string name="no_winner_yet">Pas encore de gagnant !</string>
+    <string name="kill_confirmation">Êtes-vous sûr de killer %1$s ?</string>
+    <string name="player_killed">Killé</string>
+    <string name="player_in_life">En jeu</string>
 </resources>

@@ -1,7 +1,12 @@
 package com.example.killerparty.services
 
 import android.content.Context
+import android.telephony.PhoneNumberUtils
 import android.widget.Toast
+import com.example.killerparty.db.COLUMN_ID
+import com.example.killerparty.db.COLUMN_WINNER
+import com.example.killerparty.db.TABLE_PARTIES
+import com.example.killerparty.db.executeUpdateQuery
 import com.example.killerparty.db.repository.ChallengeRepository
 import com.example.killerparty.db.repository.PartyRepository
 import com.example.killerparty.db.repository.PlayerRepository
@@ -18,25 +23,25 @@ class PartyService(context: Context) {
     private val challengeRepository = ChallengeRepository(context)
     private val playerRepository = PlayerRepository(context)
     private val playerToChallengeRepository = PlayerToChallengeRepository(context)
+    private val smsService = SmsService(context)
 
     fun findOrCreate(): Party {
         return partyRepository.findOrCreate()
     }
 
-    fun findAll(): List<Party> {
-        return partyRepository.findAll()
+    fun findAllBegan(): List<Party> {
+        return partyRepository.findAll().filter { it.state != PartyState.NOT_STARTED }
     }
 
     fun beginParty(party: Party, players: List<Player>) {
         giveChallengeToPlayers(players)
         partyRepository.modifyStateById(party.id, PartyState.IN_PROGRESS)
-        // TODO : Envoyer un sms à tous les joueurs
     }
 
     fun canBeginParty(context: Context, party: Party): Boolean {
         val players = findPlayers(party)
         val challenges = challengeRepository.findAll()
-        return if (players.size < 2) {
+        return if (players.size < 3) {
             Toast.makeText(context, "Le nombre de joueur n'est pas suffisant !", Toast.LENGTH_SHORT)
                 .show()
             false
@@ -51,6 +56,10 @@ class PartyService(context: Context) {
 
     fun findPlayers(history: Party): List<Player> {
         return playerRepository.findAllFromParty(history)
+    }
+
+    fun declareWinner(player: Player, party: Party) {
+        partyRepository.declareWinner(player, party)
     }
 
     /**
@@ -76,6 +85,8 @@ class PartyService(context: Context) {
                 randomTarget = availableTargets[randomTargetIndex]
             }
             availableTargets.remove(randomTarget)
+
+            smsService.sendSMS(it.phone, "Cible : ${randomTarget.name} \nDéfi : ${randomChallenge.description}")
 
             playerToChallengeRepository.insert(it.id, randomTarget.id, randomChallenge.id)
         }

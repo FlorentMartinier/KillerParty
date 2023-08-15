@@ -1,6 +1,7 @@
 package com.example.killerparty.services
 
 import android.content.Context
+import android.telephony.PhoneNumberUtils
 import android.widget.Toast
 import com.example.killerparty.db.repository.PlayerRepository
 import com.example.killerparty.db.repository.PlayerToChallengeRepository
@@ -38,7 +39,5 @@ class PlayerService(
         val killer = playerRepository.findKillerOf(player)
         playerToChallengeRepository.achieveChallengeWithTarget(player)
         playerToChallengeRepository.modifyChallengeKiller(player, killer)
-        Toast.makeText(context, "joueur killé : ${player.name}; Killer : ${killer.name}", Toast.LENGTH_SHORT)
-            .show()
     }
 }

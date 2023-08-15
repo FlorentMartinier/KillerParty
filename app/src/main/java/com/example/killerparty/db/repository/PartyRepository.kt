@@ -5,9 +5,12 @@ import android.content.Context
 import com.example.killerparty.db.COLUMN_DATE
 import com.example.killerparty.db.COLUMN_ID
 import com.example.killerparty.db.COLUMN_STATE
+import com.example.killerparty.db.COLUMN_WINNER
 import com.example.killerparty.db.MyDatabaseHelper
 import com.example.killerparty.db.TABLE_PARTIES
+import com.example.killerparty.db.executeUpdateQuery
 import com.example.killerparty.model.Party
+import com.example.killerparty.model.Player
 import com.example.killerparty.model.enums.PartyState
 import java.time.LocalDate
 
@@ -85,5 +88,13 @@ class PartyRepository(context: Context) {
         values.put(COLUMN_DATE, LocalDate.now().toString())
         db.insert(TABLE_PARTIES, null, values)
         println("1 party added to database")
+    }
+
+    fun declareWinner(player: Player, party: Party) {
+        val updateQuery = "UPDATE $TABLE_PARTIES " +
+                "SET $COLUMN_WINNER='${player.name}' " +
+                "WHERE $COLUMN_ID='${party.id}'"
+
+        executeUpdateQuery(db, updateQuery)
     }
 }

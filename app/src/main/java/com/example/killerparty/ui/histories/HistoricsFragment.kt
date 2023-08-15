@@ -39,6 +39,6 @@ class HistoricsFragment : Fragment() {
 
     private fun fillParties() {
         histories.clear()
-        histories.addAll(partyService.findAll())
+        histories.addAll(partyService.findAllBegan())
     }
 }

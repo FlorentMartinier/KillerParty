@@ -2,8 +2,6 @@ package com.example.killerparty.db.repository
 
 import android.content.ContentValues
 import android.content.Context
-import android.database.Cursor
-import com.example.killerparty.db.COLUMN_CHALLENGE_ID
 import com.example.killerparty.db.COLUMN_ID
 import com.example.killerparty.db.COLUMN_KILLER_ID
 import com.example.killerparty.db.COLUMN_NAME
@@ -16,10 +14,10 @@ import com.example.killerparty.db.MyDatabaseHelper
 import com.example.killerparty.db.TABLE_PLAYERS
 import com.example.killerparty.db.TABLE_PLAYER_TO_CHALLENGE
 import com.example.killerparty.db.TABLE_PLAYER_TO_PARTY
+import com.example.killerparty.db.executeUpdateQuery
 import com.example.killerparty.model.Party
 import com.example.killerparty.model.Player
 import com.example.killerparty.model.enums.PlayerState
-import java.lang.Exception
 
 class PlayerRepository(context: Context) {
 
@@ -66,10 +64,9 @@ class PlayerRepository(context: Context) {
     fun kill(player: Player) {
         val updateQuery = "UPDATE $TABLE_PLAYERS " +
                 "SET $COLUMN_STATE='${PlayerState.KILLED}' " +
-                "WHERE $COLUMN_ID='${player.id}'"
+                "WHERE $COLUMN_ID=${player.id}"
 
-        val cursor = db.rawQuery(updateQuery, null)
-        cursor.close()
+        executeUpdateQuery(db, updateQuery)
     }
 
     private fun mapQueryToPlayers(query: String): List<Player> {

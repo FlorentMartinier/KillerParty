@@ -2,6 +2,7 @@ package com.example.killerparty.ui.party
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.telephony.PhoneNumberUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -58,8 +59,10 @@ class PartyFragment : Fragment() {
                 PLAYER_DESCRIPTION,
                 viewLifecycleOwner
             ) { requestKey, bundle ->
+                val phoneNumber = bundle.getString(PLAYER_PHONE)
+                val isValidPhoneNumber = PhoneNumberUtils.isGlobalPhoneNumber(phoneNumber)
                 if (requestKey == PLAYER_DESCRIPTION && !bundle.getString(PLAYER_NAME)
-                        .isNullOrEmpty() && !bundle.getString(PLAYER_PHONE).isNullOrEmpty()
+                        .isNullOrEmpty() && !phoneNumber.isNullOrEmpty() && isValidPhoneNumber
                 ) {
                     playerService.insertPlayer(
                         name = bundle.getString(PLAYER_NAME) ?: "",
@@ -67,6 +70,8 @@ class PartyFragment : Fragment() {
                         party = party
                     )
                     fillAllPlayers()
+                } else {
+                    Toast.makeText(context, "Des champs sont invalides", Toast.LENGTH_SHORT).show()
                 }
             }
             dialog.show(activity?.supportFragmentManager!!, "")
