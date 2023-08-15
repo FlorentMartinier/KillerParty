@@ -1,0 +1,1 @@
+L'application récolte des numéros de téléphone dans une base de données SQLite. Cette base de données est interne au téléphone de l'utilisateur. Aucune interaction réseau n'existe dans l'application.

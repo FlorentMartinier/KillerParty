@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace 'com.example.killerparty'
+    namespace 'com.fmartinier.killerparty'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.example.killerparty"
+        applicationId "com.fmartinier.killerparty"
         minSdk 26
         targetSdk 33
         versionCode 1

@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/navigation_party"
-        android:name="com.example.killerparty.ui.party.PartyFragment"
+        android:name="com.fmartinier.killerparty.ui.party.PartyFragment"
         android:label="@string/title_party"
         tools:layout="@layout/fragment_party" />
 
     <fragment
         android:id="@+id/navigation_historic"
-        android:name="com.example.killerparty.ui.histories.HistoricsFragment"
+        android:name="com.fmartinier.killerparty.ui.histories.HistoricsFragment"
         android:label="@string/title_historic"
         tools:layout="@layout/fragment_historics" />
 
     <fragment
         android:id="@+id/navigation_challenges"
-        android:name="com.example.killerparty.ui.challenges.ChallengesFragment"
+        android:name="com.fmartinier.killerparty.ui.challenges.ChallengesFragment"
         android:label="@string/title_challenges"
         tools:layout="@layout/fragment_challenges" />
 </navigation>
