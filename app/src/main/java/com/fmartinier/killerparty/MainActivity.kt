@@ -30,9 +30,9 @@ class MainActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                com.fmartinier.killerparty.R.id.navigation_party,
-                com.fmartinier.killerparty.R.id.navigation_historic,
-                com.fmartinier.killerparty.R.id.navigation_challenges
+                R.id.navigation_party,
+                R.id.navigation_historic,
+                R.id.navigation_challenges
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -40,13 +40,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun checkPermissions() {
-        val permission = android.Manifest.permission.SEND_SMS
+        listOf(android.Manifest.permission.SEND_SMS, android.Manifest.permission.READ_CONTACTS)
+            .forEach { checkPermission(it) }
+    }
+
+    private fun checkPermission(permission: String) {
         if (ContextCompat.checkSelfPermission(this,permission) != PackageManager.PERMISSION_GRANTED) {
             if (!ActivityCompat.shouldShowRequestPermissionRationale(this, permission)) {
                 ActivityCompat.requestPermissions(
                     this,
                     arrayOf(permission),
-                    com.fmartinier.killerparty.MainActivity.Companion.REQUEST_CODE
+                    REQUEST_CODE
                 )
             }
         }

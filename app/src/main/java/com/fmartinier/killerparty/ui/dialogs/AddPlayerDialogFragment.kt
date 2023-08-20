@@ -12,7 +12,10 @@ import com.fmartinier.killerparty.utils.PLAYER_NAME
 import com.fmartinier.killerparty.utils.PLAYER_PHONE
 
 
-class AddPlayerDialogFragment : DialogFragment() {
+class AddPlayerDialogFragment(
+    private val playerName : String = "",
+    private val playerPhone : String = "",
+) : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
@@ -20,11 +23,13 @@ class AddPlayerDialogFragment : DialogFragment() {
 
             val view =
                 layoutInflater.inflate(R.layout.add_player_modal, null)
+            val playerNameEditText = view.findViewWithTag<EditText>(PLAYER_NAME)
+            val playerPhoneEditText = view.findViewWithTag<EditText>(PLAYER_PHONE)
+            playerNameEditText.setText(playerName)
+            playerPhoneEditText.setText(playerPhone)
             val bundle = Bundle()
             builder.setView(view)
                 .setPositiveButton(R.string.ok) { dialog, _ ->
-                    val playerNameEditText = view.findViewWithTag<EditText>(PLAYER_NAME)
-                    val playerPhoneEditText = view.findViewWithTag<EditText>(PLAYER_PHONE)
                     bundle.putString(PLAYER_NAME, playerNameEditText.text.toString())
                     bundle.putString(PLAYER_PHONE, playerPhoneEditText.text.toString())
                     requireActivity().supportFragmentManager.setFragmentResult(PLAYER_DESCRIPTION, bundle)

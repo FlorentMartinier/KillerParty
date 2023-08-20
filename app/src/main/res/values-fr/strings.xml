@@ -4,7 +4,8 @@
     <string name="title_challenges">Défis</string>
     <string name="title_historic">Historique</string>
     <string name="add_challenge">Ajouter un défi</string>
-    <string name="add_player">Ajouter un joueur</string>
+    <string name="add_player">Ajouter un joueur manuellement</string>
+    <string name="import_contact">Importer un contact</string>
     <string name="player_name">Nom</string>
     <string name="player_phone">Téléphone</string>
     <string name="challenge_description">Description du défi</string>

@@ -4,7 +4,8 @@
     <string name="title_challenges">Challenges</string>
     <string name="title_historic">Historic</string>
     <string name="add_challenge">Add challenge</string>
-    <string name="add_player">Add player</string>
+    <string name="add_player">Add player manually</string>
+    <string name="import_contact">Import contact</string>
     <string name="player_name">Name</string>
     <string name="player_phone">Phone</string>
     <string name="challenge_description">Challenge description</string>
