@@ -22,37 +22,37 @@ import com.fmartinier.killerparty.model.enums.PlayerToChallengeState
 
 class PlayerRepository(context: Context) {
 
-    private val db = com.fmartinier.killerparty.db.MyDatabaseHelper(context).getDb()
+    private val db = MyDatabaseHelper(context).getDb()
 
     fun insert(name: String, phone: String, party: Party) {
         val values = ContentValues()
-        values.put(com.fmartinier.killerparty.db.COLUMN_NAME, name)
-        values.put(com.fmartinier.killerparty.db.COLUMN_PHONE, phone)
-        values.put(com.fmartinier.killerparty.db.COLUMN_STATE, PlayerState.IN_LIFE.name)
-        val playerId = db.insert(com.fmartinier.killerparty.db.TABLE_PLAYERS, null, values)
+        values.put(COLUMN_NAME, name)
+        values.put(COLUMN_PHONE, phone)
+        values.put(COLUMN_STATE, PlayerState.IN_LIFE.name)
+        val playerId = db.insert(TABLE_PLAYERS, null, values)
         insertToParty(playerId = playerId.toInt(), partyId = party.id)
         println("1 player added to database")
     }
 
     fun deleteById(id: Int) {
-        db.delete(com.fmartinier.killerparty.db.TABLE_PLAYERS, "${com.fmartinier.killerparty.db.COLUMN_ID} = $id", null)
-        db.delete(com.fmartinier.killerparty.db.TABLE_PLAYER_TO_PARTY, "${com.fmartinier.killerparty.db.COLUMN_PLAYER_ID} = $id", null)
+        db.delete(TABLE_PLAYERS, "$COLUMN_ID = $id", null)
+        db.delete(TABLE_PLAYER_TO_PARTY, "$COLUMN_PLAYER_ID = $id", null)
     }
 
     fun findAllFromParty(party: Party): List<Player> {
-        val selectQuery = "SELECT p.${com.fmartinier.killerparty.db.COLUMN_ID}, p.${com.fmartinier.killerparty.db.COLUMN_NAME}, p.${com.fmartinier.killerparty.db.COLUMN_PHONE}, p.${com.fmartinier.killerparty.db.COLUMN_STATE} " +
-                "FROM ${com.fmartinier.killerparty.db.TABLE_PLAYER_TO_PARTY} pp " +
-                "JOIN ${com.fmartinier.killerparty.db.TABLE_PLAYERS} p on p.${com.fmartinier.killerparty.db.COLUMN_ID} = pp.${com.fmartinier.killerparty.db.COLUMN_PLAYER_ID} " +
-                "WHERE pp.${com.fmartinier.killerparty.db.COLUMN_PARTY_ID} = ${party.id} "
+        val selectQuery = "SELECT p.$COLUMN_ID, p.$COLUMN_NAME, p.$COLUMN_PHONE, p.$COLUMN_STATE " +
+                "FROM $TABLE_PLAYER_TO_PARTY pp " +
+                "JOIN $TABLE_PLAYERS p on p.$COLUMN_ID = pp.$COLUMN_PLAYER_ID " +
+                "WHERE pp.$COLUMN_PARTY_ID = ${party.id} "
 
         return mapQueryToPlayers(selectQuery)
     }
 
     fun findKillerOf(player: Player): Player {
-        val selectQuery = "SELECT p.${com.fmartinier.killerparty.db.COLUMN_ID}, p.${com.fmartinier.killerparty.db.COLUMN_NAME}, p.${com.fmartinier.killerparty.db.COLUMN_PHONE}, p.${com.fmartinier.killerparty.db.COLUMN_STATE} " +
-                "FROM ${com.fmartinier.killerparty.db.TABLE_PLAYER_TO_CHALLENGE} pc " +
-                "JOIN ${com.fmartinier.killerparty.db.TABLE_PLAYERS} p on p.${com.fmartinier.killerparty.db.COLUMN_ID}=pc.${com.fmartinier.killerparty.db.COLUMN_KILLER_ID} " +
-                "WHERE pc.${com.fmartinier.killerparty.db.COLUMN_TARGET_ID} = ${player.id} "
+        val selectQuery = "SELECT p.$COLUMN_ID, p.$COLUMN_NAME, p.$COLUMN_PHONE, p.$COLUMN_STATE " +
+                "FROM $TABLE_PLAYER_TO_CHALLENGE pc " +
+                "JOIN $TABLE_PLAYERS p on p.$COLUMN_ID=pc.$COLUMN_KILLER_ID " +
+                "WHERE pc.$COLUMN_TARGET_ID = ${player.id} "
 
         val players = mapQueryToPlayers(selectQuery)
         return if (players.isEmpty()) {
@@ -63,10 +63,10 @@ class PlayerRepository(context: Context) {
     }
 
     fun findTargetOf(player: Player): Player {
-        val selectQuery = "SELECT p.${com.fmartinier.killerparty.db.COLUMN_ID}, p.${com.fmartinier.killerparty.db.COLUMN_NAME}, p.${com.fmartinier.killerparty.db.COLUMN_PHONE}, p.${com.fmartinier.killerparty.db.COLUMN_STATE} " +
-                "FROM ${com.fmartinier.killerparty.db.TABLE_PLAYER_TO_CHALLENGE} pc " +
-                "JOIN ${com.fmartinier.killerparty.db.TABLE_PLAYERS} p on p.${com.fmartinier.killerparty.db.COLUMN_ID}=pc.${com.fmartinier.killerparty.db.COLUMN_TARGET_ID} " +
-                "WHERE pc.${com.fmartinier.killerparty.db.COLUMN_KILLER_ID}=${player.id} AND pc.${com.fmartinier.killerparty.db.COLUMN_STATE}='${PlayerToChallengeState.IN_PROGRESS}'"
+        val selectQuery = "SELECT p.$COLUMN_ID, p.$COLUMN_NAME, p.$COLUMN_PHONE, p.$COLUMN_STATE " +
+                "FROM $TABLE_PLAYER_TO_CHALLENGE pc " +
+                "JOIN $TABLE_PLAYERS p on p.$COLUMN_ID=pc.$COLUMN_TARGET_ID " +
+                "WHERE pc.$COLUMN_KILLER_ID=${player.id} AND pc.$COLUMN_STATE='${PlayerToChallengeState.IN_PROGRESS}'"
 
         val players = mapQueryToPlayers(selectQuery)
         return if (players.isEmpty()) {
@@ -77,11 +77,24 @@ class PlayerRepository(context: Context) {
     }
 
     fun kill(player: Player) {
-        val updateQuery = "UPDATE ${com.fmartinier.killerparty.db.TABLE_PLAYERS} " +
-                "SET ${com.fmartinier.killerparty.db.COLUMN_STATE}='${PlayerState.KILLED}' " +
-                "WHERE ${com.fmartinier.killerparty.db.COLUMN_ID}=${player.id}"
+        val updateQuery = "UPDATE $TABLE_PLAYERS " +
+                "SET $COLUMN_STATE='${PlayerState.KILLED}' " +
+                "WHERE $COLUMN_ID=${player.id}"
 
-        com.fmartinier.killerparty.db.executeUpdateQuery(db, updateQuery)
+        executeUpdateQuery(db, updateQuery)
+    }
+
+    fun isThereAWinner(): Boolean {
+        val selectQuery = "SELECT * " +
+                "FROM $TABLE_PLAYERS pc " +
+                "WHERE pc.$COLUMN_STATE='${PlayerState.IN_LIFE}'"
+
+        val players = mapQueryToPlayers(selectQuery)
+        return if (players.isEmpty()) {
+            throw Exception("Aucun joueur n'est encore en vie. Ce n'est pas normal")
+        } else {
+            players.size == 1
+        }
     }
 
     private fun mapQueryToPlayers(query: String): List<Player> {
@@ -105,9 +118,9 @@ class PlayerRepository(context: Context) {
 
     private fun insertToParty(playerId: Int, partyId: Int) {
         val values = ContentValues()
-        values.put(com.fmartinier.killerparty.db.COLUMN_PLAYER_ID, playerId)
-        values.put(com.fmartinier.killerparty.db.COLUMN_PARTY_ID, partyId)
-        db.insert(com.fmartinier.killerparty.db.TABLE_PLAYER_TO_PARTY, null, values)
+        values.put(COLUMN_PLAYER_ID, playerId)
+        values.put(COLUMN_PARTY_ID, partyId)
+        db.insert(TABLE_PLAYER_TO_PARTY, null, values)
         println("1 playerToParty added to database")
     }
 }

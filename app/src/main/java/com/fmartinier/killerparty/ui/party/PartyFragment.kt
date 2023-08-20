@@ -7,7 +7,6 @@ import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
 import android.provider.ContactsContract
-import android.telephony.PhoneNumberUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,6 +20,7 @@ import com.fmartinier.killerparty.model.Party
 import com.fmartinier.killerparty.model.Player
 import com.fmartinier.killerparty.services.PartyService
 import com.fmartinier.killerparty.services.PlayerService
+import com.fmartinier.killerparty.services.SmsService
 import com.fmartinier.killerparty.ui.dialogs.AddPlayerDialogFragment
 import com.fmartinier.killerparty.utils.PLAYER_DESCRIPTION
 import com.fmartinier.killerparty.utils.PLAYER_NAME
@@ -36,6 +36,7 @@ class PartyFragment : Fragment() {
     private lateinit var party: Party
     private lateinit var partyService: PartyService
     private lateinit var playerService: PlayerService
+    private lateinit var smsService: SmsService
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onCreateView(
@@ -48,6 +49,7 @@ class PartyFragment : Fragment() {
         val requiredContext = requireContext()
         partyService = PartyService(requiredContext)
         playerService = PlayerService(requiredContext)
+        smsService = SmsService(requiredContext)
         party = partyService.findOrCreate()
         fillAllPlayers()
 
@@ -102,9 +104,8 @@ class PartyFragment : Fragment() {
             viewLifecycleOwner
         ) { requestKey, bundle ->
             val phoneNumber = bundle.getString(PLAYER_PHONE)
-            val isValidPhoneNumber = PhoneNumberUtils.isGlobalPhoneNumber(phoneNumber)
             if (requestKey == PLAYER_DESCRIPTION && !bundle.getString(PLAYER_NAME)
-                    .isNullOrEmpty() && !phoneNumber.isNullOrEmpty() && isValidPhoneNumber
+                    .isNullOrEmpty() && !phoneNumber.isNullOrEmpty() && smsService.isValidPhoneNumber(phoneNumber)
             ) {
                 playerService.insertPlayer(
                     name = bundle.getString(PLAYER_NAME) ?: "",

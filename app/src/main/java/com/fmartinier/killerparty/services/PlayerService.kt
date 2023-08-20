@@ -38,18 +38,29 @@ class PlayerService(
         playerRepository.kill(player)
         val killer = playerRepository.findKillerOf(player)
         playerToChallengeRepository.achieveChallengeWithTarget(player)
-        playerToChallengeRepository.modifyChallengeKiller(player, killer)
-        val newChallengeForKiller = challengeService.findActiveFromPlayer(killer)
-        val newTargetForKiller = findTargetOf(killer)
-        smsService.sendSMS(
-            killer.phone,
-            context.resources.getString(
-                R.string.sms_kill_player,
-                player.name,
-                newTargetForKiller.name,
-                newChallengeForKiller.description
+
+        if (playerRepository.isThereAWinner()) {
+            smsService.sendSMS(
+                killer.phone,
+                context.resources.getString(
+                    R.string.sms_youre_the_winner,
+                    killer.name,
+                )
             )
-        )
+        } else {
+            playerToChallengeRepository.modifyChallengeKiller(player, killer)
+            val newChallengeForKiller = challengeService.findActiveFromPlayer(killer)
+            val newTargetForKiller = findTargetOf(killer)
+            smsService.sendSMS(
+                killer.phone,
+                context.resources.getString(
+                    R.string.sms_kill_player,
+                    player.name,
+                    newTargetForKiller.name,
+                    newChallengeForKiller.description
+                )
+            )
+        }
     }
 
     private fun findTargetOf(player: Player): Player {
