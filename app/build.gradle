@@ -11,8 +11,8 @@ android {
         applicationId "com.fmartinier.killerparty"
         minSdk 26
         targetSdk 33
-        versionCode 1
-        versionName "1.1"
+        versionCode 3
+        versionName "1.2"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -48,6 +48,7 @@ dependencies {
     implementation 'androidx.fragment:fragment-ktx:1.6.0'
     implementation 'com.nambimobile.widgets:expandable-fab:1.2.1'
     testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.mockito:mockito-core:5.4.0'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 }

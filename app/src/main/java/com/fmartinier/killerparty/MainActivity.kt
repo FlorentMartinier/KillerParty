@@ -25,7 +25,8 @@ class MainActivity : AppCompatActivity() {
 
         val navView: BottomNavigationView = binding.navView
 
-        val navController = findNavController(com.fmartinier.killerparty.R.id.nav_host_fragment_activity_main)
+        val navController =
+            findNavController(com.fmartinier.killerparty.R.id.nav_host_fragment_activity_main)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
@@ -40,23 +41,34 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun checkPermissions() {
-        listOf(android.Manifest.permission.SEND_SMS, android.Manifest.permission.READ_CONTACTS)
-            .forEach { checkPermission(it) }
+        val permissionsNeeded: List<String> =
+            PERMISSIONS_NEEDED
+                .filter {
+                    ContextCompat.checkSelfPermission(
+                        this,
+                        it
+                    ) != PackageManager.PERMISSION_GRANTED
+                }
+                .filter { !ActivityCompat.shouldShowRequestPermissionRationale(this, it) }
+
+        requestPermissions(permissionsNeeded)
     }
 
-    private fun checkPermission(permission: String) {
-        if (ContextCompat.checkSelfPermission(this,permission) != PackageManager.PERMISSION_GRANTED) {
-            if (!ActivityCompat.shouldShowRequestPermissionRationale(this, permission)) {
-                ActivityCompat.requestPermissions(
-                    this,
-                    arrayOf(permission),
-                    REQUEST_CODE
-                )
-            }
+    private fun requestPermissions(permissions: List<String>) {
+        if (permissions.isNotEmpty()) {
+            ActivityCompat.requestPermissions(
+                this,
+                permissions.toTypedArray(),
+                REQUEST_CODE
+            )
         }
     }
 
     companion object {
         const val REQUEST_CODE = 100
+        val PERMISSIONS_NEEDED = listOf(
+            android.Manifest.permission.SEND_SMS,
+            android.Manifest.permission.READ_CONTACTS
+        )
     }
 }

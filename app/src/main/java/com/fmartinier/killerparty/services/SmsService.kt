@@ -1,6 +1,8 @@
 package com.fmartinier.killerparty.services
 
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.telephony.SmsManager
 import android.widget.Toast
 
@@ -11,8 +13,12 @@ class SmsService(
 
     fun sendSMS(phoneNo: String, msg: String) {
         try {
+            val formattedPhoneNo = formatPhoneNumber(phoneNo)
             val smsManager = context.getSystemService(SmsManager::class.java)
-            smsManager.sendTextMessage(formatPhoneNumber(phoneNo), null, msg, null, null)
+            val sentPI = PendingIntent.getBroadcast(
+                context, 0, Intent("SMS_SENT"), PendingIntent.FLAG_IMMUTABLE
+            )
+            smsManager.sendTextMessage(formattedPhoneNo, null, msg, sentPI, null)
         } catch (ex: Exception) {
             Toast.makeText(context, ex.message.toString(), Toast.LENGTH_LONG).show()
             ex.printStackTrace()
@@ -32,7 +38,7 @@ class SmsService(
      *  - 06 00 00 00 00 => 0600000000
      *  - 0600000000 => 0600000000
      */
-    private fun formatPhoneNumber(phoneNo: String): String {
+    fun formatPhoneNumber(phoneNo: String): String {
         val stringWithNoSpace = phoneNo.filter { !it.isWhitespace() }
         return stringWithNoSpace.replace("+33", "0")
     }
