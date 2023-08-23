@@ -15,16 +15,30 @@
         android:layout_marginEnd="1dp"
         android:layout_marginBottom="1dp" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
-        android:clickable="true"
-        android:contentDescription="@string/add_challenge"
-        android:focusable="true"
-        android:src="@android:drawable/ic_input_add"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+    <com.nambimobile.widgets.efab.ExpandableFabLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.nambimobile.widgets.efab.ExpandableFab
+            android:id="@+id/floatingActionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            app:efab_orientation="portrait"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:efab_iconAnimationRotationDeg="0"/>
+
+        <include
+            android:id="@+id/noChallengeHelperMessage"
+            layout="@layout/text_with_arrow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+
+    </com.nambimobile.widgets.efab.ExpandableFabLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

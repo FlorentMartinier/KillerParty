@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:ignore="UseCompoundDrawables">
+
+        <TextView
+            android:id="@+id/editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:ems="10"
+            android:textColor="@color/efab_disabled"
+            android:layout_margin="10dp"
+            android:textSize="@dimen/efab_ui_margin_large" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:layout_gravity="end"
+            android:src="@drawable/ic_arrow_bottom_right"
+            android:layout_marginEnd="30dp"
+            android:importantForAccessibility="no" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

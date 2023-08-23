@@ -1,15 +1,20 @@
 package com.fmartinier.killerparty.ui.histories
 
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.fmartinier.killerparty.R
 import com.fmartinier.killerparty.databinding.FragmentHistoricsBinding
+import com.fmartinier.killerparty.extensions.toDP
 import com.fmartinier.killerparty.model.Party
 import com.fmartinier.killerparty.services.PartyService
 import com.fmartinier.killerparty.services.PlayerService
+
 
 class HistoricsFragment : Fragment() {
 
@@ -25,6 +30,9 @@ class HistoricsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentHistoricsBinding.inflate(inflater, container, false)
+
+        manageHelperConfiguration()
+
         partyService = PartyService(requireContext())
         playerService = PlayerService(requireContext())
         fillParties()
@@ -41,5 +49,29 @@ class HistoricsFragment : Fragment() {
         histories.clear()
         histories.addAll(partyService.findAllBegan())
         histories.sortByDescending { it.id }
+        manageHelperVisibility()
+    }
+
+    private fun manageHelperVisibility() {
+        if (histories.isEmpty()) {
+            binding.noHistoryHelperMessage.editText.visibility = View.VISIBLE
+            binding.noHistoryHelperMessage.imageView.visibility = View.VISIBLE
+        } else {
+            binding.noHistoryHelperMessage.editText.visibility = View.INVISIBLE
+            binding.noHistoryHelperMessage.imageView.visibility = View.INVISIBLE
+        }
+    }
+
+    private fun manageHelperConfiguration() {
+        binding.noHistoryHelperMessage.editText.text = context?.getString(R.string.no_history)
+        binding.noHistoryHelperMessage.imageView.rotationY = 180F
+        val params = LinearLayout.LayoutParams(
+            binding.noHistoryHelperMessage.imageView.layoutParams
+        ).apply {
+            weight = 1.0f
+            gravity = Gravity.START
+            marginStart = 55F.toDP(context)
+        }
+        binding.noHistoryHelperMessage.imageView.layoutParams = params
     }
 }

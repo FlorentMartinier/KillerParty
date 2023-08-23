@@ -45,6 +45,7 @@ class PartyFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentPartyBinding.inflate(inflater, container, false)
+        binding.noPartyHelperMessage.editText.text = context?.getString(R.string.no_player_in_party)
 
         val requiredContext = requireContext()
         partyService = PartyService(requiredContext)
@@ -60,6 +61,7 @@ class PartyFragment : Fragment() {
                 playerService.deletePlayerById(it.id)
                 players.remove(it)
                 adapter.notifyDataSetChanged()
+                manageHelperVisibility()
             }
             this.adapter = adapter
         }
@@ -180,5 +182,16 @@ class PartyFragment : Fragment() {
     private fun fillAllPlayers() {
         this.players.clear()
         this.players.addAll(playerService.findAllPlayersFromParty(party))
+        manageHelperVisibility()
+    }
+
+    private fun manageHelperVisibility() {
+        if (players.isEmpty()) {
+            binding.noPartyHelperMessage.editText.visibility = View.VISIBLE
+            binding.noPartyHelperMessage.imageView.visibility = View.VISIBLE
+        } else {
+            binding.noPartyHelperMessage.editText.visibility = View.INVISIBLE
+            binding.noPartyHelperMessage.imageView.visibility = View.INVISIBLE
+        }
     }
 }

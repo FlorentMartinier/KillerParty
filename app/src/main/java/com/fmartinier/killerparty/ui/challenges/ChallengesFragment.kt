@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.fmartinier.killerparty.R
 import com.fmartinier.killerparty.databinding.FragmentChallengesBinding
 import com.fmartinier.killerparty.model.Challenge
 import com.fmartinier.killerparty.services.ChallengeService
@@ -28,6 +29,7 @@ class ChallengesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentChallengesBinding.inflate(inflater, container, false)
+        binding.noChallengeHelperMessage.editText.text = context?.getString(R.string.no_challenge)
         challengeService = ChallengeService(requireContext())
         fillAllChallenges()
 
@@ -38,6 +40,7 @@ class ChallengesFragment : Fragment() {
                 challengeService.deleteById(it.id)
                 challenges.remove(it)
                 adapter.notifyDataSetChanged()
+                manageHelperVisibility()
             }
             this.adapter = adapter
         }
@@ -63,6 +66,16 @@ class ChallengesFragment : Fragment() {
     private fun fillAllChallenges() {
         challenges.clear()
         challenges.addAll(challengeService.findAll())
+        manageHelperVisibility()
     }
 
+    private fun manageHelperVisibility() {
+        if (challenges.isEmpty()) {
+            binding.noChallengeHelperMessage.editText.visibility = View.VISIBLE
+            binding.noChallengeHelperMessage.imageView.visibility = View.VISIBLE
+        } else {
+            binding.noChallengeHelperMessage.editText.visibility = View.INVISIBLE
+            binding.noChallengeHelperMessage.imageView.visibility = View.INVISIBLE
+        }
+    }
 }

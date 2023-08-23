@@ -33,4 +33,7 @@
     <string name="invalid_fields">There are invalid fields</string>
     <string name="begin_party_confirmation">Are you sure to start the game? This will cause %1$s text messages to be sent to different players.</string>
     <string name="party_beginning">Game on</string>
+    <string name="no_player_in_party">There are no players in the game yet. Please create one by clicking on the button at the bottom right.</string>
+    <string name="no_challenge">There are no challenge yet. Please create one by clicking on the button at the bottom right.</string>
+    <string name="no_history">There is no historical party yet. You can create a game by clicking here.</string>
 </resources>
