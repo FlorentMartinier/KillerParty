@@ -16,7 +16,7 @@ import com.fmartinier.killerparty.services.PartyService
 import com.fmartinier.killerparty.services.PlayerService
 
 
-class HistoricsFragment : Fragment() {
+class HistoriesFragment : Fragment() {
 
     private lateinit var binding: FragmentHistoricsBinding
     private lateinit var partyService: PartyService
@@ -37,9 +37,9 @@ class HistoricsFragment : Fragment() {
         playerService = PlayerService(requireContext())
         fillParties()
 
-        binding.historics.apply {
+        binding.histories.apply {
             layoutManager = LinearLayoutManager(context)
-            val adapter = HistoricViewAdapter(histories, context, partyService, playerService)
+            val adapter = HistoriesViewAdapter(histories, context, partyService, playerService)
             this.adapter = adapter
         }
         return binding.root

@@ -1,13 +1,11 @@
 package com.fmartinier.killerparty.services
 
 import android.content.Context
-import android.telephony.PhoneNumberUtils
 import android.widget.Toast
+import androidx.recyclerview.widget.RecyclerView
+import com.daimajia.androidanimations.library.Techniques
+import com.daimajia.androidanimations.library.YoYo
 import com.fmartinier.killerparty.R
-import com.fmartinier.killerparty.db.COLUMN_ID
-import com.fmartinier.killerparty.db.COLUMN_WINNER
-import com.fmartinier.killerparty.db.TABLE_PARTIES
-import com.fmartinier.killerparty.db.executeUpdateQuery
 import com.fmartinier.killerparty.db.repository.ChallengeRepository
 import com.fmartinier.killerparty.db.repository.PartyRepository
 import com.fmartinier.killerparty.db.repository.PlayerRepository
@@ -17,13 +15,14 @@ import com.fmartinier.killerparty.model.Party
 import com.fmartinier.killerparty.model.Player
 import com.fmartinier.killerparty.model.enums.PartyState
 import com.fmartinier.killerparty.utils.navigateTo
+import java.time.Instant
 import kotlin.random.Random
 
 
 class PartyService(val context: Context) {
     private val partyRepository = PartyRepository(context)
     private val challengeRepository =
-        com.fmartinier.killerparty.db.repository.ChallengeRepository(context)
+        ChallengeRepository(context)
     private val playerRepository = PlayerRepository(context)
     private val playerToChallengeRepository = PlayerToChallengeRepository(context)
     private val smsService = SmsService(context)
@@ -38,7 +37,9 @@ class PartyService(val context: Context) {
 
     fun beginParty(party: Party, players: List<Player>) {
         giveChallengeToPlayers(players)
-        partyRepository.modifyStateById(party.id, PartyState.IN_PROGRESS)
+        val partyId = party.id
+        partyRepository.modifyStateById(partyId, PartyState.IN_PROGRESS)
+        partyRepository.modifyDateById(partyId, Instant.now())
 
         navigateTo(context, R.id.navigation_historic)
     }

@@ -47,6 +47,7 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui-ktx:2.6.0'
     implementation 'androidx.fragment:fragment-ktx:1.6.0'
     implementation 'com.nambimobile.widgets:expandable-fab:1.2.1'
+    implementation 'com.daimajia.androidanimations:library:2.4@aar'
     testImplementation 'junit:junit:4.13.2'
     testImplementation 'org.mockito:mockito-core:5.4.0'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'

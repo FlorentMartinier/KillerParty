@@ -13,7 +13,7 @@
 
     <fragment
         android:id="@+id/navigation_historic"
-        android:name="com.fmartinier.killerparty.ui.histories.HistoricsFragment"
+        android:name="com.fmartinier.killerparty.ui.histories.HistoriesFragment"
         android:label="@string/title_historic"
         tools:layout="@layout/fragment_historics" />
 

@@ -7,8 +7,8 @@ import android.database.sqlite.SQLiteOpenHelper
 
 class MyDatabaseHelper(context: Context) :
     SQLiteOpenHelper(context,
-        com.fmartinier.killerparty.db.DATABASE_NAME, null,
-        com.fmartinier.killerparty.db.DATABASE_VERSION
+        DATABASE_NAME, null,
+        DATABASE_VERSION
     ) {
 
     private var db: SQLiteDatabase = writableDatabase
@@ -24,11 +24,11 @@ class MyDatabaseHelper(context: Context) :
 
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
-        db.execSQL("DROP TABLE IF EXISTS ${com.fmartinier.killerparty.db.TABLE_CHALLENGES}")
-        db.execSQL("DROP TABLE IF EXISTS ${com.fmartinier.killerparty.db.TABLE_PLAYERS}")
-        db.execSQL("DROP TABLE IF EXISTS ${com.fmartinier.killerparty.db.TABLE_PLAYER_TO_PARTY}")
-        db.execSQL("DROP TABLE IF EXISTS ${com.fmartinier.killerparty.db.TABLE_PLAYER_TO_CHALLENGE}")
-        db.execSQL("DROP TABLE IF EXISTS ${com.fmartinier.killerparty.db.TABLE_PARTIES}")
+        db.execSQL("DROP TABLE IF EXISTS $TABLE_CHALLENGES")
+        db.execSQL("DROP TABLE IF EXISTS $TABLE_PLAYERS")
+        db.execSQL("DROP TABLE IF EXISTS $TABLE_PLAYER_TO_PARTY")
+        db.execSQL("DROP TABLE IF EXISTS $TABLE_PLAYER_TO_CHALLENGE")
+        db.execSQL("DROP TABLE IF EXISTS $TABLE_PARTIES")
         onCreate(db)
     }
 
@@ -38,9 +38,9 @@ class MyDatabaseHelper(context: Context) :
 
     private fun initializeChallengeTable() {
         // Script to create table.
-        val script = "CREATE TABLE ${com.fmartinier.killerparty.db.TABLE_CHALLENGES}(" +
-                "${com.fmartinier.killerparty.db.COLUMN_ID} INTEGER PRIMARY KEY," +
-                "${com.fmartinier.killerparty.db.COLUMN_DESCRIPTION} TEXT" +
+        val script = "CREATE TABLE $TABLE_CHALLENGES(" +
+                "$COLUMN_ID INTEGER PRIMARY KEY," +
+                "$COLUMN_DESCRIPTION TEXT" +
                 ")"
         // Execute script.
         this.db.execSQL(script)
@@ -48,11 +48,11 @@ class MyDatabaseHelper(context: Context) :
 
     private fun initializePartyTable() {
         // Script to create table.
-        val script = "CREATE TABLE ${com.fmartinier.killerparty.db.TABLE_PARTIES}(" +
-                "${com.fmartinier.killerparty.db.COLUMN_ID} INTEGER PRIMARY KEY," +
-                "${com.fmartinier.killerparty.db.COLUMN_DATE} DATE, " +
-                "${com.fmartinier.killerparty.db.COLUMN_STATE} TEXT, " +
-                "${com.fmartinier.killerparty.db.COLUMN_WINNER} TEXT" +
+        val script = "CREATE TABLE $TABLE_PARTIES(" +
+                "$COLUMN_ID INTEGER PRIMARY KEY," +
+                "$COLUMN_DATE DATE, " +
+                "$COLUMN_STATE TEXT, " +
+                "$COLUMN_WINNER TEXT" +
                 ")"
         // Execute script.
         this.db.execSQL(script)
@@ -60,11 +60,11 @@ class MyDatabaseHelper(context: Context) :
 
     private fun initializePlayerTable() {
         // Script to create table.
-        val script = "CREATE TABLE ${com.fmartinier.killerparty.db.TABLE_PLAYERS}(" +
-                "${com.fmartinier.killerparty.db.COLUMN_ID} INTEGER PRIMARY KEY," +
-                "${com.fmartinier.killerparty.db.COLUMN_NAME} TEXT," +
-                "${com.fmartinier.killerparty.db.COLUMN_PHONE} TEXT," +
-                "${com.fmartinier.killerparty.db.COLUMN_STATE} TEXT" +
+        val script = "CREATE TABLE ${TABLE_PLAYERS}(" +
+                "$COLUMN_ID INTEGER PRIMARY KEY," +
+                "$COLUMN_NAME TEXT," +
+                "$COLUMN_PHONE TEXT," +
+                "$COLUMN_STATE TEXT" +
                 ")"
         // Execute script.
         this.db.execSQL(script)
@@ -72,12 +72,12 @@ class MyDatabaseHelper(context: Context) :
 
     private fun initializePlayerToChallengeTable() {
         // Script to create table.
-        val script = "CREATE TABLE ${com.fmartinier.killerparty.db.TABLE_PLAYER_TO_CHALLENGE}(" +
-                "${com.fmartinier.killerparty.db.COLUMN_ID} INTEGER PRIMARY KEY," +
-                "${com.fmartinier.killerparty.db.COLUMN_CHALLENGE_ID} INTEGER," +
-                "${com.fmartinier.killerparty.db.COLUMN_KILLER_ID} INTEGER," +
-                "${com.fmartinier.killerparty.db.COLUMN_TARGET_ID} INTEGER," +
-                "${com.fmartinier.killerparty.db.COLUMN_STATE} TEXT" +
+        val script = "CREATE TABLE $TABLE_PLAYER_TO_CHALLENGE(" +
+                "$COLUMN_ID INTEGER PRIMARY KEY," +
+                "$COLUMN_CHALLENGE_ID INTEGER," +
+                "$COLUMN_KILLER_ID INTEGER," +
+                "$COLUMN_TARGET_ID INTEGER," +
+                "$COLUMN_STATE TEXT" +
                 ")"
         // Execute script.
         this.db.execSQL(script)
@@ -85,10 +85,10 @@ class MyDatabaseHelper(context: Context) :
 
     private fun initializePlayerToPartyTable() {
         // Script to create table.
-        val script = "CREATE TABLE ${com.fmartinier.killerparty.db.TABLE_PLAYER_TO_PARTY}(" +
-                "${com.fmartinier.killerparty.db.COLUMN_ID} INTEGER PRIMARY KEY," +
-                "${com.fmartinier.killerparty.db.COLUMN_PLAYER_ID} INTEGER," +
-                "${com.fmartinier.killerparty.db.COLUMN_PARTY_ID} INTEGER" +
+        val script = "CREATE TABLE $TABLE_PLAYER_TO_PARTY(" +
+                "$COLUMN_ID INTEGER PRIMARY KEY," +
+                "$COLUMN_PLAYER_ID INTEGER," +
+                "$COLUMN_PARTY_ID INTEGER" +
                 ")"
         // Execute script.
         this.db.execSQL(script)

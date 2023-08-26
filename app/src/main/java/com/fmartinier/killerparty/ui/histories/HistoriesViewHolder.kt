@@ -7,13 +7,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.fmartinier.killerparty.R
 import com.fmartinier.killerparty.databinding.FragmentHistoricBinding
 import com.fmartinier.killerparty.model.Party
-import com.fmartinier.killerparty.model.Player
 import com.fmartinier.killerparty.model.enums.PlayerState
 import com.fmartinier.killerparty.services.PartyService
 import com.fmartinier.killerparty.services.PlayerService
 import com.fmartinier.killerparty.ui.histories.players.HistoricPlayerViewAdapter
+import java.time.ZoneOffset
 
-class HistoricViewHolder(
+class HistoriesViewHolder(
     private val fragmentHistoricBinding: FragmentHistoricBinding,
     private val context: Context,
     private val partyService: PartyService,
@@ -22,12 +22,11 @@ class HistoricViewHolder(
 
     @SuppressLint("NotifyDataSetChanged")
     fun bindHistory(party: Party) {
-        // TODO : quand un joueur est killé, un sms est envoyé au killer pour définir sa nouvelle cible.
         val players = partyService.findPlayers(party)
         val resources = context.resources
         var winner = party.winner ?: resources.getString(R.string.no_winner_yet)
         fragmentHistoricBinding.date.text =
-            resources.getString(R.string.party_date, party.date.toString())
+            resources.getString(R.string.party_date, party.date?.atZone(ZoneOffset.UTC)?.toLocalDate().toString())
         fragmentHistoricBinding.partyState.text =
             resources.getString(R.string.party_state, resources.getString(party.state.translate()))
         fragmentHistoricBinding.winner.text = resources.getString(R.string.winner, winner)
@@ -47,7 +46,6 @@ class HistoricViewHolder(
             layoutManager = LinearLayoutManager(context)
             this.adapter = adapter
         }
-        println("players : $players")
     }
 
 }

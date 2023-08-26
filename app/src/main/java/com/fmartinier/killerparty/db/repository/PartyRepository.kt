@@ -12,11 +12,11 @@ import com.fmartinier.killerparty.db.executeUpdateQuery
 import com.fmartinier.killerparty.model.Party
 import com.fmartinier.killerparty.model.Player
 import com.fmartinier.killerparty.model.enums.PartyState
-import java.time.LocalDate
+import java.time.Instant
 
 class PartyRepository(context: Context) {
 
-    private val db = com.fmartinier.killerparty.db.MyDatabaseHelper(context).getDb()
+    private val db = MyDatabaseHelper(context).getDb()
 
     /**
      * Find the only not started party in database.
@@ -24,8 +24,8 @@ class PartyRepository(context: Context) {
      */
     fun findOrCreate(): Party {
         val selectQuery = "SELECT * " +
-                "FROM ${com.fmartinier.killerparty.db.TABLE_PARTIES} " +
-                "WHERE ${com.fmartinier.killerparty.db.COLUMN_STATE} = '${PartyState.NOT_STARTED.name}' "
+                "FROM $TABLE_PARTIES " +
+                "WHERE $COLUMN_STATE = '${PartyState.NOT_STARTED.name}' "
 
         val cursor = db.rawQuery(selectQuery, null)
 
@@ -40,7 +40,7 @@ class PartyRepository(context: Context) {
         val party = if (cursor2.moveToFirst()) {
             Party(
                 id = cursor2.getString(0).toInt(),
-                date = LocalDate.parse(cursor2.getString(1)),
+                date = Instant.parse(cursor2.getString(1)),
                 state = PartyState.NOT_STARTED,
                 winner = null,
             )
@@ -53,7 +53,7 @@ class PartyRepository(context: Context) {
 
     fun findAll(): List<Party> {
         val parties = mutableListOf<Party>()
-        val selectQuery = "SELECT  * FROM ${com.fmartinier.killerparty.db.TABLE_PARTIES}"
+        val selectQuery = "SELECT  * FROM $TABLE_PARTIES"
 
         val cursor = db.rawQuery(selectQuery, null)
 
@@ -62,7 +62,7 @@ class PartyRepository(context: Context) {
             do {
                 val party = Party(
                     id = cursor.getString(0).toInt(),
-                    date = LocalDate.parse(cursor.getString(1)),
+                    date = Instant.parse(cursor.getString(1)),
                     state = PartyState.valueOf(cursor.getString(2)),
                     winner = cursor.getString(3),
                 )
@@ -77,24 +77,31 @@ class PartyRepository(context: Context) {
 
     fun modifyStateById(id: Int, partyState: PartyState) {
         val values = ContentValues()
-        values.put(com.fmartinier.killerparty.db.COLUMN_STATE, partyState.name)
+        values.put(COLUMN_STATE, partyState.name)
 
-        db.update(com.fmartinier.killerparty.db.TABLE_PARTIES, values, "${com.fmartinier.killerparty.db.COLUMN_ID} = $id", null)
+        db.update(TABLE_PARTIES, values, "$COLUMN_ID = $id", null)
+    }
+
+    fun modifyDateById(id: Int, date: Instant) {
+        val values = ContentValues()
+        values.put(COLUMN_DATE, date.toString())
+
+        db.update(TABLE_PARTIES, values, "$COLUMN_ID = $id", null)
     }
 
     private fun insertNotStarted() {
         val values = ContentValues()
-        values.put(com.fmartinier.killerparty.db.COLUMN_STATE, PartyState.NOT_STARTED.name)
-        values.put(com.fmartinier.killerparty.db.COLUMN_DATE, LocalDate.now().toString())
-        db.insert(com.fmartinier.killerparty.db.TABLE_PARTIES, null, values)
+        values.put(COLUMN_STATE, PartyState.NOT_STARTED.name)
+        values.put(COLUMN_DATE, Instant.now().toString())
+        db.insert(TABLE_PARTIES, null, values)
         println("1 party added to database")
     }
 
     fun declareWinner(player: Player, party: Party) {
-        val updateQuery = "UPDATE ${com.fmartinier.killerparty.db.TABLE_PARTIES} " +
-                "SET ${com.fmartinier.killerparty.db.COLUMN_WINNER}='${player.name}' " +
-                "WHERE ${com.fmartinier.killerparty.db.COLUMN_ID}='${party.id}'"
+        val updateQuery = "UPDATE $TABLE_PARTIES " +
+                "SET $COLUMN_WINNER='${player.name}' " +
+                "WHERE $COLUMN_ID='${party.id}'"
 
-        com.fmartinier.killerparty.db.executeUpdateQuery(db, updateQuery)
+        executeUpdateQuery(db, updateQuery)
     }
 }
