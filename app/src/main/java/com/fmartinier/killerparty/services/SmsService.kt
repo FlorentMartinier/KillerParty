@@ -3,6 +3,7 @@ package com.fmartinier.killerparty.services
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.telephony.SmsManager
 import android.widget.Toast
 
@@ -14,11 +15,10 @@ class SmsService(
     fun sendSMS(phoneNo: String, msg: String) {
         try {
             val formattedPhoneNo = formatPhoneNumber(phoneNo)
-            val smsManager = context.getSystemService(SmsManager::class.java)
             val sentPI = PendingIntent.getBroadcast(
                 context, 0, Intent("SMS_SENT"), PendingIntent.FLAG_IMMUTABLE
             )
-            smsManager.sendTextMessage(formattedPhoneNo, null, msg, sentPI, null)
+            getSmsManager().sendTextMessage(formattedPhoneNo, null, msg, sentPI, null)
         } catch (ex: Exception) {
             Toast.makeText(context, ex.message.toString(), Toast.LENGTH_LONG).show()
             ex.printStackTrace()
@@ -41,5 +41,17 @@ class SmsService(
     fun formatPhoneNumber(phoneNo: String): String {
         val stringWithNoSpace = phoneNo.filter { !it.isWhitespace() }
         return stringWithNoSpace.replace("+33", "0")
+    }
+
+    /**
+     * Get SMS manager with backward compatibility for old phones
+     */
+    private fun getSmsManager(): SmsManager {
+        return if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
+            // Use deprecated SmsManager to old sdk versions, for old phones
+            SmsManager.getDefault()
+        } else {
+            context.getSystemService(SmsManager::class.java)
+        }
     }
 }
