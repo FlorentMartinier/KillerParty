@@ -8,6 +8,7 @@ import com.fmartinier.killerparty.db.COLUMN_NAME
 import com.fmartinier.killerparty.db.COLUMN_PARTY_ID
 import com.fmartinier.killerparty.db.COLUMN_PHONE
 import com.fmartinier.killerparty.db.COLUMN_PLAYER_ID
+import com.fmartinier.killerparty.db.COLUMN_SCORE
 import com.fmartinier.killerparty.db.COLUMN_STATE
 import com.fmartinier.killerparty.db.COLUMN_TARGET_ID
 import com.fmartinier.killerparty.db.MyDatabaseHelper
@@ -29,6 +30,7 @@ class PlayerRepository(context: Context) {
         values.put(COLUMN_NAME, name)
         values.put(COLUMN_PHONE, phone)
         values.put(COLUMN_STATE, PlayerState.IN_LIFE.name)
+        values.put(COLUMN_SCORE, 0)
         val playerId = db.insert(TABLE_PLAYERS, null, values)
         insertToParty(playerId = playerId.toInt(), partyId = party.id)
         println("1 player added to database")
@@ -40,19 +42,21 @@ class PlayerRepository(context: Context) {
     }
 
     fun findAllFromParty(party: Party): List<Player> {
-        val selectQuery = "SELECT p.$COLUMN_ID, p.$COLUMN_NAME, p.$COLUMN_PHONE, p.$COLUMN_STATE " +
-                "FROM $TABLE_PLAYER_TO_PARTY pp " +
-                "JOIN $TABLE_PLAYERS p on p.$COLUMN_ID = pp.$COLUMN_PLAYER_ID " +
-                "WHERE pp.$COLUMN_PARTY_ID = ${party.id} "
+        val selectQuery =
+            "SELECT p.$COLUMN_ID, p.$COLUMN_NAME, p.$COLUMN_PHONE, p.$COLUMN_STATE, p.$COLUMN_SCORE " +
+                    "FROM $TABLE_PLAYER_TO_PARTY pp " +
+                    "JOIN $TABLE_PLAYERS p on p.$COLUMN_ID = pp.$COLUMN_PLAYER_ID " +
+                    "WHERE pp.$COLUMN_PARTY_ID = ${party.id} "
 
         return mapQueryToPlayers(selectQuery)
     }
 
     fun findKillerOf(player: Player): Player {
-        val selectQuery = "SELECT p.$COLUMN_ID, p.$COLUMN_NAME, p.$COLUMN_PHONE, p.$COLUMN_STATE " +
-                "FROM $TABLE_PLAYER_TO_CHALLENGE pc " +
-                "JOIN $TABLE_PLAYERS p on p.$COLUMN_ID=pc.$COLUMN_KILLER_ID " +
-                "WHERE pc.$COLUMN_TARGET_ID = ${player.id} "
+        val selectQuery =
+            "SELECT p.$COLUMN_ID, p.$COLUMN_NAME, p.$COLUMN_PHONE, p.$COLUMN_STATE, p.$COLUMN_SCORE " +
+                    "FROM $TABLE_PLAYER_TO_CHALLENGE pc " +
+                    "JOIN $TABLE_PLAYERS p on p.$COLUMN_ID=pc.$COLUMN_KILLER_ID " +
+                    "WHERE pc.$COLUMN_TARGET_ID = ${player.id} "
 
         val players = mapQueryToPlayers(selectQuery)
         return if (players.isEmpty()) {
@@ -62,11 +66,20 @@ class PlayerRepository(context: Context) {
         }
     }
 
+    fun addScore(player: Player, scoreToAdd: Int) {
+        val updateQuery = "UPDATE $TABLE_PLAYERS " +
+                "SET $COLUMN_SCORE=${player.score + scoreToAdd} " +
+                "WHERE $COLUMN_ID=${player.id}"
+
+        executeUpdateQuery(db, updateQuery)
+    }
+
     fun findTargetOf(player: Player): Player {
-        val selectQuery = "SELECT p.$COLUMN_ID, p.$COLUMN_NAME, p.$COLUMN_PHONE, p.$COLUMN_STATE " +
-                "FROM $TABLE_PLAYER_TO_CHALLENGE pc " +
-                "JOIN $TABLE_PLAYERS p on p.$COLUMN_ID=pc.$COLUMN_TARGET_ID " +
-                "WHERE pc.$COLUMN_KILLER_ID=${player.id} AND pc.$COLUMN_STATE='${PlayerToChallengeState.IN_PROGRESS}'"
+        val selectQuery =
+            "SELECT p.$COLUMN_ID, p.$COLUMN_NAME, p.$COLUMN_PHONE, p.$COLUMN_STATE, p.$COLUMN_SCORE " +
+                    "FROM $TABLE_PLAYER_TO_CHALLENGE pc " +
+                    "JOIN $TABLE_PLAYERS p on p.$COLUMN_ID=pc.$COLUMN_TARGET_ID " +
+                    "WHERE pc.$COLUMN_KILLER_ID=${player.id} AND pc.$COLUMN_STATE='${PlayerToChallengeState.IN_PROGRESS}'"
 
         val players = mapQueryToPlayers(selectQuery)
         return if (players.isEmpty()) {
@@ -84,16 +97,14 @@ class PlayerRepository(context: Context) {
         executeUpdateQuery(db, updateQuery)
     }
 
-    fun isThereAWinner(): Boolean {
-        val selectQuery = "SELECT * " +
-                "FROM $TABLE_PLAYERS pc " +
-                "WHERE pc.$COLUMN_STATE='${PlayerState.IN_LIFE}'"
+    fun isThereAWinner(party: Party): Boolean {
+        val inLifePlayers = findAllFromParty(party)
+            .filter { it.state == PlayerState.IN_LIFE }
 
-        val players = mapQueryToPlayers(selectQuery)
-        return if (players.isEmpty()) {
+        return if (inLifePlayers.isEmpty()) {
             throw Exception("Aucun joueur n'est encore en vie. Ce n'est pas normal")
         } else {
-            players.size == 1
+            inLifePlayers.size == 1
         }
     }
 
@@ -108,6 +119,7 @@ class PlayerRepository(context: Context) {
                     name = cursor.getString(1),
                     phone = cursor.getString(2),
                     state = PlayerState.valueOf(cursor.getString(3)),
+                    score = cursor.getInt(4),
                 )
                 players.add(player)
             } while (cursor.moveToNext())

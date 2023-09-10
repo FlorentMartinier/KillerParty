@@ -58,7 +58,7 @@ class PartyFragment : Fragment() {
             layoutManager = LinearLayoutManager(context)
             val adapter = PlayerViewAdapter(players, context)
             adapter.onPlayerRemoved = {
-                playerService.deletePlayerById(it.id)
+                playerService.deleteById(it.id)
                 players.remove(it)
                 adapter.notifyDataSetChanged()
                 manageHelperVisibility()
@@ -109,7 +109,7 @@ class PartyFragment : Fragment() {
             if (requestKey == PLAYER_DESCRIPTION && !bundle.getString(PLAYER_NAME)
                     .isNullOrEmpty() && !phoneNumber.isNullOrEmpty() && smsService.isValidPhoneNumber(phoneNumber)
             ) {
-                playerService.insertPlayer(
+                playerService.insert(
                     name = bundle.getString(PLAYER_NAME) ?: "",
                     phone = bundle.getString(PLAYER_PHONE) ?: "",
                     party = party
@@ -181,7 +181,7 @@ class PartyFragment : Fragment() {
 
     private fun fillAllPlayers() {
         this.players.clear()
-        this.players.addAll(playerService.findAllPlayersFromParty(party))
+        this.players.addAll(playerService.findAllFromParty(party))
         manageHelperVisibility()
     }
 

@@ -64,7 +64,8 @@ class MyDatabaseHelper(context: Context) :
                 "$COLUMN_ID INTEGER PRIMARY KEY," +
                 "$COLUMN_NAME TEXT," +
                 "$COLUMN_PHONE TEXT," +
-                "$COLUMN_STATE TEXT" +
+                "$COLUMN_STATE TEXT," +
+                "$COLUMN_SCORE INTEGER" +
                 ")"
         // Execute script.
         this.db.execSQL(script)

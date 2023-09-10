@@ -18,7 +18,7 @@ class PlayerService(
     /**
      * Insert player in DB and create put it in the current party
      */
-    fun insertPlayer(name: String, phone: String, party: Party) {
+    fun insert(name: String, phone: String, party: Party) {
         playerRepository.insert(
             name = name,
             phone = phone,
@@ -26,20 +26,27 @@ class PlayerService(
         )
     }
 
-    fun deletePlayerById(id: Int) {
+    fun deleteById(id: Int) {
         playerRepository.deleteById(id)
     }
 
-    fun findAllPlayersFromParty(party: Party): List<Player> {
+    fun findAllFromParty(party: Party): List<Player> {
         return playerRepository.findAllFromParty(party)
     }
 
-    fun killPlayer(player: Player) {
+    fun isThereAWinner(party: Party): Boolean {
+        return playerRepository.isThereAWinner(party)
+    }
+
+    fun kill(player: Player, party: Party): Player {
         playerRepository.kill(player)
         val killer = playerRepository.findKillerOf(player)
         playerToChallengeRepository.achieveChallengeWithTarget(player)
+        val scoreToAdd: Int
 
-        if (playerRepository.isThereAWinner()) {
+        if (isThereAWinner(party)) {
+            // If he is the winner, +5 point to his score
+            scoreToAdd = 5
             smsService.sendSMS(
                 killer.phone,
                 context.resources.getString(
@@ -48,6 +55,7 @@ class PlayerService(
                 )
             )
         } else {
+            scoreToAdd = 1
             playerToChallengeRepository.modifyChallengeKiller(player, killer)
             val newChallengeForKiller = challengeService.findActiveFromPlayer(killer)
             val newTargetForKiller = findTargetOf(killer)
@@ -61,6 +69,9 @@ class PlayerService(
                 )
             )
         }
+        playerRepository.addScore(killer, scoreToAdd)
+        killer.score += scoreToAdd
+        return killer
     }
 
     private fun findTargetOf(player: Player): Player {

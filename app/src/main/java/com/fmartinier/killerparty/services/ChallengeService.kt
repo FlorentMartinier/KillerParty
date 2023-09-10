@@ -6,8 +6,7 @@ import com.fmartinier.killerparty.model.Challenge
 import com.fmartinier.killerparty.model.Player
 
 class ChallengeService(context: Context) {
-    private val challengeRepository =
-        com.fmartinier.killerparty.db.repository.ChallengeRepository(context)
+    private val challengeRepository = ChallengeRepository(context)
 
     fun insert(description: String) {
         challengeRepository.insert(description)

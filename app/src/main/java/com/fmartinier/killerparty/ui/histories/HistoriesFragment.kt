@@ -1,5 +1,6 @@
 package com.fmartinier.killerparty.ui.histories
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -24,6 +25,7 @@ class HistoriesFragment : Fragment() {
 
     private val histories: MutableList<Party> = mutableListOf()
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -39,7 +41,10 @@ class HistoriesFragment : Fragment() {
 
         binding.histories.apply {
             layoutManager = LinearLayoutManager(context)
-            val adapter = HistoriesViewAdapter(histories, context, partyService, playerService)
+            val adapter = HistoriesViewAdapter(histories, context, partyService, playerService, activity)
+            adapter.onPlayerKilled = {
+                adapter.notifyDataSetChanged()
+            }
             this.adapter = adapter
         }
         return binding.root

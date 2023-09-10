@@ -20,25 +20,25 @@ class ChallengeRepository(context: Context) {
 
     fun insert(description: String) {
         val values = ContentValues()
-        values.put(com.fmartinier.killerparty.db.COLUMN_DESCRIPTION, description)
-        db.insert(com.fmartinier.killerparty.db.TABLE_CHALLENGES, null, values)
+        values.put(COLUMN_DESCRIPTION, description)
+        db.insert(TABLE_CHALLENGES, null, values)
         println("1 challenge added to database")
     }
 
     fun deleteById(id: Int) {
-        db.delete(com.fmartinier.killerparty.db.TABLE_CHALLENGES, "${com.fmartinier.killerparty.db.COLUMN_ID} = $id", null)
+        db.delete(TABLE_CHALLENGES, "$COLUMN_ID = $id", null)
     }
 
     fun findAll(): List<Challenge> {
-        val selectQuery = "SELECT  * FROM ${com.fmartinier.killerparty.db.TABLE_CHALLENGES}"
+        val selectQuery = "SELECT  * FROM $TABLE_CHALLENGES"
         return mapQueryToChallenges(selectQuery)
     }
 
     fun findActiveFromPlayer(player: Player): Challenge {
-        val query = "SELECT c.${com.fmartinier.killerparty.db.COLUMN_ID}, c.${com.fmartinier.killerparty.db.COLUMN_DESCRIPTION} " +
-                "FROM ${com.fmartinier.killerparty.db.TABLE_CHALLENGES} c " +
-                "JOIN ${com.fmartinier.killerparty.db.TABLE_PLAYER_TO_CHALLENGE} pc on c.${com.fmartinier.killerparty.db.COLUMN_ID} = pc.${com.fmartinier.killerparty.db.COLUMN_CHALLENGE_ID} " +
-                "WHERE pc.${com.fmartinier.killerparty.db.COLUMN_KILLER_ID} = '${player.id}' AND pc.${com.fmartinier.killerparty.db.COLUMN_STATE}='${PlayerToChallengeState.IN_PROGRESS}'"
+        val query = "SELECT c.$COLUMN_ID, c.$COLUMN_DESCRIPTION " +
+                "FROM $TABLE_CHALLENGES c " +
+                "JOIN $TABLE_PLAYER_TO_CHALLENGE pc on c.$COLUMN_ID = pc.$COLUMN_CHALLENGE_ID " +
+                "WHERE pc.$COLUMN_KILLER_ID = '${player.id}' AND pc.$COLUMN_STATE='${PlayerToChallengeState.IN_PROGRESS}'"
 
         return mapQueryToChallenges(query).first()
     }
