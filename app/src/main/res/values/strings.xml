@@ -36,4 +36,24 @@
     <string name="no_player_in_party">There are no players in the game yet. Please create one by clicking on the button at the bottom right.</string>
     <string name="no_challenge">There are no challenge yet. Please create one by clicking on the button at the bottom right.</string>
     <string name="no_history">There is no historical party yet. You can create a game by clicking here.</string>
+
+    <!-- Challenges : -->
+    <string name="challenge_reveal">Make him reveal his challenge</string>
+    <string name="challenge_sing_patrick_sebastien">Sing Patrick Sébastien</string>
+    <string name="challenge_drink_bottoms_up">Drink a cold drink</string>
+    <string name="challenge_congratulate">Make him say a compliment about you</string>
+    <string name="challenge_talk_philosophy">Talk about philosophy for at least 5 min</string>
+    <string name="challenge_show_picture">Show a photo of him/her when he/she was younger</string>
+    <string name="challenge_kiss">Give you a kiss on the cheek</string>
+    <string name="challenge_metal_music">Play metal music loudly for everyone to hear</string>
+    <string name="challenge_random_phone">Make a prank call to a random number</string>
+    <string name="challenge_push_up">Do 10 push-ups</string>
+    <string name="challenge_carioca">Dance the carioca (or at least try, it\'s the intention that counts!)</string>
+    <string name="challenge_joke">Tell a joke</string>
+    <string name="challenge_imitate">Make him imitate one of the guests of the party</string>
+    <string name="challenge_cringe_story">Make him reveal an embarrassing/funny anecdote in his life</string>
+    <string name="challenge_take_beard">Play a game of "I've got you, you've got me by the goatee" with you</string>
+    <string name="challenge_pryapisme">Succeed in making him say “pryapism” 3 times during the game</string>
+    <string name="challenge_grimace">Have a grimace contest with you</string>
+    <string name="challenge_help">Helping you achieve your challenge</string>
 </resources>

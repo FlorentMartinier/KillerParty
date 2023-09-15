@@ -1,15 +1,16 @@
 package com.fmartinier.killerparty.db
 
+import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import com.fmartinier.killerparty.R
+import com.fmartinier.killerparty.services.ChallengeService
 
 
-class MyDatabaseHelper(context: Context) :
-    SQLiteOpenHelper(context,
-        DATABASE_NAME, null,
-        DATABASE_VERSION
-    ) {
+class MyDatabaseHelper(
+    val context: Context
+) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
     private var db: SQLiteDatabase = writableDatabase
 
@@ -43,7 +44,11 @@ class MyDatabaseHelper(context: Context) :
                 "$COLUMN_DESCRIPTION TEXT" +
                 ")"
         // Execute script.
-        this.db.execSQL(script)
+        db.execSQL(script)
+
+        DEFAULT_CHALLENGES
+            .map { context.getString(it) }
+            .forEach { insertChallenge(it) }
     }
 
     private fun initializePartyTable() {
@@ -93,5 +98,35 @@ class MyDatabaseHelper(context: Context) :
                 ")"
         // Execute script.
         this.db.execSQL(script)
+    }
+
+    private fun insertChallenge(description: String) {
+        val values = ContentValues()
+        values.put(COLUMN_DESCRIPTION, description)
+        db.insert(TABLE_CHALLENGES, null, values)
+        println("1 challenge added to database")
+    }
+
+    companion object {
+        val DEFAULT_CHALLENGES = listOf(
+            R.string.challenge_reveal,
+            R.string.challenge_sing_patrick_sebastien,
+            R.string.challenge_drink_bottoms_up,
+            R.string.challenge_congratulate,
+            R.string.challenge_talk_philosophy,
+            R.string.challenge_show_picture,
+            R.string.challenge_kiss,
+            R.string.challenge_metal_music,
+            R.string.challenge_random_phone,
+            R.string.challenge_push_up,
+            R.string.challenge_carioca,
+            R.string.challenge_joke,
+            R.string.challenge_imitate,
+            R.string.challenge_cringe_story,
+            R.string.challenge_take_beard,
+            R.string.challenge_pryapisme,
+            R.string.challenge_grimace,
+            R.string.challenge_help,
+        )
     }
 }

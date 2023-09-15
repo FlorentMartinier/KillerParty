@@ -16,7 +16,7 @@ import com.fmartinier.killerparty.model.enums.PlayerToChallengeState
 
 class ChallengeRepository(context: Context) {
 
-    private val db = com.fmartinier.killerparty.db.MyDatabaseHelper(context).getDb()
+    private val db = MyDatabaseHelper(context).getDb()
 
     fun insert(description: String) {
         val values = ContentValues()
