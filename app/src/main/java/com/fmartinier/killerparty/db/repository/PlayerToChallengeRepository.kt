@@ -2,15 +2,7 @@ package com.fmartinier.killerparty.db.repository
 
 import android.content.ContentValues
 import android.content.Context
-import com.fmartinier.killerparty.db.COLUMN_CHALLENGE_ID
-import com.fmartinier.killerparty.db.COLUMN_KILLER_ID
-import com.fmartinier.killerparty.db.COLUMN_STATE
-import com.fmartinier.killerparty.db.COLUMN_TARGET_ID
-import com.fmartinier.killerparty.db.MyDatabaseHelper
-import com.fmartinier.killerparty.db.TABLE_PLAYER_TO_CHALLENGE
-import com.fmartinier.killerparty.db.executeUpdateQuery
 import com.fmartinier.killerparty.model.Player
-import com.fmartinier.killerparty.model.PlayerToChallenge
 import com.fmartinier.killerparty.model.enums.PlayerToChallengeState
 
 class PlayerToChallengeRepository(context: Context) {

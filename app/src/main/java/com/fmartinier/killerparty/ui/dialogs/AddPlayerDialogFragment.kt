@@ -5,7 +5,6 @@ import android.app.Dialog
 import android.os.Bundle
 import android.widget.EditText
 import androidx.fragment.app.DialogFragment
-import com.fmartinier.killerparty.utils.CHALLENGE_DESCRIPTION
 import com.fmartinier.killerparty.R
 import com.fmartinier.killerparty.utils.PLAYER_DESCRIPTION
 import com.fmartinier.killerparty.utils.PLAYER_NAME

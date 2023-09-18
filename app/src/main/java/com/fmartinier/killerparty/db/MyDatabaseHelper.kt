@@ -5,7 +5,6 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import com.fmartinier.killerparty.R
-import com.fmartinier.killerparty.services.ChallengeService
 
 
 class MyDatabaseHelper(
@@ -126,7 +125,6 @@ class MyDatabaseHelper(
             R.string.challenge_take_beard,
             R.string.challenge_pryapisme,
             R.string.challenge_grimace,
-            R.string.challenge_help,
         )
     }
 }

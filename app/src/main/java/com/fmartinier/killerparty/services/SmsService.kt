@@ -14,11 +14,10 @@ class SmsService(
 
     fun sendSMS(phoneNo: String, msg: String) {
         try {
-            val formattedPhoneNo = formatPhoneNumber(phoneNo)
-            val sentPI = PendingIntent.getBroadcast(
-                context, 0, Intent("SMS_SENT"), PendingIntent.FLAG_IMMUTABLE
-            )
-            getSmsManager().sendTextMessage(formattedPhoneNo, null, msg, sentPI, null)
+            val smsManager = getSmsManager()
+            val msgArray = smsManager.divideMessage(msg)
+            smsManager.sendMultipartTextMessage(phoneNo, null, msgArray, null, null)
+            println("SMS successfully sent to this number : $phoneNo. message was : $msg")
         } catch (ex: Exception) {
             Toast.makeText(context, ex.message.toString(), Toast.LENGTH_LONG).show()
             ex.printStackTrace()

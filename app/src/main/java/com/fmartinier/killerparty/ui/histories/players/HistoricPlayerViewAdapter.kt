@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.fmartinier.killerparty.databinding.FragmentHistoricPlayerBinding
 import com.fmartinier.killerparty.model.Player
 import com.fmartinier.killerparty.model.enums.PlayerState
-import com.fmartinier.killerparty.services.PlayerService
 
 class HistoricPlayerViewAdapter(
     private val players: List<Player>,

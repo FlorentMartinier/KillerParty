@@ -5,7 +5,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.fmartinier.killerparty.R
 import com.fmartinier.killerparty.databinding.FragmentHistoricPlayerBinding
 import com.fmartinier.killerparty.model.Player
-import com.fmartinier.killerparty.model.enums.PlayerState
 import com.fmartinier.killerparty.utils.showConfirmationDialog
 
 class HistoricPlayerViewHolder(

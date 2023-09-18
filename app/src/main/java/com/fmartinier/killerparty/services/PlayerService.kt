@@ -21,7 +21,7 @@ class PlayerService(
     fun insert(name: String, phone: String, party: Party) {
         playerRepository.insert(
             name = name,
-            phone = phone,
+            phone = smsService.formatPhoneNumber(phone),
             party = party,
         )
     }

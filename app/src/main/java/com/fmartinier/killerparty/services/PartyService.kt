@@ -2,9 +2,6 @@ package com.fmartinier.killerparty.services
 
 import android.content.Context
 import android.widget.Toast
-import androidx.recyclerview.widget.RecyclerView
-import com.daimajia.androidanimations.library.Techniques
-import com.daimajia.androidanimations.library.YoYo
 import com.fmartinier.killerparty.R
 import com.fmartinier.killerparty.db.repository.ChallengeRepository
 import com.fmartinier.killerparty.db.repository.PartyRepository

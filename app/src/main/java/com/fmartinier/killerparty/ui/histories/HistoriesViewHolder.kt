@@ -9,7 +9,6 @@ import com.fmartinier.killerparty.R
 import com.fmartinier.killerparty.databinding.FragmentHistoricBinding
 import com.fmartinier.killerparty.model.Party
 import com.fmartinier.killerparty.model.Player
-import com.fmartinier.killerparty.model.enums.PlayerState
 import com.fmartinier.killerparty.services.PartyService
 import com.fmartinier.killerparty.services.PlayerService
 import com.fmartinier.killerparty.ui.dialogs.LeaderBoardDialogFragment
