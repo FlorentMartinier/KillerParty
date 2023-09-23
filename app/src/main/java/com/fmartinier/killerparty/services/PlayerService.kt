@@ -58,7 +58,7 @@ class PlayerService(
             scoreToAdd = 1
             playerToChallengeRepository.modifyChallengeKiller(player, killer)
             val newChallengeForKiller = challengeService.findActiveFromPlayer(killer)
-            val newTargetForKiller = findTargetOf(killer)
+            val newTargetForKiller = playerRepository.findTargetOf(killer)
             smsService.sendSMS(
                 killer.phone,
                 context.resources.getString(
@@ -72,9 +72,5 @@ class PlayerService(
         playerRepository.addScore(killer, scoreToAdd)
         killer.score += scoreToAdd
         return killer
-    }
-
-    private fun findTargetOf(player: Player): Player {
-        return playerRepository.findTargetOf(player)
     }
 }

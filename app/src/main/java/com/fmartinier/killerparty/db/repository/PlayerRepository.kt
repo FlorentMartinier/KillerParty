@@ -83,7 +83,7 @@ class PlayerRepository(context: Context) {
 
         val players = mapQueryToPlayers(selectQuery)
         return if (players.isEmpty()) {
-            throw Exception("Le joueur ${player.name} ne possède pas de target, ce n'est pas normal.")
+            throw Exception("Le joueur ${player.name} ne possède pas de cible, ce n'est pas normal.")
         } else {
             players.first()
         }

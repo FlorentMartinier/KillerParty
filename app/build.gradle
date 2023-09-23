@@ -11,8 +11,8 @@ android {
         applicationId "com.fmartinier.killerparty"
         minSdk 26
         targetSdk 33
-        versionCode 7
-        versionName "1.6"
+        versionCode 8
+        versionName "1.7"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -55,6 +55,9 @@ dependencies {
 
     // Progress bar
     implementation 'com.akexorcist:round-corner-progress-bar:2.2.1'
+
+    // Circle button
+    implementation 'com.github.markushi:circlebutton:1.1'
 
     testImplementation 'junit:junit:4.13.2'
     testImplementation 'org.mockito:mockito-core:5.4.0'

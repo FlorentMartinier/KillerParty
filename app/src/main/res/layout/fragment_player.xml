@@ -22,23 +22,29 @@
             <TextView
                 android:id="@+id/playerName"
                 android:layout_weight="1"
-                android:layout_height="fill_parent"
+                android:layout_height="wrap_content"
                 android:layout_width="0dp"
+                android:layout_margin="4dp"
+                android:layout_gravity="center"
                 android:gravity="center" />
 
             <TextView
                 android:id="@+id/phone"
-                android:layout_height="fill_parent"
+                android:layout_height="wrap_content"
                 android:layout_width="0dp"
                 android:layout_weight="1"
+                android:layout_margin="4dp"
+                android:layout_gravity="center"
                 android:gravity="center"/>
 
-            <ImageView
+            <at.markushi.ui.CircleButton
                 android:id="@+id/delete_icon"
-                android:layout_weight="0.4"
-                android:layout_height="fill_parent"
-                android:layout_width="0dp"
-                app:srcCompat="@android:drawable/btn_dialog" />
+                android:layout_weight="0.2"
+                android:layout_width="55dip"
+                android:layout_height="55dip"
+                android:src="@drawable/ic_delete_button"
+                app:cb_color="#CDCDCD"
+                app:cb_pressedRingWidth="8dip" />
 
         </LinearLayout>
 
