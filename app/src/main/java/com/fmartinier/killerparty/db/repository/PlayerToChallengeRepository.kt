@@ -9,11 +9,18 @@ import com.fmartinier.killerparty.db.COLUMN_TARGET_ID
 import com.fmartinier.killerparty.db.TABLE_PLAYER_TO_CHALLENGE
 import com.fmartinier.killerparty.db.executeUpdateQuery
 import com.fmartinier.killerparty.model.Player
+import com.fmartinier.killerparty.model.PlayerToChallenge
 import com.fmartinier.killerparty.model.enums.PlayerToChallengeState
 
 class PlayerToChallengeRepository(context: Context) {
 
     private val db = com.fmartinier.killerparty.db.MyDatabaseHelper(context).getDb()
+
+    fun insertAll(playerToChallenges: List<PlayerToChallenge>) {
+        playerToChallenges.forEach {
+            insert(it.killerId, it.targetId, it.challengeId)
+        }
+    }
 
     fun insert(killerId: Int, targetId: Int, challengeId: Int) {
         val values = ContentValues()

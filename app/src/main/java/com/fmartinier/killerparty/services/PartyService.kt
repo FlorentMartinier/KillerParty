@@ -10,6 +10,7 @@ import com.fmartinier.killerparty.db.repository.PlayerToChallengeRepository
 import com.fmartinier.killerparty.model.Challenge
 import com.fmartinier.killerparty.model.Party
 import com.fmartinier.killerparty.model.Player
+import com.fmartinier.killerparty.model.PlayerToChallenge
 import com.fmartinier.killerparty.model.enums.PartyState
 import com.fmartinier.killerparty.utils.navigateTo
 import java.time.Instant
@@ -71,6 +72,8 @@ class PartyService(val context: Context) {
         val availableTargets: MutableList<Player> = mutableListOf()
         availableChallenges.addAll(challengeRepository.findAll())
         availableTargets.addAll(players)
+
+        val playerToChallenges: MutableList<PlayerToChallenge> = mutableListOf()
         players.forEach {
 
             // Select random challenge
@@ -81,11 +84,9 @@ class PartyService(val context: Context) {
             // Select random target
             var randomTargetIndex = Random.nextInt(availableTargets.size)
             var randomTarget = availableTargets[randomTargetIndex]
-            while (randomTarget == it || playerToChallengeRepository.existByKillerAndTarget(
-                    killer = randomTarget,
-                    target = it
-                )
-            ) {
+
+            // Current player can't be target of found target player. There will have a loop otherwise.
+            while (randomTarget == it || it.isTargetOf(randomTarget, playerToChallenges)) {
                 randomTargetIndex = Random.nextInt(availableTargets.size)
                 randomTarget = availableTargets[randomTargetIndex]
             }
@@ -100,7 +101,12 @@ class PartyService(val context: Context) {
                 )
             )
 
-            playerToChallengeRepository.insert(it.id, randomTarget.id, randomChallenge.id)
+            playerToChallenges.add(PlayerToChallenge(challengeId = randomChallenge.id, targetId = randomTarget.id, killerId = it.id))
         }
+        playerToChallengeRepository.insertAll(playerToChallenges)
+    }
+
+    private fun Player.isTargetOf(player: Player, playerToChallenges: List<PlayerToChallenge>): Boolean {
+        return playerToChallenges.find { it.targetId == this.id && it.killerId == player.id } != null
     }
 }
