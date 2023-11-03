@@ -3,7 +3,6 @@ package com.fmartinier.killerparty.services
 import android.content.Context
 import android.widget.Toast
 import com.fmartinier.killerparty.R
-import com.fmartinier.killerparty.db.repository.ChallengeRepository
 import com.fmartinier.killerparty.db.repository.PartyRepository
 import com.fmartinier.killerparty.db.repository.PlayerRepository
 import com.fmartinier.killerparty.db.repository.PlayerToChallengeRepository
@@ -19,8 +18,7 @@ import kotlin.random.Random
 
 class PartyService(val context: Context) {
     private val partyRepository = PartyRepository(context)
-    private val challengeRepository =
-        ChallengeRepository(context)
+    private val challengeService = ChallengeService(context)
     private val playerRepository = PlayerRepository(context)
     private val playerToChallengeRepository = PlayerToChallengeRepository(context)
     private val smsService = SmsService(context)
@@ -44,11 +42,11 @@ class PartyService(val context: Context) {
 
     fun canBeginParty(context: Context, party: Party): Boolean {
         val players = findPlayers(party)
-        val challenges = challengeRepository.findAll()
+        val enabledChallenges = challengeService.findAllEnabled()
         return if (players.size < 3) {
             Toast.makeText(context, R.string.not_enought_players, Toast.LENGTH_SHORT).show()
             false
-        } else if (challenges.size < players.size) {
+        } else if (enabledChallenges.size < players.size) {
             Toast.makeText(context, R.string.not_enought_challenges, Toast.LENGTH_SHORT).show()
             false
         } else {
@@ -70,7 +68,7 @@ class PartyService(val context: Context) {
     private fun giveChallengeToPlayers(players: List<Player>) {
         val availableChallenges: MutableList<Challenge> = mutableListOf()
         val availableTargets: MutableList<Player> = mutableListOf()
-        availableChallenges.addAll(challengeRepository.findAll())
+        availableChallenges.addAll(challengeService.findAllEnabled())
         availableTargets.addAll(players)
 
         val playerToChallenges: MutableList<PlayerToChallenge> = mutableListOf()
@@ -101,12 +99,21 @@ class PartyService(val context: Context) {
                 )
             )
 
-            playerToChallenges.add(PlayerToChallenge(challengeId = randomChallenge.id, targetId = randomTarget.id, killerId = it.id))
+            playerToChallenges.add(
+                PlayerToChallenge(
+                    challengeId = randomChallenge.id,
+                    targetId = randomTarget.id,
+                    killerId = it.id
+                )
+            )
         }
         playerToChallengeRepository.insertAll(playerToChallenges)
     }
 
-    private fun Player.isTargetOf(player: Player, playerToChallenges: List<PlayerToChallenge>): Boolean {
+    private fun Player.isTargetOf(
+        player: Player,
+        playerToChallenges: List<PlayerToChallenge>
+    ): Boolean {
         return playerToChallenges.find { it.targetId == this.id && it.killerId == player.id } != null
     }
 }

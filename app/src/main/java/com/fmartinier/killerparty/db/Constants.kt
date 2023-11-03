@@ -1,7 +1,7 @@
 package com.fmartinier.killerparty.db
 
 const val DATABASE_NAME = "KillerParty"
-const val DATABASE_VERSION = 21
+const val DATABASE_VERSION = 25
 
 // Tables
 const val TABLE_CHALLENGES = "challenges"
@@ -13,6 +13,7 @@ const val TABLE_PLAYER_TO_PARTY = "player_to_party"
 // Columns
 const val COLUMN_ID = "id"
 const val COLUMN_DESCRIPTION = "description"
+const val COLUMN_ENABLE = "enable"
 const val COLUMN_NAME = "name"
 const val COLUMN_PHONE = "phone"
 const val COLUMN_STATE = "state"

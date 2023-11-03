@@ -20,6 +20,14 @@ class ChallengeService(context: Context) {
         return challengeRepository.findAll()
     }
 
+    fun findAllEnabled(): List<Challenge> {
+        return challengeRepository.findAll().filter { it.enable }
+    }
+
+    fun setEnableById(id: Int, value: Boolean) {
+        challengeRepository.setEnableById(id, value)
+    }
+
     fun findActiveFromPlayer(player: Player): Challenge {
         return challengeRepository.findActiveFromPlayer(player)
     }

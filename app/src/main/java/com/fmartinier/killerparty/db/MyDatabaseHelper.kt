@@ -40,7 +40,8 @@ class MyDatabaseHelper(
         // Script to create table.
         val script = "CREATE TABLE $TABLE_CHALLENGES(" +
                 "$COLUMN_ID INTEGER PRIMARY KEY," +
-                "$COLUMN_DESCRIPTION TEXT" +
+                "$COLUMN_DESCRIPTION TEXT, " +
+                "$COLUMN_ENABLE BOOLEAN" +
                 ")"
         // Execute script.
         db.execSQL(script)
@@ -102,6 +103,7 @@ class MyDatabaseHelper(
     private fun insertChallenge(description: String) {
         val values = ContentValues()
         values.put(COLUMN_DESCRIPTION, description)
+        values.put(COLUMN_ENABLE, "true")
         db.insert(TABLE_CHALLENGES, null, values)
         println("1 challenge added to database")
     }
