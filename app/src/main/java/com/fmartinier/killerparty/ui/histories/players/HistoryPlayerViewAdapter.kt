@@ -4,11 +4,11 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.fmartinier.killerparty.databinding.FragmentHistoricPlayerBinding
+import com.fmartinier.killerparty.databinding.FragmentHistoryPlayerBinding
 import com.fmartinier.killerparty.model.Player
 import com.fmartinier.killerparty.model.enums.PlayerState
 
-class HistoricPlayerViewAdapter(
+class HistoryPlayerViewAdapter(
     private val players: List<Player>,
     private val context: Context,
 ) : RecyclerView.Adapter<HistoricPlayerViewHolder>() {
@@ -17,7 +17,7 @@ class HistoricPlayerViewAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoricPlayerViewHolder {
         val from = LayoutInflater.from(parent.context)
-        val binding = FragmentHistoricPlayerBinding.inflate(from, parent, false)
+        val binding = FragmentHistoryPlayerBinding.inflate(from, parent, false)
         return HistoricPlayerViewHolder(binding, context)
     }
 

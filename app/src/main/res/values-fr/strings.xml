@@ -2,7 +2,7 @@
     <string name="app_name">Killer party</string>
     <string name="title_party">Partie</string>
     <string name="title_challenges">Défis</string>
-    <string name="title_historic">Historique</string>
+    <string name="title_history">Historique</string>
     <string name="add_challenge">Ajouter un défi</string>
     <string name="add_player">Ajouter un joueur manuellement</string>
     <string name="import_contact">Importer un contact</string>

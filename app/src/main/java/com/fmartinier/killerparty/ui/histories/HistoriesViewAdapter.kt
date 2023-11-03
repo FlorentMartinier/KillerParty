@@ -7,7 +7,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.daimajia.androidanimations.library.Techniques
 import com.daimajia.androidanimations.library.YoYo
-import com.fmartinier.killerparty.databinding.FragmentHistoricBinding
+import com.fmartinier.killerparty.databinding.FragmentHistoryBinding
 import com.fmartinier.killerparty.extensions.isNearOf
 import com.fmartinier.killerparty.model.Party
 import com.fmartinier.killerparty.model.Player
@@ -27,7 +27,7 @@ class HistoriesViewAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoriesViewHolder {
         val from = LayoutInflater.from(parent.context)
-        val binding = FragmentHistoricBinding.inflate(from, parent, false)
+        val binding = FragmentHistoryBinding.inflate(from, parent, false)
         return HistoriesViewHolder(binding, context, partyService, playerService, activity)
     }
 

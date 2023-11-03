@@ -2,7 +2,7 @@
     <string name="app_name">Killer party</string>
     <string name="title_party">Party</string>
     <string name="title_challenges">Challenges</string>
-    <string name="title_historic">Historic</string>
+    <string name="title_history">History</string>
     <string name="add_challenge">Add challenge</string>
     <string name="add_player">Add player manually</string>
     <string name="import_contact">Import contact</string>
