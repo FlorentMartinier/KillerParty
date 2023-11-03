@@ -15,19 +15,24 @@ class AddChallengeDialogFragment : DialogFragment() {
         return activity?.let {
             val builder = AlertDialog.Builder(it)
 
-            val view =
-                layoutInflater.inflate(R.layout.add_challenge_modal, null)
+            val view = layoutInflater.inflate(R.layout.add_challenge_modal, null)
             val bundle = Bundle()
             builder.setView(view)
-                .setPositiveButton(R.string.ok) { dialog, _ ->
+                .setPositiveButton(R.string.add) { dialog, _ ->
                     val editText = view.findViewWithTag<EditText>(CHALLENGE_DESCRIPTION)
                     bundle.putString(CHALLENGE_DESCRIPTION, editText.text.toString())
-                    requireActivity().supportFragmentManager.setFragmentResult(CHALLENGE_DESCRIPTION, bundle)
+                    requireActivity().supportFragmentManager.setFragmentResult(
+                        CHALLENGE_DESCRIPTION,
+                        bundle
+                    )
                     dialog.dismiss()
                 }
                 .setNegativeButton(R.string.cancel) { dialog, _ ->
                     bundle.putString(CHALLENGE_DESCRIPTION, null)
-                    requireActivity().supportFragmentManager.setFragmentResult(CHALLENGE_DESCRIPTION, bundle)
+                    requireActivity().supportFragmentManager.setFragmentResult(
+                        CHALLENGE_DESCRIPTION,
+                        bundle
+                    )
                     dialog.cancel()
                 }
             builder.create()

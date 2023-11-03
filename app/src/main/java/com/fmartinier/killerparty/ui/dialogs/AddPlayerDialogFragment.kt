@@ -12,31 +12,36 @@ import com.fmartinier.killerparty.utils.PLAYER_PHONE
 
 
 class AddPlayerDialogFragment(
-    private val playerName : String = "",
-    private val playerPhone : String = "",
+    private val playerName: String = "",
+    private val playerPhone: String = "",
 ) : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
             val builder = AlertDialog.Builder(it)
 
-            val view =
-                layoutInflater.inflate(R.layout.add_player_modal, null)
+            val view = layoutInflater.inflate(R.layout.add_player_modal, null)
             val playerNameEditText = view.findViewWithTag<EditText>(PLAYER_NAME)
             val playerPhoneEditText = view.findViewWithTag<EditText>(PLAYER_PHONE)
             playerNameEditText.setText(playerName)
             playerPhoneEditText.setText(playerPhone)
             val bundle = Bundle()
             builder.setView(view)
-                .setPositiveButton(R.string.ok) { dialog, _ ->
+                .setPositiveButton(R.string.add) { dialog, _ ->
                     bundle.putString(PLAYER_NAME, playerNameEditText.text.toString())
                     bundle.putString(PLAYER_PHONE, playerPhoneEditText.text.toString())
-                    requireActivity().supportFragmentManager.setFragmentResult(PLAYER_DESCRIPTION, bundle)
+                    requireActivity().supportFragmentManager.setFragmentResult(
+                        PLAYER_DESCRIPTION,
+                        bundle
+                    )
                     dialog.dismiss()
                 }
                 .setNegativeButton(R.string.cancel) { dialog, _ ->
                     bundle.putString(PLAYER_DESCRIPTION, null)
-                    requireActivity().supportFragmentManager.setFragmentResult(PLAYER_DESCRIPTION, bundle)
+                    requireActivity().supportFragmentManager.setFragmentResult(
+                        PLAYER_DESCRIPTION,
+                        bundle
+                    )
                     dialog.cancel()
                 }
             builder.create()
