@@ -4,12 +4,12 @@ import com.fmartinier.killerparty.R
 
 enum class PlayerState {
     KILLED,
-    IN_LIFE;
+    ALIVE;
 
     fun translate(): Int {
-        return when(this){
+        return when (this) {
             KILLED -> R.string.player_killed
-            else -> R.string.player_in_life
+            else -> R.string.player_alive
         }
     }
 }

@@ -23,8 +23,8 @@ class HistoryPlayerViewAdapter(
 
     override fun onBindViewHolder(holder: HistoricPlayerViewHolder, position: Int) {
         val player = players[position]
-        val isInLife = player.state == PlayerState.IN_LIFE
-        val lastOneIneLife = players.filter { it.state == PlayerState.IN_LIFE }.size == 1
+        val isInLife = player.state == PlayerState.ALIVE
+        val lastOneIneLife = players.filter { it.state == PlayerState.ALIVE }.size == 1
         holder.bindPlayer(player, isInLife && !lastOneIneLife)
         holder.onPlayerKilled = {
             this.onPlayerKilled.invoke(it)

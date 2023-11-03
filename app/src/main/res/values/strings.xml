@@ -24,7 +24,7 @@
     <string name="no_winner_yet">No winner yet !</string>
     <string name="kill_confirmation">Are you sure to kill %1$s?</string>
     <string name="player_killed">Killed</string>
-    <string name="player_in_life">In life</string>
+    <string name="player_alive">Alive</string>
     <string name="not_enought_players">Number of players to low!</string>
     <string name="not_enought_challenges">There are more players than challenges!</string>
     <string name="sms_challenge_init">Killer\'s game has just started. Here is the information that concerns you:\Your target: %1$s\nnChallenge that you must make him achieve: %2$s</string>
