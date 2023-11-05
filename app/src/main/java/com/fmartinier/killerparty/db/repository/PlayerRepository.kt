@@ -29,7 +29,7 @@ class PlayerRepository(context: Context) {
         val values = ContentValues()
         values.put(COLUMN_NAME, name)
         values.put(COLUMN_PHONE, phone)
-        values.put(COLUMN_STATE, PlayerState.IN_LIFE.name)
+        values.put(COLUMN_STATE, PlayerState.ALIVE.name)
         values.put(COLUMN_SCORE, 0)
         val playerId = db.insert(TABLE_PLAYERS, null, values)
         insertToParty(playerId = playerId.toInt(), partyId = party.id)
@@ -99,7 +99,7 @@ class PlayerRepository(context: Context) {
 
     fun isThereAWinner(party: Party): Boolean {
         val inLifePlayers = findAllFromParty(party)
-            .filter { it.state == PlayerState.IN_LIFE }
+            .filter { it.state == PlayerState.ALIVE }
 
         return if (inLifePlayers.isEmpty()) {
             throw Exception("Aucun joueur n'est encore en vie. Ce n'est pas normal")

@@ -6,6 +6,6 @@ data class Player(
     val id: Int,
     val name: String,
     val phone: String,
-    var state: PlayerState = PlayerState.IN_LIFE,
+    var state: PlayerState = PlayerState.ALIVE,
     var score: Int,
 )

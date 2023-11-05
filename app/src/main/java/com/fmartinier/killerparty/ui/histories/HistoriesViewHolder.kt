@@ -6,17 +6,17 @@ import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.fmartinier.killerparty.R
-import com.fmartinier.killerparty.databinding.FragmentHistoricBinding
+import com.fmartinier.killerparty.databinding.FragmentHistoryBinding
 import com.fmartinier.killerparty.model.Party
 import com.fmartinier.killerparty.model.Player
 import com.fmartinier.killerparty.services.PartyService
 import com.fmartinier.killerparty.services.PlayerService
 import com.fmartinier.killerparty.ui.dialogs.LeaderBoardDialogFragment
-import com.fmartinier.killerparty.ui.histories.players.HistoricPlayerViewAdapter
+import com.fmartinier.killerparty.ui.histories.players.HistoryPlayerViewAdapter
 import java.time.ZoneOffset
 
 class HistoriesViewHolder(
-    private val fragmentHistoricBinding: FragmentHistoricBinding,
+    private val fragmentHistoricBinding: FragmentHistoryBinding,
     private val context: Context,
     private val partyService: PartyService,
     private val playerService: PlayerService,
@@ -42,7 +42,7 @@ class HistoriesViewHolder(
             launchLeaderBoard(players)
         }
         fragmentHistoricBinding.playerList.apply {
-            val adapter = HistoricPlayerViewAdapter(players, context)
+            val adapter = HistoryPlayerViewAdapter(players, context)
             adapter.onPlayerKilled = {
                 val killer = playerService.kill(it, party)
                 if (playerService.isThereAWinner(party)) {

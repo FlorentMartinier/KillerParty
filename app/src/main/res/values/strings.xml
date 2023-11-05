@@ -2,7 +2,7 @@
     <string name="app_name">Killer party</string>
     <string name="title_party">Party</string>
     <string name="title_challenges">Challenges</string>
-    <string name="title_historic">Historic</string>
+    <string name="title_history">History</string>
     <string name="add_challenge">Add challenge</string>
     <string name="add_player">Add player manually</string>
     <string name="import_contact">Import contact</string>
@@ -26,19 +26,19 @@
     <string name="kill_confirm">Kill %1$s?</string>
     <string name="kill_cancel">Keep alive</string>
     <string name="player_killed">Killed</string>
-    <string name="player_in_life">In life</string>
+    <string name="player_alive">Alive</string>
     <string name="not_enought_players">Number of players to low!</string>
     <string name="not_enought_challenges">There are more players than challenges!</string>
     <string name="sms_challenge_init">Killer\'s game has just started. Here is the information that concerns you:\Your target: %1$s\nnChallenge that you must make him achieve: %2$s</string>
     <string name="sms_kill_player">Well done, you have killed %1$s!\nHere is your new target: %2$s\nNew challenge : %3$s</string>
-    <string name="sms_youre_the_winner">Congratulation %1$s! You\'re the winner! 50 points for Gryffindor!</string>
+    <string name="sms_youre_the_winner">Congratulation %1$s! You\'re the winner! 50 points to Gryffindor!</string>
     <string name="invalid_fields">There are invalid fields</string>
     <string name="begin_party_message">Are you sure to start the game? This will cause %1$s text messages to be sent to different players.</string>
     <string name="begin_party_confirm">Send</string>
     <string name="begin_party_cancel">Cancel</string>
     <string name="party_beginning">Game on</string>
     <string name="no_player_in_party">There are no players in the game yet. Please create one by clicking on the button at the bottom right.</string>
-    <string name="no_challenge">There are no challenge yet. Please create one by clicking on the button at the bottom right.</string>
+    <string name="no_challenge">There are no challenges yet. Please create one by clicking on the button at the bottom right.</string>
     <string name="no_history">There is no historical party yet. You can create a game by clicking here.</string>
 
     <!-- Challenges : -->

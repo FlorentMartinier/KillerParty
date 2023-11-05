@@ -10,7 +10,7 @@ import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fmartinier.killerparty.R
-import com.fmartinier.killerparty.databinding.FragmentHistoricsBinding
+import com.fmartinier.killerparty.databinding.FragmentHistoryListBinding
 import com.fmartinier.killerparty.extensions.toDP
 import com.fmartinier.killerparty.model.Party
 import com.fmartinier.killerparty.services.PartyService
@@ -19,7 +19,7 @@ import com.fmartinier.killerparty.services.PlayerService
 
 class HistoriesFragment : Fragment() {
 
-    private lateinit var binding: FragmentHistoricsBinding
+    private lateinit var binding: FragmentHistoryListBinding
     private lateinit var partyService: PartyService
     private lateinit var playerService: PlayerService
 
@@ -31,7 +31,7 @@ class HistoriesFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentHistoricsBinding.inflate(inflater, container, false)
+        binding = FragmentHistoryListBinding.inflate(inflater, container, false)
 
         manageHelperConfiguration()
 

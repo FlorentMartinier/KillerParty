@@ -14,8 +14,8 @@
     <fragment
         android:id="@+id/navigation_historic"
         android:name="com.fmartinier.killerparty.ui.histories.HistoriesFragment"
-        android:label="@string/title_historic"
-        tools:layout="@layout/fragment_historics" />
+        android:label="@string/title_history"
+        tools:layout="@layout/fragment_history_list" />
 
     <fragment
         android:id="@+id/navigation_challenges"

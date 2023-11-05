@@ -3,12 +3,12 @@ package com.fmartinier.killerparty.ui.histories.players
 import android.content.Context
 import androidx.recyclerview.widget.RecyclerView
 import com.fmartinier.killerparty.R
-import com.fmartinier.killerparty.databinding.FragmentHistoricPlayerBinding
+import com.fmartinier.killerparty.databinding.FragmentHistoryPlayerBinding
 import com.fmartinier.killerparty.model.Player
 import com.fmartinier.killerparty.utils.showConfirmationDialog
 
 class HistoricPlayerViewHolder(
-    private val binding: FragmentHistoricPlayerBinding,
+    private val binding: FragmentHistoryPlayerBinding,
     private val context: Context,
 ) : RecyclerView.ViewHolder(binding.root) {
 

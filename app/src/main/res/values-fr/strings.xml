@@ -2,7 +2,7 @@
     <string name="app_name">Killer party</string>
     <string name="title_party">Partie</string>
     <string name="title_challenges">Défis</string>
-    <string name="title_historic">Historique</string>
+    <string name="title_history">Historique</string>
     <string name="add_challenge">Ajouter un défi</string>
     <string name="add_player">Ajouter un joueur manuellement</string>
     <string name="import_contact">Importer un contact</string>
@@ -26,7 +26,7 @@
     <string name="kill_confirm">Killer %1$s?</string>
     <string name="kill_cancel">Garder en vie</string>
     <string name="player_killed">Killé</string>
-    <string name="player_in_life">En jeu</string>
+    <string name="player_alive">En jeu</string>
     <string name="not_enought_players">Le nombre de joueur n\'est pas suffisant !</string>
     <string name="not_enought_challenges">Il y a plus de joueurs que de défis !</string>
     <string name="sms_challenge_init">La partie de Killer vient de commencer. Voici les informations qui vous concernent :\nVotre cible : %1$s\nDéfi que vous devez lui faire réaliser : %2$s</string>
