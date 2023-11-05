@@ -9,11 +9,11 @@
     <string name="player_name">Name</string>
     <string name="player_phone">Phone</string>
     <string name="challenge_description">Challenge description</string>
-    <string name="ok">OK</string>
+    <string name="add">Add</string>
     <string name="cancel">Cancel</string>
-    <string name="delete_confirmation">Are you sure you want to Delete?</string>
-    <string name="yes">Yes</string>
-    <string name="no">No</string>
+    <string name="delete_confirmation">Are you sure you want to delete?</string>
+    <string name="delete_confirmed">Delete</string>
+    <string name="delete_cancel">Cancel</string>
     <string name="begin_party">Begin party</string>
     <string name="party_date">Date : %1$s</string>
     <string name="party_state">State : %1$s</string>
@@ -22,7 +22,9 @@
     <string name="party_state_ended">Ended</string>
     <string name="winner">Winner: %1$s</string>
     <string name="no_winner_yet">No winner yet !</string>
-    <string name="kill_confirmation">Are you sure to kill %1$s?</string>
+    <string name="kill_message">Are you sure to kill %1$s?</string>
+    <string name="kill_confirm">Kill %1$s?</string>
+    <string name="kill_cancel">Keep alive</string>
     <string name="player_killed">Killed</string>
     <string name="player_in_life">In life</string>
     <string name="not_enought_players">Number of players to low!</string>
@@ -31,7 +33,9 @@
     <string name="sms_kill_player">Well done, you have killed %1$s!\nHere is your new target: %2$s\nNew challenge : %3$s</string>
     <string name="sms_youre_the_winner">Congratulation %1$s! You\'re the winner! 50 points for Gryffindor!</string>
     <string name="invalid_fields">There are invalid fields</string>
-    <string name="begin_party_confirmation">Are you sure to start the game? This will cause %1$s text messages to be sent to different players.</string>
+    <string name="begin_party_message">Are you sure to start the game? This will cause %1$s text messages to be sent to different players.</string>
+    <string name="begin_party_confirm">Send</string>
+    <string name="begin_party_cancel">Cancel</string>
     <string name="party_beginning">Game on</string>
     <string name="no_player_in_party">There are no players in the game yet. Please create one by clicking on the button at the bottom right.</string>
     <string name="no_challenge">There are no challenge yet. Please create one by clicking on the button at the bottom right.</string>

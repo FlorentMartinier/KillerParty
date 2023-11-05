@@ -5,54 +5,84 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.ContextWrapper
 import android.view.View
+import androidx.annotation.StringRes
 import com.fmartinier.killerparty.R
 
 
 fun <T> showDeleteConfirmationDialog(context: Context, itemToRemove: T, function: (T) -> Unit) {
-    val builder = AlertDialog.Builder(context)
-    builder.setMessage(R.string.delete_confirmation)
-        .setCancelable(false)
-        .setPositiveButton(R.string.yes) { _, _ ->
-            function.invoke(itemToRemove)
-        }
-        .setNegativeButton(R.string.no) { dialog, _ ->
-            dialog.dismiss()
-        }
-    val alert = builder.create()
-    alert.show()
+    showConfirmationDialog(
+        context,
+        R.string.delete_confirmation,
+        R.string.delete_confirmed,
+        R.string.delete_cancel,
+        itemToRemove,
+        function
+    )
 }
 
 fun <T> showConfirmationDialog(
     context: Context,
-    confirmationMessage: String,
+    @StringRes
+    message: Int,
+    @StringRes
+    positiveAction: Int,
+    @StringRes
+    negativeAction: Int,
+    elt: T,
     function: (T) -> Unit,
-    params: T
 ) {
-    val builder = AlertDialog.Builder(context)
-    builder.setMessage(confirmationMessage)
-        .setCancelable(false)
-        .setPositiveButton(R.string.yes) { _, _ ->
-            function.invoke(params)
-        }
-        .setNegativeButton(R.string.no) { dialog, _ ->
-            dialog.dismiss()
-        }
-    val alert = builder.create()
-    alert.show()
+    showConfirmationDialog(context, message, positiveAction, negativeAction) {
+        function(elt)
+    }
 }
 
-fun showConfirmationDialog(context: Context, confirmationMessage: String, function: () -> Unit) {
-    val builder = AlertDialog.Builder(context)
-    builder.setMessage(confirmationMessage)
+fun <T> showConfirmationDialog(
+    context: Context,
+    message: String,
+    positiveAction: String,
+    negativeAction: String,
+    elt: T,
+    function: (T) -> Unit,
+) {
+    showConfirmationDialog(context, message, positiveAction, negativeAction) {
+        function(elt)
+    }
+}
+
+fun showConfirmationDialog(
+    context: Context,
+    @StringRes
+    message: Int,
+    @StringRes
+    positiveAction: Int,
+    @StringRes
+    negativeAction: Int,
+    function: () -> Unit
+) {
+    showConfirmationDialog(
+        context,
+        context.getString(message),
+        context.getString(positiveAction),
+        context.getString(negativeAction),
+        function
+    )
+}
+
+fun showConfirmationDialog(
+    context: Context,
+    message: String,
+    positiveAction: String,
+    negativeAction: String,
+    function: () -> Unit
+) {
+    AlertDialog.Builder(context)
+        .setMessage(message)
         .setCancelable(false)
-        .setPositiveButton(R.string.yes) { _, _ ->
-            function.invoke()
+        .setPositiveButton(positiveAction) { _, _ ->
+            function()
         }
-        .setNegativeButton(R.string.no) { dialog, _ ->
-            dialog.dismiss()
-        }
-    val alert = builder.create()
-    alert.show()
+        .setNegativeButton(negativeAction, null)
+        .show()
 }
 
 fun navigateTo(context: Context, resourceId: Int) {

@@ -80,10 +80,12 @@ class PartyFragment : Fragment() {
             if (partyService.canBeginParty(requiredContext, party)) {
                 showConfirmationDialog(
                     context = requiredContext,
-                    confirmationMessage = resources.getString(
-                        R.string.begin_party_confirmation,
+                    message = getString(
+                        R.string.begin_party_message,
                         players.size.toString()
                     ),
+                    positiveAction = getString(R.string.begin_party_confirm),
+                    negativeAction = getString(R.string.begin_party_cancel),
                     function = {
                         partyService.beginParty(party = party, players = players)
                         Toast.makeText(
@@ -107,7 +109,9 @@ class PartyFragment : Fragment() {
         ) { requestKey, bundle ->
             val phoneNumber = bundle.getString(PLAYER_PHONE)
             if (requestKey == PLAYER_DESCRIPTION && !bundle.getString(PLAYER_NAME)
-                    .isNullOrEmpty() && !phoneNumber.isNullOrEmpty() && smsService.isValidPhoneNumber(phoneNumber)
+                    .isNullOrEmpty() && !phoneNumber.isNullOrEmpty() && smsService.isValidPhoneNumber(
+                    phoneNumber
+                )
             ) {
                 playerService.insert(
                     name = bundle.getString(PLAYER_NAME) ?: "",

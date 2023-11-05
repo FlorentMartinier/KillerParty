@@ -9,11 +9,11 @@
     <string name="player_name">Nom</string>
     <string name="player_phone">Téléphone</string>
     <string name="challenge_description">Description du défi</string>
-    <string name="ok">Ok</string>
+    <string name="add">Ajouter</string>
     <string name="cancel">Annuler</string>
     <string name="delete_confirmation">Êtes vous sûr de vouloir supprimer ?</string>
-    <string name="yes">Oui</string>
-    <string name="no">Non</string>
+    <string name="delete_confirmed">Supprimer</string>
+    <string name="delete_cancel">Cancel</string>
     <string name="begin_party">Commencer la partie</string>
     <string name="party_date">Date : %1$s</string>
     <string name="party_state">Etat : %1$s</string>
@@ -22,7 +22,9 @@
     <string name="party_state_ended">Terminée</string>
     <string name="winner">Gagnant : %1$s</string>
     <string name="no_winner_yet">Pas encore de gagnant !</string>
-    <string name="kill_confirmation">Êtes-vous sûr de killer %1$s ?</string>
+    <string name="kill_message">Êtes-vous sûr de killer %1$s ?</string>
+    <string name="kill_confirm">Killer %1$s?</string>
+    <string name="kill_cancel">Garder en vie</string>
     <string name="player_killed">Killé</string>
     <string name="player_in_life">En jeu</string>
     <string name="not_enought_players">Le nombre de joueur n\'est pas suffisant !</string>
@@ -31,7 +33,9 @@
     <string name="sms_kill_player">Bravo, vous avez killé %1$s !\nVoici votre nouvelle cible : %2$s\nNouveau défi : %3$s</string>
     <string name="sms_youre_the_winner">Félicitation %1$s! Tu as gagné cette partie de killer ! 50 points pour Gryffondor !</string>
     <string name="invalid_fields">Des champs sont invalides</string>
-    <string name="begin_party_confirmation">Êtes-vous sûr de commencer la partie ? Cela engendrera l\'envoi de %1$s SMS aux différents joueurs.</string>
+    <string name="begin_party_message">Êtes-vous sûr de commencer la partie ? Cela engendrera l\'envoi de %1$s SMS aux différents joueurs.</string>
+    <string name="begin_party_confirm">Envoyer</string>
+    <string name="begin_party_cancel">Cancel</string>
     <string name="party_beginning">La partie commence</string>
     <string name="no_player_in_party">Il n\'existe encore aucun joueur dans la partie. Veuillez en créer en cliquant sur le bouton en bas à droite.</string>
     <string name="no_challenge">Il n\'existe encore aucun défi. Veuillez en créer un en cliquant sur le bouton en bas à droite.</string>

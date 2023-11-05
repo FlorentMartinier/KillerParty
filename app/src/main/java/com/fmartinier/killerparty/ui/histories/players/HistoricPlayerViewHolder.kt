@@ -27,12 +27,14 @@ class HistoricPlayerViewHolder(
         binding.buttonKill.setOnClickListener {
             showConfirmationDialog(
                 context = context,
-                confirmationMessage = context.resources.getString(
-                    R.string.kill_confirmation,
+                message = context.getString(
+                    R.string.kill_message,
                     player.name
                 ),
+                positiveAction = context.getString(R.string.kill_confirm, player.name),
+                negativeAction = context.getString(R.string.kill_cancel),
                 function = onPlayerKilled,
-                params = player,
+                elt = player,
             )
         }
     }
