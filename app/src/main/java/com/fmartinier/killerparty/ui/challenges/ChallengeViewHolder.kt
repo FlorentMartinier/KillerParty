@@ -20,16 +20,16 @@ class ChallengeViewHolder(
 
         fragmentChallengeBinding.deleteIcon.setOnClickListener {
             showDeleteConfirmationDialog(
-                context = context,
-                itemToRemove = challenge,
-                function = onChallengeRemoved
+                context = context, itemToRemove = challenge, function = onChallengeRemoved
             )
         }
 
         fragmentChallengeBinding.switchEnable.isChecked = challenge.enable
-        fragmentChallengeBinding.switchEnable.setOnCheckedChangeListener { _, isChecked ->
+        fragmentChallengeBinding.switchEnable.setOnClickListener {
+            val isChecked = !challenge.enable
+            challenge.enable = isChecked
+            fragmentChallengeBinding.switchEnable.isChecked = isChecked
             challengeService.setEnableById(challenge.id, isChecked)
         }
     }
-
 }

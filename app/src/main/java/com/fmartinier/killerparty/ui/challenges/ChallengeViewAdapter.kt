@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.fmartinier.killerparty.databinding.FragmentChallengeBinding
 import com.fmartinier.killerparty.model.Challenge
-import com.fmartinier.killerparty.services.ChallengeService
 
 class ChallengeViewAdapter(
     private val challenges: MutableList<Challenge>,
