@@ -15,6 +15,7 @@ import com.fmartinier.killerparty.extensions.toDP
 import com.fmartinier.killerparty.model.Party
 import com.fmartinier.killerparty.services.PartyService
 import com.fmartinier.killerparty.services.PlayerService
+import com.google.android.gms.ads.MobileAds
 
 
 class HistoriesFragment : Fragment() {
@@ -41,7 +42,8 @@ class HistoriesFragment : Fragment() {
 
         binding.histories.apply {
             layoutManager = LinearLayoutManager(context)
-            val adapter = HistoriesViewAdapter(histories, context, partyService, playerService, activity)
+            val adapter =
+                HistoriesViewAdapter(histories, context, partyService, playerService, activity)
             adapter.onPlayerKilled = {
                 adapter.notifyDataSetChanged()
             }
