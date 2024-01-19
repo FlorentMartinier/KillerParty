@@ -36,6 +36,7 @@
     <string name="begin_party_message">Are you sure to start the game? This will cause %1$s text messages to be sent to different players.</string>
     <string name="begin_party_confirm">Send</string>
     <string name="begin_party_cancel">Cancel</string>
+    <string name="insert_player_message">Are you sure to add %1$s players in the game?</string>
     <string name="party_beginning">Game on</string>
     <string name="no_player_in_party">There are no players in the game yet. Please create one by clicking on the button at the bottom right.</string>
     <string name="no_challenge">There are no challenges yet. Please create one by clicking on the button at the bottom right.</string>

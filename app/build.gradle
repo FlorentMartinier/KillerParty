@@ -11,8 +11,8 @@ android {
         applicationId "com.fmartinier.killerparty"
         minSdk 26
         targetSdk 34
-        versionCode 9
-        versionName "1.8"
+        versionCode 11
+        versionName "2.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -61,6 +61,9 @@ dependencies {
 
     // Admob
     implementation 'com.google.android.gms:play-services-ads:22.6.0'
+
+    // Contact picker
+    implementation 'com.1gravity:android-contactpicker:1.4.0'
 
     testImplementation 'junit:junit:4.13.2'
     testImplementation 'org.mockito:mockito-core:5.7.0'

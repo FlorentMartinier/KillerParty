@@ -36,6 +36,7 @@
     <string name="begin_party_message">Êtes-vous sûr de commencer la partie ? Cela engendrera l\'envoi de %1$s SMS aux différents joueurs.</string>
     <string name="begin_party_confirm">Envoyer</string>
     <string name="begin_party_cancel">Cancel</string>
+    <string name="insert_player_message">Êtes-vous sûr d\'ajouter %1$s joueurs dans la partie ?</string>
     <string name="party_beginning">La partie commence</string>
     <string name="no_player_in_party">Il n\'existe encore aucun joueur dans la partie. Veuillez en créer en cliquant sur le bouton en bas à droite.</string>
     <string name="no_challenge">Il n\'existe encore aucun défi. Veuillez en créer un en cliquant sur le bouton en bas à droite.</string>

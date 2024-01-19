@@ -3,8 +3,6 @@ package com.fmartinier.killerparty.ui.party
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
-import android.database.Cursor
-import android.net.Uri
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.view.LayoutInflater
@@ -26,6 +24,11 @@ import com.fmartinier.killerparty.utils.PLAYER_DESCRIPTION
 import com.fmartinier.killerparty.utils.PLAYER_NAME
 import com.fmartinier.killerparty.utils.PLAYER_PHONE
 import com.fmartinier.killerparty.utils.showConfirmationDialog
+import com.onegravity.contactpicker.contact.Contact
+import com.onegravity.contactpicker.contact.ContactDescription
+import com.onegravity.contactpicker.contact.ContactSortOrder
+import com.onegravity.contactpicker.core.ContactPickerActivity
+import com.onegravity.contactpicker.picture.ContactPictureType
 
 
 class PartyFragment : Fragment() {
@@ -113,13 +116,10 @@ class PartyFragment : Fragment() {
                     phoneNumber
                 )
             ) {
-                playerService.insert(
+                insertPlayer(
                     name = bundle.getString(PLAYER_NAME) ?: "",
-                    phone = bundle.getString(PLAYER_PHONE) ?: "",
-                    party = party
+                    phone = bundle.getString(PLAYER_PHONE) ?: ""
                 )
-                fillAllPlayers()
-                binding.players.adapter?.notifyItemInserted(players.size)
             } else {
                 Toast.makeText(
                     context,
@@ -131,57 +131,64 @@ class PartyFragment : Fragment() {
         dialog.show(activity?.supportFragmentManager!!, "")
     }
 
+    private fun insertPlayer(name: String, phone: String) {
+        playerService.insert(
+            name = name,
+            phone = phone,
+            party = party
+        )
+        fillAllPlayers()
+        binding.players.adapter?.notifyItemInserted(players.size)
+    }
+
     private fun pickContact() {
-        val intent = Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI)
+        val intent: Intent = Intent(context, ContactPickerActivity::class.java)
+            .putExtra(ContactPickerActivity.EXTRA_CONTACT_BADGE_TYPE, ContactPictureType.ROUND.name)
+            .putExtra(ContactPickerActivity.EXTRA_SHOW_CHECK_ALL, true)
+            .putExtra(
+                ContactPickerActivity.EXTRA_CONTACT_DESCRIPTION,
+                ContactDescription.ADDRESS.name
+            )
+            .putExtra(
+                ContactPickerActivity.EXTRA_CONTACT_DESCRIPTION_TYPE,
+                ContactsContract.CommonDataKinds.Email.TYPE_WORK
+            )
+            .putExtra(
+                ContactPickerActivity.EXTRA_CONTACT_SORT_ORDER,
+                ContactSortOrder.AUTOMATIC.name
+            ).putExtra(ContactPickerActivity.EXTRA_ONLY_CONTACTS_WITH_PHONE, true)
+
         contactPickLaucher.launch(intent)
     }
 
     private var contactPickLaucher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_OK && result.data != null) {
-                // There are no request codes
-                val data: Intent = result.data!!
-                val contactUri: Uri = data.data ?: Uri.EMPTY
-                val fieldsToQuery = arrayOf(
-                    ContactsContract.Contacts._ID,
-                    ContactsContract.Contacts.DISPLAY_NAME,
-                    ContactsContract.Contacts.HAS_PHONE_NUMBER,
+            if (result.resultCode == Activity.RESULT_OK && result.data != null && result.data!!.hasExtra(
+                    ContactPickerActivity.RESULT_CONTACT_DATA
                 )
-                val cursor: Cursor? = requireContext().contentResolver?.query(
-                    contactUri,
-                    fieldsToQuery, null, null, null
+            ) {
+                val contacts =
+                    result.data!!.getSerializableExtra(ContactPickerActivity.RESULT_CONTACT_DATA) as List<Contact>
+                showConfirmationDialog(
+                    context = requireContext(),
+                    message = getString(
+                        R.string.insert_player_message,
+                        contacts.size.toString()
+                    ),
+                    positiveAction = getString(R.string.add),
+                    negativeAction = getString(R.string.cancel),
+                    function = {
+                        contacts.forEach {
+                            insertPlayer(
+                                name = "${it.firstName} ${it.lastName}",
+                                phone = it.mapPhone.values.first()
+                            )
+                        }
+                    }
                 )
-                cursor?.moveToFirst()
-                val id = cursor?.getString(0) ?: ""
-                val name = cursor?.getString(1) ?: ""
-                val hasPhoneNumber = cursor?.getInt(2)
-                val phoneNumbers = getContactPhoneNumbers(hasPhoneNumber == 1, id)
-                cursor?.close()
-                launchAddingPlayerModal(playerName = name, playerPhone = phoneNumbers[0])
             }
-        }
 
-    private fun getContactPhoneNumbers(hasPhoneNumber: Boolean, contactId: String): List<String> {
-        val phoneNumbers = mutableListOf<String>()
-        //check if contact has a phone number or not
-        if (hasPhoneNumber) {
-            val cursor = requireContext().contentResolver.query(
-                ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
-                arrayOf(ContactsContract.CommonDataKinds.Phone.NUMBER),
-                ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = " + contactId,
-                null,
-                null
-            )
-            //a contact may have multiple phone numbers
-            while (cursor!!.moveToNext()) {
-                //get phone number
-                val contactNumber = cursor.getString(0)
-                phoneNumbers.add(contactNumber)
-            }
-            cursor.close()
         }
-        return phoneNumbers
-    }
 
     private fun fillAllPlayers() {
         this.players.clear()
