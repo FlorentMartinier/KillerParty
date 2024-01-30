@@ -45,7 +45,6 @@
     <!-- Défis : -->
     <string name="challenge_reveal">Lui faire révéler son défi</string>
     <string name="challenge_sing_patrick_sebastien">Lui faire chanter du Patrick Sébastien</string>
-    <string name="challenge_drink_bottoms_up">Lui faire boire un verre cul-sec</string>
     <string name="challenge_congratulate">Lui faire dire un compliment sur vous</string>
     <string name="challenge_talk_philosophy">Parler de philosophie pendant au moins 5 min d\'affilé</string>
     <string name="challenge_show_picture">Lui faire montrer une photo de lui/elle quand il/elle était plus jeune</string>
@@ -58,7 +57,6 @@
     <string name="challenge_imitate">Lui faire imiter un des convives de la soirée</string>
     <string name="challenge_cringe_story">Lui faire révéler une anecdote gênante/rigolote dans sa vie</string>
     <string name="challenge_take_beard">Faire une partie de "je te tiens, tu me tiens par la barbichette" avec vous</string>
-    <string name="challenge_pryapisme">Réussir à lui faire dire "pryapisme" 3 fois durant la partie</string>
     <string name="challenge_grimace">Faire un concours de grimace avec vous</string>
     <string name="challenge_help">Vous aider à réaliser votre défi</string>
 </resources>

@@ -1,7 +1,7 @@
 package com.fmartinier.killerparty.db
 
 const val DATABASE_NAME = "KillerParty"
-const val DATABASE_VERSION = 26
+const val DATABASE_VERSION = 27
 
 // Tables
 const val TABLE_CHALLENGES = "challenges"

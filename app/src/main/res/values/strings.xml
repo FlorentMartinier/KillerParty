@@ -45,7 +45,6 @@
     <!-- Challenges : -->
     <string name="challenge_reveal">Make him reveal his challenge</string>
     <string name="challenge_sing_patrick_sebastien">Sing Patrick Sébastien</string>
-    <string name="challenge_drink_bottoms_up">Drink a cold drink</string>
     <string name="challenge_congratulate">Make him say a compliment about you</string>
     <string name="challenge_talk_philosophy">Talk about philosophy for at least 5 min</string>
     <string name="challenge_show_picture">Show a photo of him/her when he/she was younger</string>
@@ -58,7 +57,6 @@
     <string name="challenge_imitate">Make him imitate one of the guests of the party</string>
     <string name="challenge_cringe_story">Make him reveal an embarrassing/funny anecdote in his life</string>
     <string name="challenge_take_beard">Play a game of "I've got you, you've got me by the goatee" with you</string>
-    <string name="challenge_pryapisme">Succeed in making him say “pryapism” 3 times during the game</string>
     <string name="challenge_grimace">Have a grimace contest with you</string>
     <string name="challenge_help">Helping you achieve your challenge</string>
 </resources>

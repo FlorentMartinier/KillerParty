@@ -112,7 +112,6 @@ class MyDatabaseHelper(
         val DEFAULT_CHALLENGES = listOf(
             R.string.challenge_reveal,
             R.string.challenge_sing_patrick_sebastien,
-            R.string.challenge_drink_bottoms_up,
             R.string.challenge_congratulate,
             R.string.challenge_talk_philosophy,
             R.string.challenge_show_picture,
@@ -125,7 +124,6 @@ class MyDatabaseHelper(
             R.string.challenge_imitate,
             R.string.challenge_cringe_story,
             R.string.challenge_take_beard,
-            R.string.challenge_pryapisme,
             R.string.challenge_grimace,
         )
     }
