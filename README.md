@@ -1,7 +1,6 @@
 # KillerParty
 
 ## Prochaines features souhaitées :
-* Pouvoir sélectionner plusieurs contacts en même temps
 * Pouvoir importer tous les contacts depuis un groupe whattsap, messenger, etc.
 * Mettre de la publicité sur l'appli
 * Mettre en place un gestionnaire de BDD type flyway
