@@ -1,6 +1,11 @@
 # KillerParty
+## Pour exécuter en local
+* Ouvrir le projet sur Android studio (qui doit posséder un émulateur android)
+* Lancer une synchronisation gradle
+* Run la configuration créée par gradle
 
 ## Prochaines features souhaitées :
+* La fonctionnalité d'envois de SMS pose problème pour le déploiement sur google play. Etudier la possibilité d'envoyer des messages whattsap plutôt que des SMS.
 * Pouvoir importer tous les contacts depuis un groupe whattsap, messenger, etc.
 * Mettre de la publicité sur l'appli
 * Mettre en place un gestionnaire de BDD type flyway
