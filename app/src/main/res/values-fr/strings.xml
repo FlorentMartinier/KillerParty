@@ -41,6 +41,10 @@
     <string name="no_player_in_party">Il n\'existe encore aucun joueur dans la partie. Veuillez en créer en cliquant sur le bouton en bas à droite.</string>
     <string name="no_challenge">Il n\'existe encore aucun défi. Veuillez en créer un en cliquant sur le bouton en bas à droite.</string>
     <string name="no_history">Il n\'existe encore aucune partie historisée. Vous pouvez créer une partie en cliquant ici.</string>
+    <string name="empty_phone_error">Le numéro de téléphone ne peut pas être vide.</string>
+    <string name="empty_player_error">Le nom du joueur ne peux pas être vide.</string>
+    <string name="phone_number_format_error">Le numéro de téléphone est invalide. Seuls les numéros sont acceptés.</string>
+    <string name="unknown_error">Erreur inconnue.</string>
 
     <!-- Défis : -->
     <string name="challenge_reveal">Lui faire révéler son défi</string>

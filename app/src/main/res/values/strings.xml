@@ -41,6 +41,10 @@
     <string name="no_player_in_party">There are no players in the game yet. Please create one by clicking on the button at the bottom right.</string>
     <string name="no_challenge">There are no challenges yet. Please create one by clicking on the button at the bottom right.</string>
     <string name="no_history">There is no historical party yet. You can create a game by clicking here.</string>
+    <string name="empty_phone_error">Phone number cannot be empty.</string>
+    <string name="empty_player_error">Player name cannot be empty.</string>
+    <string name="phone_number_format_error">Phone number has an invalid format. Only french number are accepted.</string>
+    <string name="unknown_error">Unknown error.</string>
 
     <!-- Challenges : -->
     <string name="challenge_reveal">Make him reveal his challenge</string>

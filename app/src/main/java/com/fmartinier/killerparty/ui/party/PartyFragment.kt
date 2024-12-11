@@ -111,19 +111,28 @@ class PartyFragment : Fragment() {
             viewLifecycleOwner
         ) { requestKey, bundle ->
             val phoneNumber = bundle.getString(PLAYER_PHONE)
-            if (requestKey == PLAYER_DESCRIPTION && !bundle.getString(PLAYER_NAME)
-                    .isNullOrEmpty() && !phoneNumber.isNullOrEmpty() && smsService.isValidPhoneNumber(
-                    phoneNumber
-                )
-            ) {
+            val namePlayer = bundle.getString(PLAYER_NAME)
+            try {
+                if(phoneNumber.isNullOrEmpty()) {
+                    throw Exception(resources.getString(R.string.empty_phone_error))
+                }
+                if(namePlayer.isNullOrEmpty()) {
+                    throw Exception(resources.getString(R.string.empty_player_error))
+                }
+                if (!smsService.isValidPhoneNumber(phoneNumber)) {
+                    throw Exception(resources.getString(R.string.phone_number_format_error))
+                }
+                if (requestKey != PLAYER_DESCRIPTION) {
+                    throw Exception(resources.getString(R.string.unknown_error))
+                }
                 insertPlayer(
-                    name = bundle.getString(PLAYER_NAME) ?: "",
-                    phone = bundle.getString(PLAYER_PHONE) ?: ""
+                    name = namePlayer,
+                    phone = phoneNumber
                 )
-            } else {
+            } catch (e: Exception) {
                 Toast.makeText(
                     context,
-                    resources.getString(R.string.invalid_fields),
+                    e.message,
                     Toast.LENGTH_SHORT
                 ).show()
             }
