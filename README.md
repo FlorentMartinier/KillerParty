@@ -6,7 +6,7 @@
 
 ## Prochaines features souhaitées :
 * La fonctionnalité d'envois de SMS pose problème pour le déploiement sur google play. Etudier la possibilité d'envoyer des messages whattsap plutôt que des SMS.
-* Pouvoir importer tous les contacts depuis un groupe whattsap, messenger, etc. Etudier la possibilité de transmettre un lien d'invitation.
+* Pouvoir importer tous les contacts depuis un groupe whattsap, messenger, etc (cette solution semble impossible après quelques recherches). Etudier la possibilité de transmettre un lien d'invitation.
 * Mettre de la publicité sur l'appli
 * Mettre en place un gestionnaire de BDD type flyway
 * Rendre la l'invalidation d'un joueur plus ergonomique (empêcher de fermer la fenêtre, rajouter du rouge là où le problème est présent)
