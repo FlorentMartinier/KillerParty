@@ -15,6 +15,7 @@
     <string name="delete_confirmed">Delete</string>
     <string name="delete_cancel">Cancel</string>
     <string name="begin_party">Begin party</string>
+    <string name="copy_session_link">Copy session link</string>
     <string name="party_date">Date : %1$s</string>
     <string name="party_state">State : %1$s</string>
     <string name="party_state_not_started">Not started</string>

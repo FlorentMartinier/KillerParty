@@ -13,6 +13,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fmartinier.killerparty.R
+import com.fmartinier.killerparty.client.KillerBackClient
 import com.fmartinier.killerparty.databinding.FragmentPartyBinding
 import com.fmartinier.killerparty.model.Party
 import com.fmartinier.killerparty.model.Player
@@ -29,10 +30,16 @@ import com.onegravity.contactpicker.contact.ContactDescription
 import com.onegravity.contactpicker.contact.ContactSortOrder
 import com.onegravity.contactpicker.core.ContactPickerActivity
 import com.onegravity.contactpicker.picture.ContactPictureType
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import org.koin.android.ext.android.inject
 
 
 class PartyFragment : Fragment() {
 
+    private val killerBackClient: KillerBackClient by inject()
     private lateinit var binding: FragmentPartyBinding
 
     private val players: MutableList<Player> = mutableListOf()
@@ -70,13 +77,27 @@ class PartyFragment : Fragment() {
         }
 
         // Ajouter un joueur manuellement (ouvrir une fenêtre modale pour écrire les infos du joueur)
+        /*
         binding.addPlayerButton.setOnClickListener {
             launchAddingPlayerModal()
         }
+         */
 
         // Importer les infos d'un contact depuis le répertoire
         binding.importPlayerButton.setOnClickListener {
             pickContact()
+        }
+
+        // Créer ou copier un lien de session pour rejoindre la partie.
+        binding.createSessionButton.setOnClickListener {
+            // TODO : Vérifier si une session est déjà en cours. Auquel cas, retourner directement l'id dans le presse papier
+            CoroutineScope(Dispatchers.Main).launch {
+                val test = withContext(Dispatchers.IO) {
+                    killerBackClient.createSession().execute()
+                }
+                // TODO :  Copier l'id dans le presse papier + mettre cet id dans la bdd pour signaler que c'est la session en cours.
+                println(test)
+            }
         }
 
         binding.beginPartyButton.setOnClickListener {
@@ -113,10 +134,10 @@ class PartyFragment : Fragment() {
             val phoneNumber = bundle.getString(PLAYER_PHONE)
             val namePlayer = bundle.getString(PLAYER_NAME)
             try {
-                if(phoneNumber.isNullOrEmpty()) {
+                if (phoneNumber.isNullOrEmpty()) {
                     throw Exception(resources.getString(R.string.empty_phone_error))
                 }
-                if(namePlayer.isNullOrEmpty()) {
+                if (namePlayer.isNullOrEmpty()) {
                     throw Exception(resources.getString(R.string.empty_player_error))
                 }
                 if (!smsService.isValidPhoneNumber(phoneNumber)) {
