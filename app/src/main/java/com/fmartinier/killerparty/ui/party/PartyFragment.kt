@@ -19,6 +19,7 @@ import com.fmartinier.killerparty.model.Party
 import com.fmartinier.killerparty.model.Player
 import com.fmartinier.killerparty.services.PartyService
 import com.fmartinier.killerparty.services.PlayerService
+import com.fmartinier.killerparty.services.SessionService
 import com.fmartinier.killerparty.services.SmsService
 import com.fmartinier.killerparty.ui.dialogs.AddPlayerDialogFragment
 import com.fmartinier.killerparty.utils.PLAYER_DESCRIPTION
@@ -30,10 +31,6 @@ import com.onegravity.contactpicker.contact.ContactDescription
 import com.onegravity.contactpicker.contact.ContactSortOrder
 import com.onegravity.contactpicker.core.ContactPickerActivity
 import com.onegravity.contactpicker.picture.ContactPictureType
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.koin.android.ext.android.inject
 
 
@@ -47,6 +44,7 @@ class PartyFragment : Fragment() {
     private lateinit var partyService: PartyService
     private lateinit var playerService: PlayerService
     private lateinit var smsService: SmsService
+    private lateinit var sessionService: SessionService
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onCreateView(
@@ -61,6 +59,7 @@ class PartyFragment : Fragment() {
         partyService = PartyService(requiredContext)
         playerService = PlayerService(requiredContext)
         smsService = SmsService(requiredContext)
+        sessionService = SessionService(requiredContext, killerBackClient)
         party = partyService.findOrCreate()
         fillAllPlayers()
 
@@ -90,14 +89,7 @@ class PartyFragment : Fragment() {
 
         // Créer ou copier un lien de session pour rejoindre la partie.
         binding.createSessionButton.setOnClickListener {
-            // TODO : Vérifier si une session est déjà en cours. Auquel cas, retourner directement l'id dans le presse papier
-            CoroutineScope(Dispatchers.Main).launch {
-                val test = withContext(Dispatchers.IO) {
-                    killerBackClient.createSession().execute()
-                }
-                // TODO :  Copier l'id dans le presse papier + mettre cet id dans la bdd pour signaler que c'est la session en cours.
-                println(test)
-            }
+            sessionService.copySessionLinkToClipboard(requireContext())
         }
 
         binding.beginPartyButton.setOnClickListener {

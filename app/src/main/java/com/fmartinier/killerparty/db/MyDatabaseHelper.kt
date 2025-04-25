@@ -57,7 +57,8 @@ class MyDatabaseHelper(
                 "$COLUMN_ID INTEGER PRIMARY KEY," +
                 "$COLUMN_DATE DATE, " +
                 "$COLUMN_STATE TEXT, " +
-                "$COLUMN_WINNER TEXT" +
+                "$COLUMN_WINNER TEXT," +
+                "$COLUMN_SESSION_ID TEXT" +
                 ")"
         // Execute script.
         this.db.execSQL(script)

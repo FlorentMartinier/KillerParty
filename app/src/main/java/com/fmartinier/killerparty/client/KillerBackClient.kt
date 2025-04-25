@@ -6,5 +6,5 @@ import retrofit2.http.POST
 interface KillerBackClient {
 
     @POST("session/create")
-    fun createSession(): Call<Any>
+    fun createSession(): Call<Map<String, Any>>
 }

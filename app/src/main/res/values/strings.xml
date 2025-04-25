@@ -46,6 +46,7 @@
     <string name="empty_player_error">Player name cannot be empty.</string>
     <string name="phone_number_format_error">Phone number has an invalid format. Only french number are accepted.</string>
     <string name="unknown_error">Unknown error.</string>
+    <string name="shared_link_copied">Shared link copied.</string>
 
     <!-- Challenges : -->
     <string name="challenge_reveal">Make him reveal his challenge</string>

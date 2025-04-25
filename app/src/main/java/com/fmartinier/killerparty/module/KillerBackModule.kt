@@ -3,15 +3,17 @@ package com.fmartinier.killerparty.module
 import com.fmartinier.killerparty.client.KillerBackClient
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
+import com.fmartinier.killerparty.R
 
 val killerBackModule = module {
     single {
         Retrofit.Builder()
-            .baseUrl("https://killer-party-back-2c78d956bd06.herokuapp.com/")
+            .baseUrl(androidContext().getString(R.string.killer_back_api_base_url))
             .client(get())
             .addConverterFactory(GsonConverterFactory.create())
             .build()

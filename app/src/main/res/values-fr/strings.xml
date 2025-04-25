@@ -46,6 +46,7 @@
     <string name="empty_player_error">Le nom du joueur ne peux pas être vide.</string>
     <string name="phone_number_format_error">Le numéro de téléphone est invalide. Seuls les numéros sont acceptés.</string>
     <string name="unknown_error">Erreur inconnue.</string>
+    <string name="shared_link_copied">Lien de partage copié.</string>
 
     <!-- Défis : -->
     <string name="challenge_reveal">Lui faire révéler son défi</string>

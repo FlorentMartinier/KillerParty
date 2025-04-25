@@ -8,4 +8,5 @@ data class Party(
     val date: Instant? = Instant.now(),
     val state: PartyState = PartyState.NOT_STARTED,
     var winner: String? = null,
+    val sessionId: String? = null,
 )

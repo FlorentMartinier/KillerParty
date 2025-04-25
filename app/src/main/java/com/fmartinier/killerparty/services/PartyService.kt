@@ -31,6 +31,10 @@ class PartyService(val context: Context) {
         return partyRepository.findAll().filter { it.state != PartyState.NOT_STARTED }
     }
 
+    fun modifySessionIdById(partyId: Int, sessionId: String) {
+        partyRepository.modifySessionIdById(partyId, sessionId)
+    }
+
     fun beginParty(party: Party, players: List<Player>) {
         giveChallengeToPlayers(players)
         val partyId = party.id

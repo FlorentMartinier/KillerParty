@@ -4,6 +4,7 @@ import android.content.ContentValues
 import android.content.Context
 import com.fmartinier.killerparty.db.COLUMN_DATE
 import com.fmartinier.killerparty.db.COLUMN_ID
+import com.fmartinier.killerparty.db.COLUMN_SESSION_ID
 import com.fmartinier.killerparty.db.COLUMN_STATE
 import com.fmartinier.killerparty.db.COLUMN_WINNER
 import com.fmartinier.killerparty.db.MyDatabaseHelper
@@ -43,6 +44,7 @@ class PartyRepository(context: Context) {
                 date = Instant.parse(cursor2.getString(1)),
                 state = PartyState.NOT_STARTED,
                 winner = null,
+                sessionId = cursor2.getString(4),
             )
         } else {
             throw Exception("Error during party recuperation")
@@ -65,6 +67,7 @@ class PartyRepository(context: Context) {
                     date = Instant.parse(cursor.getString(1)),
                     state = PartyState.valueOf(cursor.getString(2)),
                     winner = cursor.getString(3),
+                    sessionId = cursor.getString(4),
                 )
                 parties.add(party)
             } while (cursor.moveToNext())
@@ -85,6 +88,13 @@ class PartyRepository(context: Context) {
     fun modifyDateById(id: Int, date: Instant) {
         val values = ContentValues()
         values.put(COLUMN_DATE, date.toString())
+
+        db.update(TABLE_PARTIES, values, "$COLUMN_ID = $id", null)
+    }
+
+    fun modifySessionIdById(id: Int, sessionId: String) {
+        val values = ContentValues()
+        values.put(COLUMN_SESSION_ID, sessionId.toString())
 
         db.update(TABLE_PARTIES, values, "$COLUMN_ID = $id", null)
     }
