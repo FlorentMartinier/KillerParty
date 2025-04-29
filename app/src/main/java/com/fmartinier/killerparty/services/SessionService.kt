@@ -10,24 +10,28 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.widget.Toast
 import com.fmartinier.killerparty.R
+import com.fmartinier.killerparty.model.Party
 
 class SessionService(context: Context, val killerBackClient: KillerBackClient) {
     private val partyService = PartyService(context)
 
-    fun copySessionLinkToClipboard(context: Context) {
-        val party = partyService.findOrCreate()
-        if(party.sessionId?.isNotEmpty() == true) {
-            copyToClipboard(context, party.sessionId)
-            return
-        }
+    fun createSessionForParty(party: Party) {
         CoroutineScope(Dispatchers.Main).launch {
             val response = withContext(Dispatchers.IO) {
                 killerBackClient.createSession().execute()
             }.body()
             response?.get("id")?.let {
                 partyService.modifySessionIdById(party.id, it.toString())
-                copyToClipboard(context, it.toString())
             }
+        }
+    }
+
+    fun copySessionLinkToClipboard(context: Context, party: Party) {
+        if(party.sessionId?.isNotEmpty() == true) {
+            copyToClipboard(context, party.sessionId)
+            return
+        } else {
+            Toast.makeText(context, "Session error", Toast.LENGTH_SHORT).show()
         }
     }
 

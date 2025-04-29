@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="killer_back_api_base_url" translatable="false">https://killer-party-back-2c78d956bd06.herokuapp.com/</string>
+    <string name="killer_back_api_host_base_url" translatable="false">killer-party-back-2c78d956bd06.herokuapp.com/</string>
 </resources>

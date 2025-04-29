@@ -1,5 +1,6 @@
 package com.fmartinier.killerparty.ui.party
 
+import UserWebSocketService
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
@@ -40,6 +41,7 @@ class PartyFragment : Fragment() {
     private lateinit var binding: FragmentPartyBinding
 
     private val players: MutableList<Player> = mutableListOf()
+    private val userWebSocketService = UserWebSocketService()
     private lateinit var party: Party
     private lateinit var partyService: PartyService
     private lateinit var playerService: PlayerService
@@ -61,7 +63,11 @@ class PartyFragment : Fragment() {
         smsService = SmsService(requiredContext)
         sessionService = SessionService(requiredContext, killerBackClient)
         party = partyService.findOrCreate()
+        if (party.sessionId.isNullOrEmpty()) {
+            sessionService.createSessionForParty(party)
+        }
         fillAllPlayers()
+        userWebSocketService.connect(party.sessionId!!, requiredContext, playerService, party, this::fillAllPlayers)
 
         binding.players.apply {
             layoutManager = LinearLayoutManager(context)
@@ -76,11 +82,9 @@ class PartyFragment : Fragment() {
         }
 
         // Ajouter un joueur manuellement (ouvrir une fenêtre modale pour écrire les infos du joueur)
-        /*
         binding.addPlayerButton.setOnClickListener {
             launchAddingPlayerModal()
         }
-         */
 
         // Importer les infos d'un contact depuis le répertoire
         binding.importPlayerButton.setOnClickListener {
@@ -88,8 +92,8 @@ class PartyFragment : Fragment() {
         }
 
         // Créer ou copier un lien de session pour rejoindre la partie.
-        binding.createSessionButton.setOnClickListener {
-            sessionService.copySessionLinkToClipboard(requireContext())
+        binding.copySessionLinkButton.setOnClickListener {
+            sessionService.copySessionLinkToClipboard(requireContext(), party)
         }
 
         binding.beginPartyButton.setOnClickListener {
@@ -115,6 +119,11 @@ class PartyFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        userWebSocketService.disconnect()
     }
 
     private fun launchAddingPlayerModal(playerName: String = "", playerPhone: String = "") {

@@ -45,7 +45,7 @@
             app:layout_constraintRight_toRightOf="parent" />
 
         <com.nambimobile.widgets.efab.FabOption
-            android:id="@+id/createSessionButton"
+            android:id="@+id/copySessionLinkButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:fab_icon="@drawable/ic_link"
@@ -66,7 +66,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintRight_toRightOf="parent" />
 
-        <!--com.nambimobile.widgets.efab.FabOption
+        <com.nambimobile.widgets.efab.FabOption
             android:id="@+id/addPlayerButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -75,7 +75,7 @@
             app:label_text="@string/add_player"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintRight_toRightOf="parent" /-->
+            app:layout_constraintRight_toRightOf="parent" />
 
         <include
             android:id="@+id/noPartyHelperMessage"
